@@ -32,6 +32,9 @@
         <activity
             android:name=".ui.category.CategoryActivity"
             android:label="@string/category" />
+        <activity
+            android:name=".ui.lessons.LessonsActivity"
+            android:label="@string/lessons" />
     </application>
 
 </manifest>

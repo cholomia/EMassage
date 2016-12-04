@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="lesson"
+            type="com.capstone.tip.emassage.model.data.Lesson" />
+
+        <variable
+            name="view"
+            type="com.capstone.tip.emassage.ui.lessons.LessonsView" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:onClick="@{() -> view.onLessonsItemClicked(lesson)}"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{lesson.title}"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
+
+    </LinearLayout>
+
+</layout>
