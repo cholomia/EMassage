@@ -35,6 +35,8 @@
         <activity
             android:name=".ui.lessons.LessonsActivity"
             android:label="@string/lessons" />
+        <activity android:name=".ui.pdf.PdfActivity" />
+        <activity android:name=".ui.quiz.QuizActivity"></activity>
     </application>
 
 </manifest>

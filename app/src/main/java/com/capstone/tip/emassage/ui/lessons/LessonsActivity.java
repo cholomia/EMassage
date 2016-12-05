@@ -1,5 +1,6 @@
 package com.capstone.tip.emassage.ui.lessons;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +16,7 @@ import com.capstone.tip.emassage.app.Constants;
 import com.capstone.tip.emassage.databinding.ActivityLessonsBinding;
 import com.capstone.tip.emassage.model.data.Category;
 import com.capstone.tip.emassage.model.data.Lesson;
+import com.capstone.tip.emassage.ui.pdf.PdfActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.MvpViewStateActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.ViewState;
 
@@ -117,7 +119,9 @@ public class LessonsActivity extends MvpViewStateActivity<LessonsView, LessonsPr
 
     @Override
     public void onLessonsItemClicked(Lesson lesson) {
-
+        Intent intent = new Intent(this, PdfActivity.class);
+        intent.putExtra(Constants.ID, lesson.getId());
+        startActivity(intent);
     }
 
     /***

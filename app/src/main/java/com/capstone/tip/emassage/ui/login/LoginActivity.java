@@ -64,9 +64,7 @@ public class LoginActivity extends MvpViewStateActivity<LoginView, LoginPresente
 
     @Override
     public void onNewViewStateInstance() {
-        LoginViewState loginViewState = (LoginViewState) getViewState();
-        loginViewState.setUsername(binding.etUsername.getText().toString());
-        loginViewState.setPassword(binding.etPassword.getText().toString());
+        saveValues();
     }
 
     /***
@@ -137,9 +135,7 @@ public class LoginActivity extends MvpViewStateActivity<LoginView, LoginPresente
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        LoginViewState loginViewState = (LoginViewState) getViewState();
-        loginViewState.setUsername(binding.etUsername.getText().toString());
-        loginViewState.setPassword(binding.etPassword.getText().toString());
+        saveValues();
     }
 
     @Override
@@ -150,5 +146,11 @@ public class LoginActivity extends MvpViewStateActivity<LoginView, LoginPresente
     /***
      * End of TextWatcher
      ***/
+
+    private void saveValues() {
+        LoginViewState loginViewState = (LoginViewState) getViewState();
+        loginViewState.setUsername(binding.etUsername.getText().toString());
+        loginViewState.setPassword(binding.etPassword.getText().toString());
+    }
 
 }

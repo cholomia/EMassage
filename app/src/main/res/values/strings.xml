@@ -17,4 +17,6 @@
     <string name="courses">Courses</string>
     <string name="category">Categories</string>
     <string name="lessons">Lessons</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
 </resources>

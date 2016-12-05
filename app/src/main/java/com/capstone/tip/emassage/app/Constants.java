@@ -14,4 +14,8 @@ public class Constants {
 
     public static final String ID = "id";
     public static final String COL_SEQ = "sequence";
+
+    public static final String COUNTER = "counter";
+    public static final String QUESTIONS = "questions";
+    public static final String ANSWERS = "answers";
 }

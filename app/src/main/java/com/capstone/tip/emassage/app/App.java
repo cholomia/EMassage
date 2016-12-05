@@ -19,6 +19,8 @@ public class App extends Application {
     private OkHttpClient.Builder httpClient;
     private Retrofit retrofit;
     private ApiInterface apiInterface;
+    private Retrofit retrofitMedia;
+    private MediaApiInterface mediaApiInterface;
 
     @Override
     public void onCreate() {
@@ -64,11 +66,30 @@ public class App extends Application {
         return retrofit;
     }
 
+    private Retrofit getMediaClient() {
+        if (retrofitMedia == null) {
+            String url = Endpoints.BASE_URL;
+            retrofitMedia = new Retrofit.Builder()
+                    .baseUrl(url)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(getOkHttpClient().build())
+                    .build();
+        }
+        return retrofitMedia;
+    }
+
     public ApiInterface getApiInterface() {
         if (apiInterface == null) {
             apiInterface = getClient().create(ApiInterface.class);
         }
         return apiInterface;
+    }
+
+    public MediaApiInterface getMediaApiInterface() {
+        if (mediaApiInterface == null) {
+            mediaApiInterface = getMediaClient().create(MediaApiInterface.class);
+        }
+        return mediaApiInterface;
     }
 
 }
