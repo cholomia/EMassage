@@ -2,6 +2,7 @@ package com.capstone.tip.emassage.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 
 import com.capstone.tip.emassage.R;
 import com.capstone.tip.emassage.ui.courses.CoursesActivity;
+import com.capstone.tip.emassage.ui.forums.ForumsActivity;
 import com.capstone.tip.emassage.ui.login.LoginActivity;
 
 import io.realm.Realm;
@@ -86,14 +88,14 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_courses) {
             startActivity(new Intent(this, CoursesActivity.class));
-        } else if (id == R.id.nav_gallery) {
-
+        } else if (id == R.id.nav_forums) {
+            startActivity(new Intent(this, ForumsActivity.class));
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

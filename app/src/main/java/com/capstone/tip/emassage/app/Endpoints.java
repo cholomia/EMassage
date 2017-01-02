@@ -6,9 +6,16 @@ package com.capstone.tip.emassage.app;
 
 public class Endpoints {
 
+    public static final String _ID = "{id}/";
     public static final String BASE_URL = "http://vlitztrom.pythonanywhere.com";
+    //public static final String BASE_URL = "http://127.0.0.1:8000";
+
     public static final String API_URL = BASE_URL + "/emassage/api/";
     public static final String LOGIN = "user/login/";
     public static final String REGISTER = "user/register/";
     public static final String COURSES = "courses/";
+    public static final String FORUMS = "forums/";
+    public static final String FORUM = FORUMS + _ID;
+    public static final String COMMENTS = "comments/";
+    public static final String COMMENT = COMMENTS + _ID;
 }

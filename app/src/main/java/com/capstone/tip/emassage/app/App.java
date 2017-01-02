@@ -2,6 +2,10 @@ package com.capstone.tip.emassage.app;
 
 import android.app.Application;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.internal.bind.util.ISO8601Utils;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import okhttp3.OkHttpClient;
@@ -56,10 +60,15 @@ public class App extends Application {
 
     private Retrofit getClient() {
         if (retrofit == null) {
+
+            Gson gson = new GsonBuilder()
+                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                    .create();
+
             String url = Endpoints.API_URL;
             retrofit = new Retrofit.Builder()
                     .baseUrl(url)
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .client(getOkHttpClient().build())
                     .build();
         }

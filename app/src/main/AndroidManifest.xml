@@ -25,7 +25,9 @@
             android:name=".ui.main.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.forums.ForumsActivity" />
+        <activity
+            android:name=".ui.forums.ForumsActivity"
+            android:label="@string/forums" />
         <activity
             android:name=".ui.courses.CoursesActivity"
             android:label="@string/courses" />
@@ -36,7 +38,9 @@
             android:name=".ui.lessons.LessonsActivity"
             android:label="@string/lessons" />
         <activity android:name=".ui.pdf.PdfActivity" />
-        <activity android:name=".ui.quiz.QuizActivity"></activity>
+        <activity android:name=".ui.quiz.QuizActivity" />
+        <activity android:name=".ui.forums.form.ForumFormActivity" />
+        <activity android:name=".ui.forums.details.ForumDetailActivity"></activity>
     </application>
 
 </manifest>
