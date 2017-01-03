@@ -17,4 +17,6 @@ public interface ForumDetailView extends MvpView {
     void startLoading();
 
     void stopLoading();
+
+    void deleteForumSuccessful();
 }

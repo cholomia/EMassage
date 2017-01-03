@@ -15,6 +15,7 @@ import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmModel;
 import okhttp3.Credentials;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -74,8 +75,8 @@ public class ForumDetailPresenter extends MvpNullObjectBasePresenter<ForumDetail
                                     @Override
                                     public void onError(Throwable error) {
                                         realm.close();
-                                        Log.e(TAG, "onError: Error Saving Forum", error);
-                                        getView().showMessage("Error Saving Forum");
+                                        Log.e(TAG, "onError: Error Saving Comment", error);
+                                        getView().showMessage("Error Saving Comment");
                                     }
                                 });
                             } else {
@@ -93,9 +94,64 @@ public class ForumDetailPresenter extends MvpNullObjectBasePresenter<ForumDetail
                         public void onFailure(Call<Comment> call, Throwable t) {
                             Log.e(TAG, "onFailure: Create New Comment API Failed", t);
                             getView().stopLoading();
-                            getView().showMessage("Error Creating Sending Comment");
+                            getView().showMessage("Error Sending Comment");
                         }
                     });
         }
+    }
+
+    void deleteForum(final int forumId) {
+        getView().startLoading();
+        App.getInstance().getApiInterface().deleteForum(forumId,
+                Credentials.basic(user.getUsername(), user.getPassword()))
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        getView().stopLoading();
+                        if (response.isSuccessful()) {
+                            final Realm realm = Realm.getDefaultInstance();
+                            realm.executeTransactionAsync(new Realm.Transaction() {
+                                @Override
+                                public void execute(Realm realm) {
+                                    Forum forum = realm.where(Forum.class).equalTo(Constants.ID, forumId).findFirst();
+                                    forum.deleteFromRealm();
+                                }
+                            }, new Realm.Transaction.OnSuccess() {
+                                @Override
+                                public void onSuccess() {
+                                    realm.close();
+                                    getView().deleteForumSuccessful();
+                                }
+                            }, new Realm.Transaction.OnError() {
+                                @Override
+                                public void onError(Throwable error) {
+                                    realm.close();
+                                    Log.e(TAG, "onError: Error Saving Forum", error);
+                                    getView().showMessage("Error Deleting Forum");
+                                }
+                            });
+                        } else {
+                            try {
+                                getView().showMessage(response.errorBody().string());
+                            } catch (IOException e) {
+                                Log.e(TAG, "onResponse: Error parsing error body", e);
+                                getView().showMessage(response.message() != null ? response.message()
+                                        : "Unknown Error");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.e(TAG, "onFailure: Delete Forum API Failed", t);
+                        getView().stopLoading();
+                        getView().showMessage("Error Deleting Forum");
+                    }
+                });
+
+    }
+
+    public boolean isForumMine() {
+        return user.getUsername().contentEquals(forum.getUsername());
     }
 }

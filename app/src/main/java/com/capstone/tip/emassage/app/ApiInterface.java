@@ -11,14 +11,20 @@ import com.capstone.tip.emassage.model.response.LoginResponse;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 
 /**
  * Created by Cholo Mia on 12/4/2016.
@@ -52,6 +58,18 @@ public interface ApiInterface {
     Call<Forum> createForum(@Header("Authorization") String basicAuthentication,
                             @Field("title") String title,
                             @Field("content") String content);
+
+    @FormUrlEncoded
+    @PUT(Endpoints.FORUM)
+    Call<Forum> editForum(@Path("id") int id,
+                          @Header("Authorization") String basicAuthentication,
+                          @Field("title") String title,
+                          @Field("content") String content);
+
+    @DELETE(Endpoints.FORUM)
+    Call<ResponseBody> deleteForum(@Path("id") int id,
+                                   @Header("Authorization") String basicAuthentication);
+
 
     @GET(Endpoints.COMMENTS)
     Call<CommentListResponse> comments();

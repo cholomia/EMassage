@@ -13,6 +13,7 @@ import java.util.Map;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,7 +30,7 @@ public class ForumsPresenter extends MvpNullObjectBasePresenter<ForumsView> {
 
     public void onStart() {
         realm = Realm.getDefaultInstance();
-        forumRealmResults = realm.where(Forum.class).findAllAsync();
+        forumRealmResults = realm.where(Forum.class).findAllSortedAsync("created", Sort.DESCENDING);
         forumRealmResults.addChangeListener(new RealmChangeListener<RealmResults<Forum>>() {
             @Override
             public void onChange(RealmResults<Forum> element) {

@@ -3,7 +3,7 @@
 
     <data>
 
-        <import type="com.capstone.tip.emassage.utils.DateUtils" />
+        <import type="com.capstone.tip.emassage.utils.DateTimeUtils" />
 
         <variable
             name="forum"
@@ -19,8 +19,8 @@
         android:layout_height="wrap_content"
         android:foreground="?attr/selectableItemBackground"
         android:onClick="@{() -> view.onForumClicked(forum)}"
-        app:cardCornerRadius="2dp"
-        app:cardElevation="2dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="4dp"
         app:cardUseCompatPadding="true"
         app:contentPadding="@dimen/activity_vertical_margin">
 
@@ -32,23 +32,35 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{forum.title}"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Title" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text='@{"by: " + forum.username + " :: " + DateUtils.getLongDateTimeString(forum.created)}'
+                android:text='@{"Submitted " + DateTimeUtils.toDuration(forum.created) + " by " + forum.username}'
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:ellipsize="end"
-                android:maxLines="3"
-                android:text="@{forum.content}"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
+                android:text="@{forum.title}"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_comment" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text='@{forum.commentCounts + " Comments"}'
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

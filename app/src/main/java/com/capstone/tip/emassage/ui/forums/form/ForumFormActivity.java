@@ -10,7 +10,9 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.capstone.tip.emassage.R;
+import com.capstone.tip.emassage.app.Constants;
 import com.capstone.tip.emassage.databinding.ActivityForumFormBinding;
+import com.capstone.tip.emassage.model.data.Forum;
 import com.hannesdorfmann.mosby.mvp.viewstate.MvpViewStateActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.ViewState;
 
@@ -19,6 +21,7 @@ public class ForumFormActivity extends MvpViewStateActivity<ForumFormView, Forum
 
     private ActivityForumFormBinding binding;
     private ProgressDialog progressDialog;
+    private Forum forum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +30,8 @@ public class ForumFormActivity extends MvpViewStateActivity<ForumFormView, Forum
         binding = DataBindingUtil.setContentView(this, R.layout.activity_forum_form);
         binding.setView(getMvpView());
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        presenter.onStart();
+        int id = getIntent().getIntExtra(Constants.ID, -1);
+        presenter.onStart(id);
     }
 
     @Override
@@ -72,8 +76,8 @@ public class ForumFormActivity extends MvpViewStateActivity<ForumFormView, Forum
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        presenter.newForum(binding.etTitle.getText().toString(),
-                                binding.etContent.getText().toString());
+                        presenter.saveForum(binding.etTitle.getText().toString(),
+                                binding.etContent.getText().toString(), forum);
                         dialogInterface.dismiss();
                     }
                 })
@@ -105,5 +109,11 @@ public class ForumFormActivity extends MvpViewStateActivity<ForumFormView, Forum
     public void saveSuccess() {
         showMessage("Save Forum Successful");
         finish();
+    }
+
+    @Override
+    public void setForum(Forum forum) {
+        this.forum = forum;
+        binding.setForum(forum);
     }
 }

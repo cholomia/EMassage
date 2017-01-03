@@ -14,6 +14,7 @@ import java.util.Map;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,7 +31,7 @@ public class CommentsPresenter extends MvpNullObjectBasePresenter<CommentsView> 
     public void onStart(int forumId) {
         realm = Realm.getDefaultInstance();
         Log.d(TAG, "onStart: Forum ID: " + forumId);
-        commentRealmResults = realm.where(Comment.class).equalTo("forum", forumId).findAllAsync();
+        commentRealmResults = realm.where(Comment.class).equalTo("forum", forumId).findAllSortedAsync("created", Sort.DESCENDING);
         commentRealmResults.addChangeListener(new RealmChangeListener<RealmResults<Comment>>() {
             @Override
             public void onChange(RealmResults<Comment> element) {

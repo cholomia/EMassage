@@ -1,5 +1,6 @@
 package com.capstone.tip.emassage.ui.forums.form;
 
+import com.capstone.tip.emassage.model.data.Forum;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 
 /**
@@ -17,4 +18,6 @@ public interface ForumFormView extends MvpView {
     void startLoading();
 
     void saveSuccess();
+
+    void setForum(Forum forum);
 }

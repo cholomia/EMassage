@@ -4,6 +4,10 @@
     <data>
 
         <variable
+            name="forum"
+            type="com.capstone.tip.emassage.model.data.Forum" />
+
+        <variable
             name="view"
             type="com.capstone.tip.emassage.ui.forums.form.ForumFormView" />
     </data>
@@ -30,7 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:drawable/edit_text"
-            android:maxLength="250" />
+            android:maxLength="250"
+            android:text='@{forum != null ? forum.title : ""}' />
 
         <TextView
             android:layout_width="match_parent"
@@ -44,7 +49,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@android:drawable/edit_text" />
+            android:background="@android:drawable/edit_text"
+            android:gravity="top"
+            android:text='@{forum != null ? forum.content : ""}' />
 
         <Button
             android:layout_width="match_parent"
