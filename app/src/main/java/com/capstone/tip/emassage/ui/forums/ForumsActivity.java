@@ -133,6 +133,16 @@ public class ForumsActivity extends MvpViewStateActivity<ForumsView, ForumsPrese
     }
 
     @Override
+    public void onUpVote(Forum forum) {
+        Toast.makeText(this, "upvote", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDownVote(Forum forum) {
+        Toast.makeText(this, "downvote", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onRefresh() {
         presenter.loadForumList();
     }

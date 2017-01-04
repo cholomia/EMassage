@@ -1,6 +1,9 @@
 package com.capstone.tip.emassage.ui.comments;
 
+import android.view.View;
+
 import com.capstone.tip.emassage.model.data.Comment;
+import com.capstone.tip.emassage.model.data.User;
 import com.capstone.tip.emassage.ui.base.MoreListView;
 
 import java.util.List;
@@ -17,4 +20,12 @@ public interface CommentsView extends MoreListView {
     void showMessage(String message);
 
     void addNext(String nextUrl);
+
+    void onMoreOptions(View view, Comment comment);
+
+    void setUser(User user);
+
+    void startProgressLoading();
+
+    void stopProgressLoading();
 }

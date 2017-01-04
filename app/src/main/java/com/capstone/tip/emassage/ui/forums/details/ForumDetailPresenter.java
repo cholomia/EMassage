@@ -24,13 +24,13 @@ import retrofit2.Response;
  * Created by Cholo Mia on 12/27/2016.
  */
 
-public class ForumDetailPresenter extends MvpNullObjectBasePresenter<ForumDetailView> {
+class ForumDetailPresenter extends MvpNullObjectBasePresenter<ForumDetailView> {
     private static final String TAG = ForumDetailPresenter.class.getSimpleName();
     private Realm realm;
     private Forum forum;
     private User user;
 
-    public void onStart(int id) {
+    void onStart(int id) {
         realm = Realm.getDefaultInstance();
         user = realm.where(User.class).findFirst();
         forum = realm.where(Forum.class).equalTo(Constants.ID, id).findFirstAsync();
@@ -43,61 +43,76 @@ public class ForumDetailPresenter extends MvpNullObjectBasePresenter<ForumDetail
         });
     }
 
-    public void onStop() {
+    void onStop() {
         forum.removeChangeListeners();
         realm.close();
     }
 
-    public void sendComment(Forum forum, String comment) {
+    void sendComment(Forum forum, String comment) {
         if (comment.isEmpty()) {
             getView().showMessage("Blank comment not permitted!");
         } else {
-            getView().startLoading();
-            App.getInstance().getApiInterface().createComment(
-                    Credentials.basic(user.getUsername(), user.getPassword()), forum.getId(), comment)
-                    .enqueue(new Callback<Comment>() {
-                        @Override
-                        public void onResponse(Call<Comment> call, final Response<Comment> response) {
-                            getView().stopLoading();
-                            if (response.isSuccessful()) {
-                                final Realm realm = Realm.getDefaultInstance();
-                                realm.executeTransactionAsync(new Realm.Transaction() {
-                                    @Override
-                                    public void execute(Realm realm) {
-                                        realm.insertOrUpdate(response.body());
-                                    }
-                                }, new Realm.Transaction.OnSuccess() {
-                                    @Override
-                                    public void onSuccess() {
-                                        realm.close();
-                                    }
-                                }, new Realm.Transaction.OnError() {
-                                    @Override
-                                    public void onError(Throwable error) {
-                                        realm.close();
-                                        Log.e(TAG, "onError: Error Saving Comment", error);
-                                        getView().showMessage("Error Saving Comment");
-                                    }
-                                });
-                            } else {
-                                try {
-                                    getView().showMessage(response.errorBody().string());
-                                } catch (IOException e) {
-                                    Log.e(TAG, "onResponse: Error parsing error body", e);
-                                    getView().showMessage(response.message() != null ? response.message()
-                                            : "Unknown Error");
-                                }
-                            }
-                        }
+            saveComment(App.getInstance().getApiInterface().createComment(
+                    Credentials.basic(user.getUsername(), user.getPassword()), forum.getId(), comment));
+        }
+    }
 
+    void editComment(Comment comment) {
+        if (comment.getBody().isEmpty()) {
+            getView().showMessage("Blank comment not permitted!");
+        } else {
+            saveComment(App.getInstance().getApiInterface().editComment(comment.getId(),
+                    Credentials.basic(user.getUsername(), user.getPassword()),
+                    comment.getForum(), comment.getBody()));
+            getView().startLoading();
+        }
+    }
+
+    private void saveComment(Call<Comment> commentCall) {
+        getView().startLoading();
+        commentCall.enqueue(new Callback<Comment>() {
+            @Override
+            public void onResponse(Call<Comment> call, final Response<Comment> response) {
+                getView().stopLoading();
+                if (response.isSuccessful()) {
+                    final Realm realm = Realm.getDefaultInstance();
+                    realm.executeTransactionAsync(new Realm.Transaction() {
                         @Override
-                        public void onFailure(Call<Comment> call, Throwable t) {
-                            Log.e(TAG, "onFailure: Create New Comment API Failed", t);
-                            getView().stopLoading();
-                            getView().showMessage("Error Sending Comment");
+                        public void execute(Realm realm) {
+                            realm.insertOrUpdate(response.body());
+                        }
+                    }, new Realm.Transaction.OnSuccess() {
+                        @Override
+                        public void onSuccess() {
+                            realm.close();
+                            getView().onCommentSaved();
+                        }
+                    }, new Realm.Transaction.OnError() {
+                        @Override
+                        public void onError(Throwable error) {
+                            realm.close();
+                            Log.e(TAG, "onError: Error Saving Comment", error);
+                            getView().showMessage("Error Saving Comment");
                         }
                     });
-        }
+                } else {
+                    try {
+                        getView().showMessage(response.errorBody().string());
+                    } catch (IOException e) {
+                        Log.e(TAG, "onResponse: Error parsing error body", e);
+                        getView().showMessage(response.message() != null ? response.message()
+                                : "Unknown Error");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Comment> call, Throwable t) {
+                Log.e(TAG, "onFailure: Create Save Comment API Failed", t);
+                getView().stopLoading();
+                getView().showMessage("Error Sending Comment");
+            }
+        });
     }
 
     void deleteForum(final int forumId) {
@@ -151,7 +166,20 @@ public class ForumDetailPresenter extends MvpNullObjectBasePresenter<ForumDetail
 
     }
 
-    public boolean isForumMine() {
+    boolean isForumMine() {
         return user.getUsername().contentEquals(forum.getUsername());
+    }
+
+
+
+    void deleteCommentLocally(final Comment comment) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Comment mComment = realm.where(Comment.class).equalTo(Constants.ID, comment.getId()).findFirst();
+                mComment.deleteFromRealm();
+            }
+        });
+
     }
 }

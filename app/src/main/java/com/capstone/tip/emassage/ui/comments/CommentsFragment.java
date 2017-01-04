@@ -1,15 +1,19 @@
 package com.capstone.tip.emassage.ui.comments;
 
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -17,6 +21,8 @@ import android.widget.Toast;
 import com.capstone.tip.emassage.R;
 import com.capstone.tip.emassage.databinding.FragmentCommentsBinding;
 import com.capstone.tip.emassage.model.data.Comment;
+import com.capstone.tip.emassage.model.data.User;
+import com.capstone.tip.emassage.ui.forums.details.ForumDetailView;
 import com.capstone.tip.emassage.utils.StringUtils;
 import com.hannesdorfmann.mosby.mvp.viewstate.MvpViewStateFragment;
 import com.hannesdorfmann.mosby.mvp.viewstate.ViewState;
@@ -35,6 +41,8 @@ public class CommentsFragment extends MvpViewStateFragment<CommentsView, Comment
     private int forumId;
     private FragmentCommentsBinding binding;
     private CommentsListAdapter adapter;
+    private ProgressDialog progressDialog;
+    private ForumDetailView forumDetailView;
 
     public static CommentsFragment newInstance(int forumId) {
         CommentsFragment fragment = new CommentsFragment();
@@ -70,6 +78,18 @@ public class CommentsFragment extends MvpViewStateFragment<CommentsView, Comment
         });
         binding.txtCommentHeader.setText("Comments");
         return binding.getRoot();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof ForumDetailView) forumDetailView = (ForumDetailView) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        forumDetailView = null;
     }
 
     @Override
@@ -149,5 +169,46 @@ public class CommentsFragment extends MvpViewStateFragment<CommentsView, Comment
     @Override
     public void addNext(String nextUrl) {
         adapter.setNextUrl(nextUrl);
+    }
+
+    @Override
+    public void onMoreOptions(View view, final Comment comment) {
+        PopupMenu popupMenu = new PopupMenu(getContext(), view);
+        popupMenu.inflate(R.menu.menu_comment_options);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_edit:
+                        forumDetailView.onEditComment(comment);
+                        break;
+                    case R.id.action_delete:
+                        presenter.deleteComment(comment);
+                        break;
+                }
+                return false;
+            }
+        });
+        popupMenu.show();
+    }
+
+    @Override
+    public void setUser(User user) {
+        adapter.setUser(user);
+    }
+
+    @Override
+    public void startProgressLoading() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(getContext());
+            progressDialog.setMessage("Connecting...");
+            progressDialog.setCancelable(false);
+        }
+        progressDialog.show();
+    }
+
+    @Override
+    public void stopProgressLoading() {
+        if (progressDialog != null) progressDialog.dismiss();
     }
 }

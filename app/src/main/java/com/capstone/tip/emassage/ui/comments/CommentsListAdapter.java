@@ -9,6 +9,7 @@ import com.capstone.tip.emassage.R;
 import com.capstone.tip.emassage.databinding.ItemCommentBinding;
 import com.capstone.tip.emassage.databinding.ItemMoreBinding;
 import com.capstone.tip.emassage.model.data.Comment;
+import com.capstone.tip.emassage.model.data.User;
 import com.capstone.tip.emassage.ui.base.MoreViewHolder;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class CommentsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private List<Comment> commentList;
     private String nextUrl;
+    private User user;
     private CommentsView view;
     private boolean loading;
 
@@ -62,6 +64,8 @@ public class CommentsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             case VIEW_TYPE_DEFAULT:
                 CommentViewHolder commentViewHolder = (CommentViewHolder) holder;
                 commentViewHolder.itemCommentBinding.setComment(commentList.get(position));
+                commentViewHolder.itemCommentBinding.setView(view);
+                commentViewHolder.itemCommentBinding.setUser(user);
                 break;
             case VIEW_TYPE_MORE:
                 MoreViewHolder moreViewHolder = (MoreViewHolder) holder;
@@ -98,6 +102,11 @@ public class CommentsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public void setLoading(boolean loading) {
         this.loading = loading;
+        notifyDataSetChanged();
+    }
+
+    public void setUser(User user) {
+        this.user = user;
         notifyDataSetChanged();
     }
 

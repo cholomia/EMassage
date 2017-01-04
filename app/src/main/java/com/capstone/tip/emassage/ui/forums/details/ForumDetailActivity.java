@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +18,7 @@ import android.widget.Toast;
 import com.capstone.tip.emassage.R;
 import com.capstone.tip.emassage.app.Constants;
 import com.capstone.tip.emassage.databinding.ActivityForumDetailBinding;
+import com.capstone.tip.emassage.model.data.Comment;
 import com.capstone.tip.emassage.model.data.Forum;
 import com.capstone.tip.emassage.ui.comments.CommentsFragment;
 import com.capstone.tip.emassage.ui.forums.form.ForumFormActivity;
@@ -32,6 +32,7 @@ public class ForumDetailActivity extends MvpViewStateActivity<ForumDetailView, F
     private ProgressDialog progressDialog;
     private FragmentManager fragmentManager;
     private Forum forum;
+    private Comment comment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class ForumDetailActivity extends MvpViewStateActivity<ForumDetailView, F
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_forum_detail);
         binding.setView(getMvpView());
+        binding.setContentVisible(true);
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         int id = getIntent().getIntExtra(Constants.ID, -1);
@@ -128,7 +130,13 @@ public class ForumDetailActivity extends MvpViewStateActivity<ForumDetailView, F
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
-        presenter.sendComment(forum, binding.etComment.getText().toString());
+        if (comment != null) {
+            comment.setBody(binding.etComment.getText().toString());
+            presenter.editComment(comment);
+        } else {
+            presenter.sendComment(forum, binding.etComment.getText().toString());
+        }
+
     }
 
     @Override
@@ -156,4 +164,26 @@ public class ForumDetailActivity extends MvpViewStateActivity<ForumDetailView, F
         finish();
     }
 
+    @Override
+    public void onEditComment(Comment comment) {
+        this.comment = comment;
+        presenter.deleteCommentLocally(comment);
+        binding.etComment.setText(comment.getBody());
+    }
+
+    @Override
+    public void onCommentSaved() {
+        comment = null;
+        binding.etComment.setText("");
+    }
+
+    @Override
+    public void onUpVote(Forum forum) {
+
+    }
+
+    @Override
+    public void onDownVote(Forum forum) {
+
+    }
 }

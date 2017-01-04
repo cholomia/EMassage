@@ -1,6 +1,7 @@
 package com.capstone.tip.emassage.ui.forums;
 
 import com.capstone.tip.emassage.model.data.Forum;
+import com.capstone.tip.emassage.ui.base.VoteView;
 import com.capstone.tip.emassage.ui.base.MoreListView;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  * Created by Cholo Mia on 12/4/2016.
  */
 
-public interface ForumsView extends MoreListView {
+public interface ForumsView extends VoteView, MoreListView {
 
     void onAddClicked();
 
@@ -22,4 +23,5 @@ public interface ForumsView extends MoreListView {
     void onForumClicked(Forum forum);
 
     void setForums(List<Forum> forumList);
+
 }

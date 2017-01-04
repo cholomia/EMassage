@@ -64,6 +64,7 @@ public class ForumsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 ForumViewHolder forumViewHolder = (ForumViewHolder) holder;
                 forumViewHolder.itemForumBinding.setForum(forumList.get(position));
                 forumViewHolder.itemForumBinding.setView(forumsView);
+                forumViewHolder.itemForumBinding.setVoteView(forumsView);
                 break;
             case VIEW_TYPE_MORE:
                 MoreViewHolder moreViewHolder = (MoreViewHolder) holder;

@@ -70,7 +70,6 @@ public interface ApiInterface {
     Call<ResponseBody> deleteForum(@Path("id") int id,
                                    @Header("Authorization") String basicAuthentication);
 
-
     @GET(Endpoints.COMMENTS)
     Call<CommentListResponse> comments();
 
@@ -82,5 +81,16 @@ public interface ApiInterface {
     Call<Comment> createComment(@Header("Authorization") String basicAuthentication,
                                 @Field("forum") int forumId,
                                 @Field("body") String body);
+
+    @FormUrlEncoded
+    @PUT(Endpoints.COMMENT)
+    Call<Comment> editComment(@Path("id") int id,
+                              @Header("Authorization") String basicAuthentication,
+                              @Field("forum") int forumId,
+                              @Field("body") String body);
+
+    @DELETE(Endpoints.COMMENT)
+    Call<ResponseBody> deleteComment(@Path("id") int id,
+                                     @Header("Authorization") String basicAuthentication);
 
 }

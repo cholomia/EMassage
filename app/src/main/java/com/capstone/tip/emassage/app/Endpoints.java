@@ -18,4 +18,7 @@ public class Endpoints {
     public static final String FORUM = FORUMS + _ID;
     public static final String COMMENTS = "comments/";
     public static final String COMMENT = COMMENTS + _ID;
+
+    public static final String UPVOTE_FORUM = FORUMS + "upvote/";
+    public static final String DOWNVOTE_FORUM = FORUMS + "downvote/";
 }

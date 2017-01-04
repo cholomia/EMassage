@@ -12,6 +12,10 @@
         <variable
             name="view"
             type="com.capstone.tip.emassage.ui.forums.details.ForumDetailView" />
+
+        <variable
+            name="contentVisible"
+            type="boolean" />
     </data>
 
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -22,7 +26,13 @@
         android:orientation="vertical"
         tools:context="com.capstone.tip.emassage.ui.forums.details.ForumDetailActivity">
 
-        <android.support.v7.widget.CardView
+        <include
+            layout="@layout/item_forum"
+            app:contentVisible="@{contentVisible}"
+            app:forum="@{forum}"
+            app:voteView="@{view}" />
+
+        <!--<android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@android:color/white"
@@ -57,7 +67,7 @@
 
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </android.support.v7.widget.CardView>-->
 
         <FrameLayout
             android:id="@+id/container_comments"
@@ -71,7 +81,8 @@
             app:cardBackgroundColor="@android:color/white"
             app:cardCornerRadius="2dp"
             app:cardElevation="2dp"
-            app:cardUseCompatPadding="true">
+            app:cardUseCompatPadding="true"
+            app:contentPadding="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
