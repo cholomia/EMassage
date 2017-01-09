@@ -88,7 +88,8 @@
                     android:layout_weight="1"
                     android:gravity="end"
                     android:text="1000"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:visibility="gone" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -97,6 +98,7 @@
                     android:background="@drawable/bg_arrow_vote"
                     android:onClick="@{() -> voteView.onUpVote(forum)}"
                     android:padding="4dp"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/ic_arrow_up_bold" />
 
                 <ImageView
@@ -106,6 +108,7 @@
                     android:background="@drawable/bg_arrow_vote"
                     android:onClick="@{() -> voteView.onDownVote(forum)}"
                     android:padding="4dp"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/ic_arrow_down_bold" />
 
             </LinearLayout>
