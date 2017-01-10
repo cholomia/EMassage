@@ -3,9 +3,11 @@ package com.capstone.tip.emassage.app;
 import com.capstone.tip.emassage.model.data.Comment;
 import com.capstone.tip.emassage.model.data.Course;
 import com.capstone.tip.emassage.model.data.Forum;
+import com.capstone.tip.emassage.model.data.Grade;
 import com.capstone.tip.emassage.model.data.User;
 import com.capstone.tip.emassage.model.response.CommentListResponse;
 import com.capstone.tip.emassage.model.response.ForumListResponse;
+import com.capstone.tip.emassage.model.response.GradesListResponse;
 import com.capstone.tip.emassage.model.response.LoginResponse;
 
 import java.util.List;
@@ -92,5 +94,27 @@ public interface ApiInterface {
     @DELETE(Endpoints.COMMENT)
     Call<ResponseBody> deleteComment(@Path("id") int id,
                                      @Header("Authorization") String basicAuthentication);
+
+    @GET(Endpoints.GRADES)
+    Call<List<Grade>> getGrades(@Header("Authorization") String basicAuthentication);
+
+    @GET(Endpoints.GRADES)
+    Call<GradesListResponse> getGrades(@Header("Authorization") String basicAuthentication,
+                                       @QueryMap Map<String, String> params);
+
+    @FormUrlEncoded
+    @POST(Endpoints.GRADES)
+    Call<Grade> saveGrade(@Header("Authorization") String basicAuthentication,
+                          @Field("lesson") int lessonId,
+                          @Field("raw_score") int rawScore,
+                          @Field("item_count") int itemCount);
+
+    @FormUrlEncoded
+    @PUT(Endpoints.GRADES)
+    Call<Grade> saveGrade(@Path("id") int id,
+                          @Header("Authorization") String basicAuthentication,
+                          @Field("lesson") int lessonId,
+                          @Field("raw_score") int rawScore,
+                          @Field("item_count") int itemCount);
 
 }

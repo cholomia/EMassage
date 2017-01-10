@@ -15,7 +15,9 @@ import android.widget.Toast;
 import com.capstone.tip.emassage.R;
 import com.capstone.tip.emassage.app.Constants;
 import com.capstone.tip.emassage.databinding.ActivityQuizBinding;
+import com.capstone.tip.emassage.databinding.DialogQuizSummaryBinding;
 import com.capstone.tip.emassage.model.data.Choice;
+import com.capstone.tip.emassage.model.data.Grade;
 import com.capstone.tip.emassage.model.data.Lesson;
 import com.capstone.tip.emassage.model.data.Question;
 import com.capstone.tip.emassage.model.pojo.UserAnswer;
@@ -23,11 +25,13 @@ import com.hannesdorfmann.mosby.mvp.viewstate.MvpViewStateActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.ViewState;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
 
-public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter> implements QuizView {
+public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
+        implements QuizView {
 
     private ActivityQuizBinding binding;
     private ChoiceListAdapter adapter;
@@ -35,8 +39,8 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter> 
     private Realm realm;
     private Lesson lesson;
 
-    private List<UserAnswer> userAnswerList;
     private List<Question> questionList;
+    private List<UserAnswer> userAnswerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +50,12 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter> 
 
         int id = getIntent().getIntExtra(Constants.ID, -1);
         if (id == -1) {
-            Toast.makeText(getApplicationContext(), "No Intent Extra Found!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "No Intent Extra Found!", Toast.LENGTH_SHORT)
+                    .show();
             finish();
         }
+
+        lesson = realm.where(Lesson.class).equalTo(Constants.ID, id).findFirst();
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_quiz);
         binding.setView(getMvpView());
@@ -58,10 +65,9 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter> 
         adapter = new ChoiceListAdapter();
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
-        binding.recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        binding.recyclerView.addItemDecoration(new DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL));
         binding.recyclerView.setAdapter(adapter);
-
-        lesson = realm.where(Lesson.class).equalTo(Constants.ID, id).findFirst();
 
         if (getSupportActionBar() != null) {
             String title = "Quiz: " + lesson.getTitle();
@@ -81,6 +87,22 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter> 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Exit?")
+                .setMessage("Are you sure you want to exit?")
+                .setCancelable(false)
+                .setPositiveButton("EXIT", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        QuizActivity.this.finish();
+                    }
+                })
+                .setNegativeButton("CANCEL", null)
+                .show();
     }
 
     @Override
@@ -109,6 +131,42 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter> 
 
     @Override
     public void onNewViewStateInstance() {
+        // alert user that quiz already taken
+        if (lesson.getQuestions().size() <= 0) {
+            new AlertDialog.Builder(this)
+                    .setTitle("No Questions")
+                    .setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            QuizActivity.this.finish();
+                        }
+                    })
+                    .setCancelable(false)
+                    .show();
+        }
+
+        Grade grade = realm.where(Grade.class).equalTo("lesson", lesson.getId()).findFirst();
+        if (grade != null) {
+            // already taken the quiz
+            new AlertDialog.Builder(this)
+                    .setTitle("Retake Quiz?")
+                    .setMessage("If Submitted, it will overwrite previous grade!")
+                    .setCancelable(false)
+                    .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            QuizActivity.this.finish();
+                        }
+                    })
+                    .show();
+        }
+
         ((QuizViewState) getViewState()).setCounter(0);
 
         userAnswerList = new ArrayList<>();
@@ -146,8 +204,7 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter> 
                     .setNegativeButton("CANCEL", null)
                     .show();
         } else {
-            userAnswerList.remove(((QuizViewState) getViewState()).getCounter());
-            ((QuizViewState) getViewState()).setUserAnswerList(userAnswerList);
+            setUserAnswer(false);
 
             ((QuizViewState) getViewState()).decrementCounter();
             onSetQuestion(questionList.get(((QuizViewState) getViewState()).getCounter()));
@@ -156,21 +213,11 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter> 
 
     @Override
     public void onNext() {
-        Question question = questionList.get(((QuizViewState) getViewState()).getCounter());
-        UserAnswer userAnswer = new UserAnswer();
-        userAnswer.setQuestionId(question.getId());
-        userAnswer.setCorrectAnswer(question.getAnswer());
-
-        Choice choice = adapter.getSelectedChoice();
-        if (choice != null) {
-            userAnswer.setUserAnswer(choice.getBody());
-        } else {
-            Snackbar.make(binding.getRoot(), "Select Answer", Snackbar.LENGTH_SHORT).show();
+        String message = setUserAnswer(true);
+        if (message != null) {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
             return;
         }
-
-        userAnswerList.add(userAnswer);
-        ((QuizViewState) getViewState()).setUserAnswerList(userAnswerList);
 
         if (((QuizViewState) getViewState()).getCounter() < questionList.size() - 1) {
             ((QuizViewState) getViewState()).incrementCounter();
@@ -195,7 +242,6 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter> 
                         }
                     })
                     .show();
-
         }
     }
 
@@ -215,8 +261,37 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter> 
      * @param question question to display
      */
     private void onSetQuestion(Question question) {
-        binding.txtQuestion.setText((((QuizViewState) getViewState()).getCounter() + 1) + ".) " + question.getBody());
+        int counter = ((QuizViewState) getViewState()).getCounter();
+        binding.txtQuestion.setText((counter + 1) + ".) " + question.getBody());
+
+        UserAnswer userAnswer = null;
+        if (userAnswerList.size() > counter)
+            userAnswer = userAnswerList.get(counter);
+
+
         adapter.setChoiceList(question.getChoices());
+        if (userAnswer != null) adapter.setAnswer(userAnswer.getUserAnswer());
+    }
+
+    private String setUserAnswer(boolean hasReturn) {
+        Question question = questionList.get(((QuizViewState) getViewState()).getCounter());
+        UserAnswer userAnswer = new UserAnswer();
+        userAnswer.setQuestionId(question.getId());
+        userAnswer.setCorrectAnswer(question.getAnswer());
+
+        Choice choice = adapter.getSelectedChoice();
+        if (choice == null && hasReturn) {
+            return "Select Answer";
+        }
+        userAnswer.setUserAnswer(choice != null ? choice.getBody() : "");
+        userAnswer.setChoiceType(1);
+
+        if (userAnswerList.size() > ((QuizViewState) getViewState()).getCounter())
+            userAnswerList.set(((QuizViewState) getViewState()).getCounter(), userAnswer);
+        else
+            userAnswerList.add(userAnswer);
+        ((QuizViewState) getViewState()).setUserAnswerList(userAnswerList);
+        return null;
     }
 
     /**
@@ -224,7 +299,8 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter> 
      */
     private void showSummary() {
         Toast.makeText(this, "Show Summary", Toast.LENGTH_SHORT).show();
-        /*DialogQuizSummaryBinding dialogBinding = DataBindingUtil.inflate(
+
+        DialogQuizSummaryBinding dialogBinding = DataBindingUtil.inflate(
                 getLayoutInflater(),
                 R.layout.dialog_quiz_summary,
                 null,
@@ -246,16 +322,16 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter> 
         summaryListAdapter.setUserAnswerList(userAnswerList);
         dialogBinding.recyclerView.setAdapter(summaryListAdapter);
 
-
         final int finalScore = score;
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                QuizGrade quizGrade = new QuizGrade();
-                quizGrade.setId(topic.getId());
+                Grade quizGrade = new Grade();
+                quizGrade.setId(lesson.getId());
+                quizGrade.setLesson(lesson.getId());
                 quizGrade.setRawScore(finalScore);
                 quizGrade.setItemCount(items);
-                quizGrade.setDateUpdated(new Date().getTime());
+                quizGrade.setSaved(false);
                 realm.copyToRealmOrUpdate(quizGrade);
             }
         });
@@ -270,7 +346,7 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter> 
                         QuizActivity.this.finish();
                     }
                 })
-                .show();*/
+                .show();
     }
 
 }

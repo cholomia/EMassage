@@ -21,4 +21,7 @@ public class Endpoints {
 
     public static final String UPVOTE_FORUM = FORUMS + "upvote/";
     public static final String DOWNVOTE_FORUM = FORUMS + "downvote/";
+
+    public static final String GRADES = "grades/";
+    public static final String GRADE = GRADES + _ID;
 }

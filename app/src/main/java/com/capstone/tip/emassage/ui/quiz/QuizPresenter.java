@@ -1,5 +1,7 @@
 package com.capstone.tip.emassage.ui.quiz;
 
+import android.util.Log;
+
 import com.capstone.tip.emassage.model.data.Choice;
 import com.capstone.tip.emassage.model.data.Question;
 import com.hannesdorfmann.mosby.mvp.MvpNullObjectBasePresenter;
@@ -26,5 +28,18 @@ public class QuizPresenter extends MvpNullObjectBasePresenter<QuizView> {
         }
         Collections.shuffle(questionList);
         return questionList;
+    }
+
+    /**
+     * @param score raw score
+     * @param items total number of items
+     * @return return average using score/items * 50 + 50
+     */
+    double getAverage(int score, int items) {
+        double ave = (((double) score / (double) items) * 50.0) + 50.0;
+        double a = score / items;
+        double b = a * 50;
+        double c = b + 50;
+        return ave;
     }
 }

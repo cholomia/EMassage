@@ -32,6 +32,7 @@ public class CoursesPresenter extends MvpNullObjectBasePresenter<CoursesView> {
                     realm.executeTransactionAsync(new Realm.Transaction() {
                         @Override
                         public void execute(Realm realm) {
+                            realm.delete(Course.class);
                             realm.copyToRealmOrUpdate(response.body());
                         }
                     }, new Realm.Transaction.OnSuccess() {

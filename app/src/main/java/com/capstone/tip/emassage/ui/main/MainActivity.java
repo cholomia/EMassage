@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import com.capstone.tip.emassage.R;
 import com.capstone.tip.emassage.ui.courses.CoursesActivity;
 import com.capstone.tip.emassage.ui.forums.ForumsActivity;
+import com.capstone.tip.emassage.ui.grades.GradesActivity;
 import com.capstone.tip.emassage.ui.login.LoginActivity;
 
 import io.realm.Realm;
@@ -96,8 +97,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(this, CoursesActivity.class));
         } else if (id == R.id.nav_forums) {
             startActivity(new Intent(this, ForumsActivity.class));
-        } else if (id == R.id.nav_slideshow) {
-
+        } else if (id == R.id.nav_grades) {
+            startActivity(new Intent(this, GradesActivity.class));
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {

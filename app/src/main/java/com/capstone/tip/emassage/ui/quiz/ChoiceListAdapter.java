@@ -2,6 +2,7 @@ package com.capstone.tip.emassage.ui.quiz;
 
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,7 @@ public class ChoiceListAdapter extends RecyclerView.Adapter<ChoiceListAdapter.Vi
     public void setChoiceList(List<Choice> choiceList) {
         this.choices.clear();
         this.choices.addAll(choiceList);
+        notifyDataSetChanged();
         resetSelected(-1);
     }
 
@@ -86,12 +88,13 @@ public class ChoiceListAdapter extends RecyclerView.Adapter<ChoiceListAdapter.Vi
      * @return selected choice
      */
     public Choice getSelectedChoice() {
-        for (int i = 0; i < selected.length; i++) {
-            if (selected[i]) {
-                return choices.get(i);
-            }
-        }
+        for (int i = 0; i < selected.length; i++) if (selected[i]) return choices.get(i);
         return null;
+    }
+
+    public void setAnswer(String userAnswer) {
+        for (int i = 0; i < choices.size(); i++)
+            if (choices.get(i).getBody().contentEquals(userAnswer)) resetSelected(i);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -100,17 +103,10 @@ public class ChoiceListAdapter extends RecyclerView.Adapter<ChoiceListAdapter.Vi
         public ViewHolder(ItemChoiceBinding itemChoiceBinding) {
             super(itemChoiceBinding.getRoot());
             this.itemChoiceBinding = itemChoiceBinding;
-            // setup listener as issues if onBindViewHolder
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    resetSelected(getAdapterPosition());
-                }
-            });
             itemChoiceBinding.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    resetSelected(getAdapterPosition());
+                    resetSelected(b ? getAdapterPosition() : -1);
                 }
             });
         }

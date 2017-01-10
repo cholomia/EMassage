@@ -40,7 +40,8 @@
         <activity android:name=".ui.pdf.PdfActivity" />
         <activity android:name=".ui.quiz.QuizActivity" />
         <activity android:name=".ui.forums.form.ForumFormActivity" />
-        <activity android:name=".ui.forums.details.ForumDetailActivity"></activity>
+        <activity android:name=".ui.forums.details.ForumDetailActivity" />
+        <activity android:name=".ui.grades.GradesActivity"></activity>
     </application>
 
 </manifest>
