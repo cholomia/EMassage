@@ -99,8 +99,8 @@ public interface ApiInterface {
     Call<List<Grade>> getGrades(@Header("Authorization") String basicAuthentication);
 
     @GET(Endpoints.GRADES)
-    Call<GradesListResponse> getGrades(@Header("Authorization") String basicAuthentication,
-                                       @QueryMap Map<String, String> params);
+    Call<List<Grade>> getGrades(@Header("Authorization") String basicAuthentication,
+                                @QueryMap Map<String, String> params);
 
     @FormUrlEncoded
     @POST(Endpoints.GRADES)
@@ -110,7 +110,7 @@ public interface ApiInterface {
                           @Field("item_count") int itemCount);
 
     @FormUrlEncoded
-    @PUT(Endpoints.GRADES)
+    @PUT(Endpoints.GRADE)
     Call<Grade> saveGrade(@Path("id") int id,
                           @Header("Authorization") String basicAuthentication,
                           @Field("lesson") int lessonId,

@@ -1,5 +1,7 @@
 package com.capstone.tip.emassage.model.data;
 
+import com.google.gson.annotations.SerializedName;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -13,9 +15,12 @@ public class Grade extends RealmObject {
     @PrimaryKey
     private int id;
     private int lesson;
+    @SerializedName("raw_score")
     private int rawScore;
+    @SerializedName("item_count")
     private int itemCount;
     private boolean saved;
+    private boolean local;
 
     public int getId() {
         return id;
@@ -55,6 +60,14 @@ public class Grade extends RealmObject {
 
     public void setSaved(boolean saved) {
         this.saved = saved;
+    }
+
+    public boolean isLocal() {
+        return local;
+    }
+
+    public void setLocal(boolean local) {
+        this.local = local;
     }
 
     /**

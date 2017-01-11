@@ -14,7 +14,9 @@ import com.hannesdorfmann.mosby.mvp.MvpNullObjectBasePresenter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
@@ -93,9 +95,13 @@ public class GradesPresenter extends MvpNullObjectBasePresenter<GradesView> {
                         displayGradeLesson.setSequence(x);
                         displayGradeLesson.setView(DisplayGrade.VIEW_LESSON);
                         displayGradeLesson.setTitle(lesson.getTitle());
-                        if (gradeRealmResults.isLoaded() && gradeRealmResults.isValid())
-                            displayGradeLesson.setGrade(gradeRealmResults.where()
-                                    .equalTo("lesson", lesson.getId()).findFirst());
+                        if (gradeRealmResults.isLoaded() && gradeRealmResults.isValid()) {
+                            Grade grade = gradeRealmResults.where()
+                                    .equalTo("lesson", lesson.getId()).findFirst();
+                            if (grade != null) {
+                                displayGradeLesson.setGrade(realm.copyFromRealm(grade));
+                            }
+                        }
                         displayGrades.add(displayGradeLesson);
                     }
                 }
@@ -106,8 +112,10 @@ public class GradesPresenter extends MvpNullObjectBasePresenter<GradesView> {
 
     public void refreshGrades() {
         getView().startLoading();
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("username", user.getUsername());
         App.getInstance().getApiInterface().getGrades(
-                Credentials.basic(user.getUsername(), user.getPassword()))
+                Credentials.basic(user.getUsername(), user.getPassword()), parameters)
                 .enqueue(new Callback<List<Grade>>() {
                     @Override
                     public void onResponse(Call<List<Grade>> call, final Response<List<Grade>> response) {
@@ -118,7 +126,11 @@ public class GradesPresenter extends MvpNullObjectBasePresenter<GradesView> {
                                 @Override
                                 public void execute(Realm realm) {
                                     realm.delete(Grade.class);
-                                    realm.insertOrUpdate(response.body());
+                                    for (Grade grade : response.body()) {
+                                        grade.setLocal(false);
+                                        grade.setSaved(true);
+                                        realm.insertOrUpdate(grade);
+                                    }
                                 }
                             }, new Realm.Transaction.OnSuccess() {
                                 @Override
@@ -154,17 +166,18 @@ public class GradesPresenter extends MvpNullObjectBasePresenter<GradesView> {
     }
 
     public void saveGrade(final Grade grade) {
-        Call<Grade> gradeCall = grade.isSaved() ?
-                App.getInstance().getApiInterface().saveGrade(
+        Call<Grade> gradeCall = !grade.isSaved() && !grade.isLocal() ?
+                App.getInstance().getApiInterface().saveGrade(grade.getId(),
                         Credentials.basic(user.getUsername(), user.getPassword()),
                         grade.getLesson(), grade.getRawScore(), grade.getItemCount())
-                : App.getInstance().getApiInterface().saveGrade(grade.getId(),
+                : App.getInstance().getApiInterface().saveGrade(
                 Credentials.basic(user.getUsername(), user.getPassword()),
                 grade.getLesson(), grade.getRawScore(), grade.getItemCount());
         getView().startLoading();
         gradeCall.enqueue(new Callback<Grade>() {
             @Override
             public void onResponse(Call<Grade> call, final Response<Grade> response) {
+                getView().stopLoading();
                 if (response.isSuccessful()) {
                     final Realm realm = Realm.getDefaultInstance();
                     realm.executeTransactionAsync(new Realm.Transaction() {
@@ -172,7 +185,9 @@ public class GradesPresenter extends MvpNullObjectBasePresenter<GradesView> {
                         public void execute(Realm realm) {
                             Grade mGrade = realm.where(Grade.class).equalTo("id", grade.getId()).findFirst();
                             mGrade.deleteFromRealm();
-                            realm.copyToRealmOrUpdate(response.body());
+                            Grade grade1 = realm.copyToRealmOrUpdate(response.body());
+                            grade1.setSaved(true);
+                            grade1.setLocal(false);
                         }
                     }, new Realm.Transaction.OnSuccess() {
                         @Override

@@ -75,6 +75,7 @@ public class GradesListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 LessonViewHolder lessonViewHolder = (LessonViewHolder) holder;
                 lessonViewHolder.itemDisplayGradeLessonBinding
                         .setDisplayGrade(displayGrades.get(position));
+                lessonViewHolder.itemDisplayGradeLessonBinding.setView(gradesView);
                 break;
         }
     }

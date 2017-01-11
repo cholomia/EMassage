@@ -21,7 +21,9 @@ import com.capstone.tip.emassage.model.pojo.DisplayGrade;
 import com.hannesdorfmann.mosby.mvp.viewstate.MvpViewStateActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.ViewState;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GradesActivity extends MvpViewStateActivity<GradesView, GradesPresenter>
         implements GradesView {

@@ -298,7 +298,6 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
      * Show Dialog Summary
      */
     private void showSummary() {
-        Toast.makeText(this, "Show Summary", Toast.LENGTH_SHORT).show();
 
         DialogQuizSummaryBinding dialogBinding = DataBindingUtil.inflate(
                 getLayoutInflater(),
@@ -326,9 +325,13 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                Grade quizGrade = new Grade();
-                quizGrade.setId(lesson.getId());
-                quizGrade.setLesson(lesson.getId());
+                Grade quizGrade = realm.where(Grade.class).equalTo("lesson", lesson.getId()).findFirst();
+                if (quizGrade == null) {
+                    quizGrade = new Grade();
+                    quizGrade.setId(lesson.getId());
+                    quizGrade.setLesson(lesson.getId());
+                    quizGrade.setLocal(true);
+                }
                 quizGrade.setRawScore(finalScore);
                 quizGrade.setItemCount(items);
                 quizGrade.setSaved(false);
