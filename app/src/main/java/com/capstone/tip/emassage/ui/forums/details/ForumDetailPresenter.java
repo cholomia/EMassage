@@ -64,16 +64,16 @@ class ForumDetailPresenter extends MvpNullObjectBasePresenter<ForumDetailView> {
             saveComment(App.getInstance().getApiInterface().editComment(comment.getId(),
                     Credentials.basic(user.getUsername(), user.getPassword()),
                     comment.getForum(), comment.getBody()));
-            getView().startLoading();
+            getView().startProgressLoading();
         }
     }
 
     private void saveComment(Call<Comment> commentCall) {
-        getView().startLoading();
+        getView().startProgressLoading();
         commentCall.enqueue(new Callback<Comment>() {
             @Override
             public void onResponse(Call<Comment> call, final Response<Comment> response) {
-                getView().stopLoading();
+                getView().stopProgressDialog();
                 if (response.isSuccessful()) {
                     final Realm realm = Realm.getDefaultInstance();
                     realm.executeTransactionAsync(new Realm.Transaction() {
@@ -109,20 +109,20 @@ class ForumDetailPresenter extends MvpNullObjectBasePresenter<ForumDetailView> {
             @Override
             public void onFailure(Call<Comment> call, Throwable t) {
                 Log.e(TAG, "onFailure: Create Save Comment API Failed", t);
-                getView().stopLoading();
+                getView().stopProgressDialog();
                 getView().showMessage("Error Sending Comment");
             }
         });
     }
 
     void deleteForum(final int forumId) {
-        getView().startLoading();
+        getView().startProgressLoading();
         App.getInstance().getApiInterface().deleteForum(forumId,
                 Credentials.basic(user.getUsername(), user.getPassword()))
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        getView().stopLoading();
+                        getView().stopProgressDialog();
                         if (response.isSuccessful()) {
                             final Realm realm = Realm.getDefaultInstance();
                             realm.executeTransactionAsync(new Realm.Transaction() {
@@ -159,7 +159,7 @@ class ForumDetailPresenter extends MvpNullObjectBasePresenter<ForumDetailView> {
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
                         Log.e(TAG, "onFailure: Delete Forum API Failed", t);
-                        getView().stopLoading();
+                        getView().stopProgressDialog();
                         getView().showMessage("Error Deleting Forum");
                     }
                 });

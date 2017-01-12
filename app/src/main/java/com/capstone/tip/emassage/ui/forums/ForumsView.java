@@ -14,14 +14,12 @@ public interface ForumsView extends VoteView, MoreListView {
 
     void onAddClicked();
 
-    void stopLoading();
-
-    void showMessage(String message);
-
     void addNext(String nextUrl);
 
     void onForumClicked(Forum forum);
 
     void setForums(List<Forum> forumList);
+
+    void stopLoading();
 
 }

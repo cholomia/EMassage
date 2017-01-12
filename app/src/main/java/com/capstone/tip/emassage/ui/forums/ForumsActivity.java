@@ -1,5 +1,6 @@
 package com.capstone.tip.emassage.ui.forums;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -26,8 +28,10 @@ import java.util.Map;
 public class ForumsActivity extends MvpViewStateActivity<ForumsView, ForumsPresenter>
         implements ForumsView, SwipeRefreshLayout.OnRefreshListener {
 
+    private static final String TAG = ForumsActivity.class.getSimpleName();
     private ActivityForumsBinding binding;
     private ForumsListAdapter forumsListAdapter;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +101,7 @@ public class ForumsActivity extends MvpViewStateActivity<ForumsView, ForumsPrese
     protected void onDestroy() {
         presenter.onStop();
         super.onDestroy();
+        Log.d(TAG, "onDestroy: forum Destroyed");
     }
 
     @Override
@@ -134,12 +139,27 @@ public class ForumsActivity extends MvpViewStateActivity<ForumsView, ForumsPrese
 
     @Override
     public void onUpVote(Forum forum) {
-        Toast.makeText(this, "upvote", Toast.LENGTH_SHORT).show();
+        presenter.vote(forum.getId(), forum.getMyVote() == 1 ? 0 : 1);
     }
 
     @Override
     public void onDownVote(Forum forum) {
-        Toast.makeText(this, "downvote", Toast.LENGTH_SHORT).show();
+        presenter.vote(forum.getId(), forum.getMyVote() == -1 ? 0 : -1);
+    }
+
+    @Override
+    public void startProgressLoading() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Loading...");
+            progressDialog.setCancelable(false);
+        }
+        progressDialog.show();
+    }
+
+    @Override
+    public void stopProgressDialog() {
+        if (progressDialog != null) progressDialog.dismiss();
     }
 
     @Override

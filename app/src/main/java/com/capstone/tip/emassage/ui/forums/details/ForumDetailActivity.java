@@ -145,7 +145,7 @@ public class ForumDetailActivity extends MvpViewStateActivity<ForumDetailView, F
     }
 
     @Override
-    public void startLoading() {
+    public void startProgressLoading() {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(this);
             progressDialog.setMessage("Connecting...");
@@ -155,7 +155,7 @@ public class ForumDetailActivity extends MvpViewStateActivity<ForumDetailView, F
     }
 
     @Override
-    public void stopLoading() {
+    public void stopProgressDialog() {
         if (progressDialog != null) progressDialog.dismiss();
     }
 

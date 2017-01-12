@@ -23,6 +23,10 @@ public class Forum extends RealmObject {
     private Date updated;
     @SerializedName("comment_count")
     private int commentCounts;
+    @SerializedName("vote_count")
+    private int voteCounts;
+    @SerializedName("my_vote")
+    private int myVote;
 
     public int getId() {
         return id;
@@ -78,5 +82,21 @@ public class Forum extends RealmObject {
 
     public void setCommentCounts(int commentCounts) {
         this.commentCounts = commentCounts;
+    }
+
+    public int getVoteCounts() {
+        return voteCounts;
+    }
+
+    public void setVoteCounts(int voteCounts) {
+        this.voteCounts = voteCounts;
+    }
+
+    public int getMyVote() {
+        return myVote;
+    }
+
+    public void setMyVote(int myVote) {
+        this.myVote = myVote;
     }
 }

@@ -5,6 +5,7 @@ import com.capstone.tip.emassage.model.data.Course;
 import com.capstone.tip.emassage.model.data.Forum;
 import com.capstone.tip.emassage.model.data.Grade;
 import com.capstone.tip.emassage.model.data.User;
+import com.capstone.tip.emassage.model.pojo.Vote;
 import com.capstone.tip.emassage.model.response.CommentListResponse;
 import com.capstone.tip.emassage.model.response.ForumListResponse;
 import com.capstone.tip.emassage.model.response.GradesListResponse;
@@ -116,5 +117,12 @@ public interface ApiInterface {
                           @Field("lesson") int lessonId,
                           @Field("raw_score") int rawScore,
                           @Field("item_count") int itemCount);
+
+    @FormUrlEncoded
+    @PUT(Endpoints.VOTE)
+    Call<Vote> vote(@Path("id") String id,
+                    @Header("Authorization") String basicAuthentication,
+                    @Field("forum") int forumId,
+                    @Field("vote") int vote);
 
 }

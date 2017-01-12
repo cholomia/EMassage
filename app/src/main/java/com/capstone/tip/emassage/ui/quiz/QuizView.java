@@ -2,6 +2,7 @@ package com.capstone.tip.emassage.ui.quiz;
 
 import com.capstone.tip.emassage.model.data.Question;
 import com.capstone.tip.emassage.model.pojo.UserAnswer;
+import com.capstone.tip.emassage.ui.base.GradesSaveView;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  * @since 05/12/2016
  */
 
-public interface QuizView extends MvpView {
+public interface QuizView extends GradesSaveView {
 
     void onPrevious();
 

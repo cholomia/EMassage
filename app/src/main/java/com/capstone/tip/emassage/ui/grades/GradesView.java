@@ -2,7 +2,7 @@ package com.capstone.tip.emassage.ui.grades;
 
 import com.capstone.tip.emassage.model.data.Grade;
 import com.capstone.tip.emassage.model.pojo.DisplayGrade;
-import com.hannesdorfmann.mosby.mvp.MvpView;
+import com.capstone.tip.emassage.ui.base.GradesSaveView;
 
 import java.util.List;
 
@@ -11,14 +11,8 @@ import java.util.List;
  * @since 10/01/2017
  */
 
-public interface GradesView extends MvpView {
+public interface GradesView extends GradesSaveView {
     void setDisplayGradeList(List<DisplayGrade> displayGrades);
-
-    void startLoading();
-
-    void stopLoading();
-
-    void showAlert(String message);
 
     void onGradeSave(Grade grade);
 

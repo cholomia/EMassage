@@ -1,5 +1,6 @@
 package com.capstone.tip.emassage.ui.quiz;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.capstone.tip.emassage.model.data.Choice;
 import com.capstone.tip.emassage.model.data.Grade;
 import com.capstone.tip.emassage.model.data.Lesson;
 import com.capstone.tip.emassage.model.data.Question;
+import com.capstone.tip.emassage.model.data.User;
 import com.capstone.tip.emassage.model.pojo.UserAnswer;
 import com.hannesdorfmann.mosby.mvp.viewstate.MvpViewStateActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.ViewState;
@@ -29,6 +31,7 @@ import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
+import okhttp3.Credentials;
 
 public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
         implements QuizView {
@@ -38,16 +41,18 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
 
     private Realm realm;
     private Lesson lesson;
+    private User user;
 
     private List<Question> questionList;
     private List<UserAnswer> userAnswerList;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         realm = Realm.getDefaultInstance();
-
+        user = realm.where(User.class).findFirst();
         int id = getIntent().getIntExtra(Constants.ID, -1);
         if (id == -1) {
             Toast.makeText(getApplicationContext(), "No Intent Extra Found!", Toast.LENGTH_SHORT)
@@ -322,22 +327,21 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
         dialogBinding.recyclerView.setAdapter(summaryListAdapter);
 
         final int finalScore = score;
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                Grade quizGrade = realm.where(Grade.class).equalTo("lesson", lesson.getId()).findFirst();
-                if (quizGrade == null) {
-                    quizGrade = new Grade();
-                    quizGrade.setId(lesson.getId());
-                    quizGrade.setLesson(lesson.getId());
-                    quizGrade.setLocal(true);
-                }
-                quizGrade.setRawScore(finalScore);
-                quizGrade.setItemCount(items);
-                quizGrade.setSaved(false);
-                realm.copyToRealmOrUpdate(quizGrade);
-            }
-        });
+        realm.beginTransaction();
+        Grade grade = realm.where(Grade.class).equalTo("lesson", lesson.getId()).findFirst();
+        if (grade == null) {
+            grade = new Grade();
+            grade.setId(lesson.getId());
+            grade.setLesson(lesson.getId());
+            grade.setLocal(true);
+        }
+        grade.setRawScore(finalScore);
+        grade.setItemCount(items);
+        grade.setSaved(false);
+        realm.copyToRealmOrUpdate(grade);
+        realm.commitTransaction();
+
+        presenter.saveGrade(realm.copyFromRealm(grade), Credentials.basic(user.getUsername(), user.getPassword()));
 
         new AlertDialog.Builder(this)
                 .setTitle("Summary")
@@ -350,6 +354,27 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
                     }
                 })
                 .show();
+
     }
 
+    @Override
+    public void startLoading() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Loading...");
+            progressDialog.setCancelable(false);
+        }
+        progressDialog.show();
+    }
+
+    @Override
+    public void stopLoading() {
+        if (progressDialog != null) progressDialog.dismiss();
+
+    }
+
+    @Override
+    public void showAlert(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 }

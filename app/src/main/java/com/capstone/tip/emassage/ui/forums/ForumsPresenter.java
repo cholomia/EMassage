@@ -4,8 +4,9 @@ import android.util.Log;
 
 import com.capstone.tip.emassage.app.App;
 import com.capstone.tip.emassage.model.data.Forum;
+import com.capstone.tip.emassage.model.data.User;
 import com.capstone.tip.emassage.model.response.ForumListResponse;
-import com.hannesdorfmann.mosby.mvp.MvpNullObjectBasePresenter;
+import com.capstone.tip.emassage.ui.base.VotePresenter;
 
 import java.io.IOException;
 import java.util.Map;
@@ -22,14 +23,16 @@ import retrofit2.Response;
  * Created by Cholo Mia on 12/4/2016.
  */
 
-public class ForumsPresenter extends MvpNullObjectBasePresenter<ForumsView> {
+public class ForumsPresenter extends VotePresenter<ForumsView> {
 
     private static final String TAG = ForumsPresenter.class.getSimpleName();
     private Realm realm;
     private RealmResults<Forum> forumRealmResults;
+    private User user;
 
     public void onStart() {
         realm = Realm.getDefaultInstance();
+        user = realm.where(User.class).findFirst();
         forumRealmResults = realm.where(Forum.class).findAllSortedAsync("created", Sort.DESCENDING);
         forumRealmResults.addChangeListener(new RealmChangeListener<RealmResults<Forum>>() {
             @Override
@@ -57,6 +60,7 @@ public class ForumsPresenter extends MvpNullObjectBasePresenter<ForumsView> {
         forumListResponseCall.enqueue(new Callback<ForumListResponse>() {
             @Override
             public void onResponse(Call<ForumListResponse> call, final Response<ForumListResponse> response) {
+                Log.d(TAG, "onResponse: ");
                 getView().stopLoading();
                 if (response.isSuccessful()) {
                     final Realm realm = Realm.getDefaultInstance();
@@ -102,6 +106,10 @@ public class ForumsPresenter extends MvpNullObjectBasePresenter<ForumsView> {
                 getView().showMessage("Error Retrieving Forum List");
             }
         });
+    }
+
+    public void vote(int forumId, int vote) {
+        super.vote(realm.copyFromRealm(user), forumId, vote);
     }
 
 }

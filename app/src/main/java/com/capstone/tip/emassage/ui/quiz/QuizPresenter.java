@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.capstone.tip.emassage.model.data.Choice;
 import com.capstone.tip.emassage.model.data.Question;
+import com.capstone.tip.emassage.ui.base.GradesSavePresenter;
+import com.capstone.tip.emassage.ui.base.GradesSaveView;
 import com.hannesdorfmann.mosby.mvp.MvpNullObjectBasePresenter;
 
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ import io.realm.RealmList;
  * @since 05/12/2016
  */
 
-public class QuizPresenter extends MvpNullObjectBasePresenter<QuizView> {
+public class QuizPresenter extends GradesSavePresenter<QuizView> {
     public List<Question> getShuffledQuestionList(List<Question> questions) {
         List<Question> questionList = new ArrayList<>();
         for (Question question : questions) {

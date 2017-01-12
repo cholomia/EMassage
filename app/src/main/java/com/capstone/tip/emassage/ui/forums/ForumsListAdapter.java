@@ -1,6 +1,7 @@
 package com.capstone.tip.emassage.ui.forums;
 
 import android.databinding.DataBindingUtil;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,6 +66,16 @@ public class ForumsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 forumViewHolder.itemForumBinding.setForum(forumList.get(position));
                 forumViewHolder.itemForumBinding.setView(forumsView);
                 forumViewHolder.itemForumBinding.setVoteView(forumsView);
+                forumViewHolder.itemForumBinding.imgUpVote.setImageDrawable(
+                        ContextCompat.getDrawable(holder.itemView.getContext(),
+                                forumList.get(position).getMyVote() == 1 ?
+                                        R.drawable.ic_arrow_up_bold_active :
+                                        R.drawable.ic_arrow_up_bold));
+                forumViewHolder.itemForumBinding.imgDownVote.setImageDrawable(
+                        ContextCompat.getDrawable(holder.itemView.getContext(),
+                                forumList.get(position).getMyVote() == -11 ?
+                                        R.drawable.ic_arrow_down_bold_active :
+                                        R.drawable.ic_arrow_down_bold));
                 break;
             case VIEW_TYPE_MORE:
                 MoreViewHolder moreViewHolder = (MoreViewHolder) holder;

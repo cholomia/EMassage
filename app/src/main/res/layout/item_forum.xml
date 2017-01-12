@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -24,7 +25,7 @@
             type="com.capstone.tip.emassage.ui.base.VoteView" />
     </data>
 
-    <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="?attr/selectableItemBackground"
@@ -87,28 +88,30 @@
                     android:layout_marginStart="4dp"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="1000"
+                    android:text='@{forum.voteCounts + ""}'
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <ImageView
+                    android:id="@+id/img_up_vote"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:background="@drawable/bg_arrow_vote"
                     android:onClick="@{() -> voteView.onUpVote(forum)}"
                     android:padding="4dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:srcCompat="@drawable/ic_arrow_up_bold" />
 
                 <ImageView
+                    android:id="@+id/img_down_vote"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     android:background="@drawable/bg_arrow_vote"
                     android:onClick="@{() -> voteView.onDownVote(forum)}"
                     android:padding="4dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:srcCompat="@drawable/ic_arrow_down_bold" />
 
             </LinearLayout>

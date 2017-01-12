@@ -16,10 +16,6 @@ public interface ForumDetailView extends VoteView {
 
     void showMessage(String message);
 
-    void startLoading();
-
-    void stopLoading();
-
     void deleteForumSuccessful();
 
     void onEditComment(Comment comment);

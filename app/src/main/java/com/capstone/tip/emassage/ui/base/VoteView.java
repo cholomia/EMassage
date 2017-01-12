@@ -14,4 +14,9 @@ public interface VoteView extends MvpView {
 
     void onDownVote(Forum forum);
 
+    void startProgressLoading();
+
+    void stopProgressDialog();
+
+    void showMessage(String message);
 }

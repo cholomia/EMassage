@@ -11,11 +11,15 @@ public class Endpoints {
     //public static final String BASE_URL = "http://127.0.0.1:8000";
 
     public static final String API_URL = BASE_URL + "/emassage/api/";
+
     public static final String LOGIN = "user/login/";
     public static final String REGISTER = "user/register/";
+
     public static final String COURSES = "courses/";
+
     public static final String FORUMS = "forums/";
     public static final String FORUM = FORUMS + _ID;
+
     public static final String COMMENTS = "comments/";
     public static final String COMMENT = COMMENTS + _ID;
 
@@ -24,4 +28,7 @@ public class Endpoints {
 
     public static final String GRADES = "grades/";
     public static final String GRADE = GRADES + _ID;
+
+    public static final String VOTES = "votes/";
+    public static final String VOTE = VOTES + _ID;
 }
