@@ -29,6 +29,10 @@ public class Endpoints {
     public static final String GRADES = "grades/";
     public static final String GRADE = GRADES + _ID;
 
-    public static final String VOTES = "votes/";
-    public static final String VOTE = VOTES + _ID;
+    public static final String FORUM_VOTES = "forum-vote/";
+    public static final String FORUM_VOTE = FORUM_VOTES + _ID;
+
+    public static final String VIDEOS = "video-simulations/";
+
+    public static final String YOUTUBE_THUMBNAIL = "http://img.youtube.com/vi/{code}/hqdefault.jpg";
 }

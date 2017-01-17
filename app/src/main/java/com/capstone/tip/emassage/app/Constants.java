@@ -18,4 +18,6 @@ public class Constants {
     public static final String COUNTER = "counter";
     public static final String QUESTIONS = "questions";
     public static final String ANSWERS = "answers";
+    public static final String EMAIL = "email";
+    public static final String DEVELOPER_KEY = "AIzaSyDBqwQICxkTVtkYlBI_2ZtSx1xc56EW_cM";
 }

@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -120,6 +121,16 @@ public class ForumDetailActivity extends MvpViewStateActivity<ForumDetailView, F
     public void setForum(Forum forum) {
         this.forum = forum;
         binding.setForum(forum);
+        binding.itemForum.imgUpVote.setImageDrawable(
+                ContextCompat.getDrawable(this,
+                        forum.getMyVote() == 1 ?
+                                R.drawable.ic_arrow_up_bold_active :
+                                R.drawable.ic_arrow_up_bold));
+        binding.itemForum.imgDownVote.setImageDrawable(
+                ContextCompat.getDrawable(this,
+                        forum.getMyVote() == -1 ?
+                                R.drawable.ic_arrow_down_bold_active :
+                                R.drawable.ic_arrow_down_bold));
     }
 
     @Override
@@ -179,11 +190,11 @@ public class ForumDetailActivity extends MvpViewStateActivity<ForumDetailView, F
 
     @Override
     public void onUpVote(Forum forum) {
-
+        presenter.vote(forum.getId(), forum.getMyVote() == 1 ? 0 : 1);
     }
 
     @Override
     public void onDownVote(Forum forum) {
-
+        presenter.vote(forum.getId(), forum.getMyVote() == -1 ? 0 : -1);
     }
 }

@@ -27,6 +27,7 @@ public class Forum extends RealmObject {
     private int voteCounts;
     @SerializedName("my_vote")
     private int myVote;
+    private double points;
 
     public int getId() {
         return id;
@@ -98,5 +99,13 @@ public class Forum extends RealmObject {
 
     public void setMyVote(int myVote) {
         this.myVote = myVote;
+    }
+
+    public double getPoints() {
+        return points;
+    }
+
+    public void setPoints(double points) {
+        this.points = points;
     }
 }

@@ -7,6 +7,7 @@ import com.capstone.tip.emassage.app.Constants;
 import com.capstone.tip.emassage.model.data.Comment;
 import com.capstone.tip.emassage.model.data.Forum;
 import com.capstone.tip.emassage.model.data.User;
+import com.capstone.tip.emassage.ui.base.VotePresenter;
 import com.hannesdorfmann.mosby.mvp.MvpNullObjectBasePresenter;
 
 import java.io.IOException;
@@ -24,7 +25,7 @@ import retrofit2.Response;
  * Created by Cholo Mia on 12/27/2016.
  */
 
-class ForumDetailPresenter extends MvpNullObjectBasePresenter<ForumDetailView> {
+class ForumDetailPresenter extends VotePresenter<ForumDetailView> {
     private static final String TAG = ForumDetailPresenter.class.getSimpleName();
     private Realm realm;
     private Forum forum;
@@ -171,7 +172,6 @@ class ForumDetailPresenter extends MvpNullObjectBasePresenter<ForumDetailView> {
     }
 
 
-
     void deleteCommentLocally(final Comment comment) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -181,5 +181,9 @@ class ForumDetailPresenter extends MvpNullObjectBasePresenter<ForumDetailView> {
             }
         });
 
+    }
+
+    void vote(int forumId, int vote) {
+        super.vote(realm.copyFromRealm(user), forumId, vote);
     }
 }

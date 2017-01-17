@@ -21,6 +21,7 @@ import com.capstone.tip.emassage.ui.courses.CoursesActivity;
 import com.capstone.tip.emassage.ui.forums.ForumsActivity;
 import com.capstone.tip.emassage.ui.grades.GradesActivity;
 import com.capstone.tip.emassage.ui.login.LoginActivity;
+import com.capstone.tip.emassage.ui.video_simulation.VideoSimulationActivity;
 
 import io.realm.Realm;
 
@@ -99,8 +100,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(this, ForumsActivity.class));
         } else if (id == R.id.nav_grades) {
             startActivity(new Intent(this, GradesActivity.class));
-        } else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.nav_video_simulations) {
+            startActivity(new Intent(this, VideoSimulationActivity.class));
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_log_out) {

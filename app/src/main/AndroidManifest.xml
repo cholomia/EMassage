@@ -41,7 +41,8 @@
         <activity android:name=".ui.quiz.QuizActivity" />
         <activity android:name=".ui.forums.form.ForumFormActivity" />
         <activity android:name=".ui.forums.details.ForumDetailActivity" />
-        <activity android:name=".ui.grades.GradesActivity"></activity>
+        <activity android:name=".ui.grades.GradesActivity" />
+        <activity android:name=".ui.video_simulation.VideoSimulationActivity"></activity>
     </application>
 
 </manifest>

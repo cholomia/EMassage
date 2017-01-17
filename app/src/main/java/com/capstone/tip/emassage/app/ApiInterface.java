@@ -5,10 +5,10 @@ import com.capstone.tip.emassage.model.data.Course;
 import com.capstone.tip.emassage.model.data.Forum;
 import com.capstone.tip.emassage.model.data.Grade;
 import com.capstone.tip.emassage.model.data.User;
+import com.capstone.tip.emassage.model.data.Video;
 import com.capstone.tip.emassage.model.pojo.Vote;
 import com.capstone.tip.emassage.model.response.CommentListResponse;
 import com.capstone.tip.emassage.model.response.ForumListResponse;
-import com.capstone.tip.emassage.model.response.GradesListResponse;
 import com.capstone.tip.emassage.model.response.LoginResponse;
 
 import java.util.List;
@@ -23,11 +23,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.QueryMap;
-import retrofit2.http.Streaming;
-import retrofit2.http.Url;
 
 /**
  * Created by Cholo Mia on 12/4/2016.
@@ -43,6 +40,7 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST(Endpoints.REGISTER)
     Call<User> register(@Field(Constants.USERNAME) String username,
+                        @Field(Constants.EMAIL) String email,
                         @Field(Constants.FIRST_NAME) String firstName,
                         @Field(Constants.LAST_NAME) String lastName,
                         @Field(Constants.PASSWORD) String password);
@@ -51,10 +49,11 @@ public interface ApiInterface {
     Call<List<Course>> courses();
 
     @GET(Endpoints.FORUMS)
-    Call<ForumListResponse> forums();
+    Call<ForumListResponse> forums(@Header("Authorization") String basicAuthentication);
 
     @GET(Endpoints.FORUMS)
-    Call<ForumListResponse> forums(@QueryMap Map<String, String> params);
+    Call<ForumListResponse> forums(@Header("Authorization") String basicAuthentication,
+                                   @QueryMap Map<String, String> params);
 
     @FormUrlEncoded
     @POST(Endpoints.FORUMS)
@@ -119,10 +118,13 @@ public interface ApiInterface {
                           @Field("item_count") int itemCount);
 
     @FormUrlEncoded
-    @PUT(Endpoints.VOTE)
-    Call<Vote> vote(@Path("id") String id,
-                    @Header("Authorization") String basicAuthentication,
-                    @Field("forum") int forumId,
-                    @Field("vote") int vote);
+    @PUT(Endpoints.FORUM_VOTE)
+    Call<Vote> forumVote(@Path("id") String id,
+                         @Header("Authorization") String basicAuthentication,
+                         @Field("forum") int forumId,
+                         @Field("vote") int vote);
+
+    @GET(Endpoints.VIDEOS)
+    Call<List<Video>> videos();
 
 }

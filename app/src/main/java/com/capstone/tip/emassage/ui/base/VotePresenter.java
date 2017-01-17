@@ -27,7 +27,7 @@ public class VotePresenter<V extends VoteView> extends MvpNullObjectBasePresente
 
     public void vote(User user, final int forumId, int vote) {
         getView().startProgressLoading();
-        App.getInstance().getApiInterface().vote(user.getUsername() + "::" + forumId,
+        App.getInstance().getApiInterface().forumVote("f-" + forumId + "-" + user.getUsername(),
                 Credentials.basic(user.getUsername(), user.getPassword()), forumId, vote)
                 .enqueue(new Callback<Vote>() {
                     @Override
@@ -38,9 +38,7 @@ public class VotePresenter<V extends VoteView> extends MvpNullObjectBasePresente
                             realm.executeTransactionAsync(new Realm.Transaction() {
                                 @Override
                                 public void execute(Realm realm) {
-                                    Forum forum = realm.where(Forum.class)
-                                            .equalTo("id", response.body().getForumId()).findFirst();
-                                    if (forum != null) forum.setMyVote(response.body().getVote());
+                                    realm.copyToRealmOrUpdate(response.body().getForum());
                                 }
                             }, new Realm.Transaction.OnSuccess() {
                                 @Override

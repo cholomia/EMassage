@@ -15,6 +15,7 @@ import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 import io.realm.Sort;
+import okhttp3.Credentials;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,7 +34,7 @@ public class ForumsPresenter extends VotePresenter<ForumsView> {
     public void onStart() {
         realm = Realm.getDefaultInstance();
         user = realm.where(User.class).findFirst();
-        forumRealmResults = realm.where(Forum.class).findAllSortedAsync("created", Sort.DESCENDING);
+        forumRealmResults = realm.where(Forum.class).findAllSortedAsync("points", Sort.DESCENDING);
         forumRealmResults.addChangeListener(new RealmChangeListener<RealmResults<Forum>>() {
             @Override
             public void onChange(RealmResults<Forum> element) {
@@ -49,11 +50,11 @@ public class ForumsPresenter extends VotePresenter<ForumsView> {
     }
 
     public void loadForumList() {
-        forums(App.getInstance().getApiInterface().forums());
+        forums(App.getInstance().getApiInterface().forums(Credentials.basic(user.getUsername(), user.getPassword())));
     }
 
     public void loadForumList(Map<String, String> params) {
-        forums(App.getInstance().getApiInterface().forums(params));
+        forums(App.getInstance().getApiInterface().forums(Credentials.basic(user.getUsername(), user.getPassword()), params));
     }
 
     private void forums(Call<ForumListResponse> forumListResponseCall) {

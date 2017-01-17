@@ -19,16 +19,16 @@ import retrofit2.Response;
 public class RegisterPresenter extends MvpNullObjectBasePresenter<RegisterView> {
     private static final String TAG = RegisterPresenter.class.getSimpleName();
 
-    public void register(String username, String firstName, String lastName, String password,
+    public void register(String username, String email, String firstName, String lastName, String password,
                          String repeatPassword) {
-        if (username.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || password.isEmpty() ||
+        if (username.isEmpty() || email.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || password.isEmpty() ||
                 repeatPassword.isEmpty()) {
             getView().showAlert("Fill-up all fields");
         } else if (!password.contentEquals(repeatPassword)) {
             getView().showAlert("Password does not match");
         } else {
             getView().startLoading();
-            App.getInstance().getApiInterface().register(username, firstName, lastName, password)
+            App.getInstance().getApiInterface().register(username, email, firstName, lastName, password)
                     .enqueue(new Callback<User>() {
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {

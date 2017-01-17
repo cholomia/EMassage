@@ -32,6 +32,7 @@ public class RegisterActivity extends MvpViewStateActivity<RegisterView, Registe
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         binding.etUsername.addTextChangedListener(this);
+        binding.etEmail.addTextChangedListener(this);
         binding.etFirstName.addTextChangedListener(this);
         binding.etLastName.addTextChangedListener(this);
         binding.etPassword.addTextChangedListener(this);
@@ -85,6 +86,7 @@ public class RegisterActivity extends MvpViewStateActivity<RegisterView, Registe
     public void onRegisterButtonClicked() {
         presenter.register(
                 binding.etUsername.getText().toString(),
+                binding.etEmail.getText().toString(),
                 binding.etFirstName.getText().toString(),
                 binding.etLastName.getText().toString(),
                 binding.etPassword.getText().toString(),
@@ -125,7 +127,7 @@ public class RegisterActivity extends MvpViewStateActivity<RegisterView, Registe
     public void onRegisterSuccessful() {
         new AlertDialog.Builder(this)
                 .setTitle("Register Successful")
-                .setMessage("Go Back to Login Activity")
+                .setMessage("Link for account validation hasve been send to your email address")
                 .setCancelable(false)
                 .setPositiveButton("Close", new DialogInterface.OnClickListener() {
                     @Override

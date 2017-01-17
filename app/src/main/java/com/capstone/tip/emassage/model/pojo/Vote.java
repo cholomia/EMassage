@@ -1,5 +1,6 @@
 package com.capstone.tip.emassage.model.pojo;
 
+import com.capstone.tip.emassage.model.data.Forum;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -9,20 +10,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class Vote {
 
-    @SerializedName("vote_id")
-    private String voteId;
     @SerializedName("forum")
     private int forumId;
     @SerializedName("vote")
     private int vote;
-
-    public String getVoteId() {
-        return voteId;
-    }
-
-    public void setVoteId(String voteId) {
-        this.voteId = voteId;
-    }
+    @SerializedName("forum_votes")
+    private Forum forum;
 
     public int getForumId() {
         return forumId;
@@ -38,5 +31,13 @@ public class Vote {
 
     public void setVote(int vote) {
         this.vote = vote;
+    }
+
+    public Forum getForum() {
+        return forum;
+    }
+
+    public void setForum(Forum forum) {
+        this.forum = forum;
     }
 }

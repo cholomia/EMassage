@@ -73,7 +73,7 @@ public class ForumsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                                         R.drawable.ic_arrow_up_bold));
                 forumViewHolder.itemForumBinding.imgDownVote.setImageDrawable(
                         ContextCompat.getDrawable(holder.itemView.getContext(),
-                                forumList.get(position).getMyVote() == -11 ?
+                                forumList.get(position).getMyVote() == -1 ?
                                         R.drawable.ic_arrow_down_bold_active :
                                         R.drawable.ic_arrow_down_bold));
                 break;
