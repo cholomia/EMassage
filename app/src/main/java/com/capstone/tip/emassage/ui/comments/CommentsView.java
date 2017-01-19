@@ -28,4 +28,8 @@ public interface CommentsView extends MoreListView {
     void startProgressLoading();
 
     void stopProgressLoading();
+
+    void onUpVote(Comment comment);
+
+    void onDownVote(Comment comment);
 }

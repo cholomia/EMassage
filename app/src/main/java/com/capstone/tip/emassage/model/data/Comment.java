@@ -1,5 +1,7 @@
 package com.capstone.tip.emassage.model.data;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 import io.realm.RealmObject;
@@ -19,6 +21,11 @@ public class Comment extends RealmObject {
     private String body;
     private Date created;
     private Date updated;
+    @SerializedName("vote_count")
+    private int voteCount;
+    @SerializedName("my_vote")
+    private int myVote;
+    private double points;
 
     public int getId() {
         return id;
@@ -66,5 +73,29 @@ public class Comment extends RealmObject {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    public int getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(int voteCount) {
+        this.voteCount = voteCount;
+    }
+
+    public int getMyVote() {
+        return myVote;
+    }
+
+    public void setMyVote(int myVote) {
+        this.myVote = myVote;
+    }
+
+    public double getPoints() {
+        return points;
+    }
+
+    public void setPoints(double points) {
+        this.points = points;
     }
 }

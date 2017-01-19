@@ -1,6 +1,7 @@
 package com.capstone.tip.emassage.ui.comments;
 
 import android.databinding.DataBindingUtil;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -66,6 +67,18 @@ public class CommentsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 commentViewHolder.itemCommentBinding.setComment(commentList.get(position));
                 commentViewHolder.itemCommentBinding.setView(view);
                 commentViewHolder.itemCommentBinding.setUser(user);
+
+                commentViewHolder.itemCommentBinding.imgUpVote.setImageDrawable(
+                        ContextCompat.getDrawable(holder.itemView.getContext(),
+                                commentList.get(position).getMyVote() == 1 ?
+                                        R.drawable.ic_arrow_up_bold_active :
+                                        R.drawable.ic_arrow_up_bold));
+                commentViewHolder.itemCommentBinding.imgDownVote.setImageDrawable(
+                        ContextCompat.getDrawable(holder.itemView.getContext(),
+                                commentList.get(position).getMyVote() == -1 ?
+                                        R.drawable.ic_arrow_down_bold_active :
+                                        R.drawable.ic_arrow_down_bold));
+
                 break;
             case VIEW_TYPE_MORE:
                 MoreViewHolder moreViewHolder = (MoreViewHolder) holder;

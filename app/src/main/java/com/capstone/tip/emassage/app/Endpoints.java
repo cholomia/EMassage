@@ -32,7 +32,11 @@ public class Endpoints {
     public static final String FORUM_VOTES = "forum-vote/";
     public static final String FORUM_VOTE = FORUM_VOTES + _ID;
 
+    public static final String COMMENT_VOTES = "comment-vote";
+    public static final String COMMENT_VOTE = COMMENT_VOTES + _ID;
+
     public static final String VIDEOS = "video-simulations/";
 
     public static final String YOUTUBE_THUMBNAIL = "http://img.youtube.com/vi/{code}/hqdefault.jpg";
+
 }

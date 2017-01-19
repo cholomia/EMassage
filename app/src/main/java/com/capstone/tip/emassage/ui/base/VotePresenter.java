@@ -3,9 +3,8 @@ package com.capstone.tip.emassage.ui.base;
 import android.util.Log;
 
 import com.capstone.tip.emassage.app.App;
-import com.capstone.tip.emassage.model.data.Forum;
 import com.capstone.tip.emassage.model.data.User;
-import com.capstone.tip.emassage.model.pojo.Vote;
+import com.capstone.tip.emassage.model.response.ForumVote;
 import com.hannesdorfmann.mosby.mvp.MvpNullObjectBasePresenter;
 
 import java.io.IOException;
@@ -29,9 +28,9 @@ public class VotePresenter<V extends VoteView> extends MvpNullObjectBasePresente
         getView().startProgressLoading();
         App.getInstance().getApiInterface().forumVote("f-" + forumId + "-" + user.getUsername(),
                 Credentials.basic(user.getUsername(), user.getPassword()), forumId, vote)
-                .enqueue(new Callback<Vote>() {
+                .enqueue(new Callback<ForumVote>() {
                     @Override
-                    public void onResponse(Call<Vote> call, final Response<Vote> response) {
+                    public void onResponse(Call<ForumVote> call, final Response<ForumVote> response) {
                         getView().stopProgressDialog();
                         if (response.isSuccessful()) {
                             final Realm realm = Realm.getDefaultInstance();
@@ -49,8 +48,8 @@ public class VotePresenter<V extends VoteView> extends MvpNullObjectBasePresente
                                 @Override
                                 public void onError(Throwable error) {
                                     realm.close();
-                                    Log.e(TAG, "onError: Error Saving Vote", error);
-                                    getView().showMessage("Error Saving Vote");
+                                    Log.e(TAG, "onError: Error Saving ForumVote", error);
+                                    getView().showMessage("Error Saving ForumVote");
                                 }
                             });
                         } else {
@@ -65,7 +64,7 @@ public class VotePresenter<V extends VoteView> extends MvpNullObjectBasePresente
                     }
 
                     @Override
-                    public void onFailure(Call<Vote> call, Throwable t) {
+                    public void onFailure(Call<ForumVote> call, Throwable t) {
                         Log.e(TAG, "onFailure: API call", t);
                         getView().stopProgressDialog();
                         getView().showMessage("Error Calling API");

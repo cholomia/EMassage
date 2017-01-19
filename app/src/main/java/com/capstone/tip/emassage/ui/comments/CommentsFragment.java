@@ -211,4 +211,14 @@ public class CommentsFragment extends MvpViewStateFragment<CommentsView, Comment
     public void stopProgressLoading() {
         if (progressDialog != null) progressDialog.dismiss();
     }
+
+    @Override
+    public void onUpVote(Comment comment) {
+        presenter.vote(comment.getId(), comment.getMyVote() == 1 ? 0 : 1);
+    }
+
+    @Override
+    public void onDownVote(Comment comment) {
+        presenter.vote(comment.getId(), comment.getMyVote() == -1 ? 0 : -1);
+    }
 }

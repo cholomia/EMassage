@@ -1,4 +1,4 @@
-package com.capstone.tip.emassage.model.pojo;
+package com.capstone.tip.emassage.model.response;
 
 import com.capstone.tip.emassage.model.data.Forum;
 import com.google.gson.annotations.SerializedName;
@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
  * @since 12/01/2017
  */
 
-public class Vote {
+public class ForumVote {
 
     @SerializedName("forum")
     private int forumId;

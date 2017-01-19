@@ -8,6 +8,8 @@ import com.capstone.tip.emassage.model.data.Comment;
 import com.capstone.tip.emassage.model.data.Forum;
 import com.capstone.tip.emassage.model.data.User;
 import com.capstone.tip.emassage.model.response.CommentListResponse;
+import com.capstone.tip.emassage.model.response.CommentVote;
+import com.capstone.tip.emassage.model.response.ForumVote;
 import com.hannesdorfmann.mosby.mvp.MvpNullObjectBasePresenter;
 
 import java.io.IOException;
@@ -38,7 +40,7 @@ public class CommentsPresenter extends MvpNullObjectBasePresenter<CommentsView> 
         Log.d(TAG, "onStart: Forum ID: " + forumId);
         user = realm.where(User.class).findFirst();
         getView().setUser(user);
-        commentRealmResults = realm.where(Comment.class).equalTo("forum", forumId).findAllSortedAsync("created", Sort.DESCENDING);
+        commentRealmResults = realm.where(Comment.class).equalTo("forum", forumId).findAllSortedAsync("points", Sort.DESCENDING);
         commentRealmResults.addChangeListener(new RealmChangeListener<RealmResults<Comment>>() {
             @Override
             public void onChange(RealmResults<Comment> element) {
@@ -160,6 +162,54 @@ public class CommentsPresenter extends MvpNullObjectBasePresenter<CommentsView> 
                         Log.e(TAG, "onFailure: Comment Delete Failed", t);
                         getView().stopProgressLoading();
                         getView().showMessage("Error Deleting Comment");
+                    }
+                });
+    }
+
+    public void vote(int commentId, int vote) {
+        getView().startProgressLoading();
+        App.getInstance().getApiInterface().commentVote("c-" + commentId + "-" + user.getUsername(),
+                Credentials.basic(user.getUsername(), user.getPassword()), commentId, vote)
+                .enqueue(new Callback<CommentVote>() {
+                    @Override
+                    public void onResponse(Call<CommentVote> call, final Response<CommentVote> response) {
+                        getView().stopProgressLoading();
+                        if (response.isSuccessful()) {
+                            final Realm realm = Realm.getDefaultInstance();
+                            realm.executeTransactionAsync(new Realm.Transaction() {
+                                @Override
+                                public void execute(Realm realm) {
+                                    realm.copyToRealmOrUpdate(response.body().getComment());
+                                }
+                            }, new Realm.Transaction.OnSuccess() {
+                                @Override
+                                public void onSuccess() {
+                                    realm.close();
+                                }
+                            }, new Realm.Transaction.OnError() {
+                                @Override
+                                public void onError(Throwable error) {
+                                    realm.close();
+                                    Log.e(TAG, "onError: Error Vote Comment", error);
+                                    getView().showMessage("Error Vote Comment");
+                                }
+                            });
+                        } else {
+                            try {
+                                getView().showMessage(response.errorBody().string());
+                            } catch (IOException e) {
+                                Log.e(TAG, "onResponse: Error parsing error body", e);
+                                getView().showMessage(response.message() != null ? response.message()
+                                        : "Unknown Error");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommentVote> call, Throwable t) {
+                        Log.e(TAG, "onFailure: Comment Vote Failed", t);
+                        getView().stopProgressLoading();
+                        getView().showMessage("Error Vote Comment");
                     }
                 });
     }

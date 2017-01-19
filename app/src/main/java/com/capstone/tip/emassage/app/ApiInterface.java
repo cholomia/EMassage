@@ -6,7 +6,8 @@ import com.capstone.tip.emassage.model.data.Forum;
 import com.capstone.tip.emassage.model.data.Grade;
 import com.capstone.tip.emassage.model.data.User;
 import com.capstone.tip.emassage.model.data.Video;
-import com.capstone.tip.emassage.model.pojo.Vote;
+import com.capstone.tip.emassage.model.response.CommentVote;
+import com.capstone.tip.emassage.model.response.ForumVote;
 import com.capstone.tip.emassage.model.response.CommentListResponse;
 import com.capstone.tip.emassage.model.response.ForumListResponse;
 import com.capstone.tip.emassage.model.response.LoginResponse;
@@ -119,10 +120,17 @@ public interface ApiInterface {
 
     @FormUrlEncoded
     @PUT(Endpoints.FORUM_VOTE)
-    Call<Vote> forumVote(@Path("id") String id,
-                         @Header("Authorization") String basicAuthentication,
-                         @Field("forum") int forumId,
-                         @Field("vote") int vote);
+    Call<ForumVote> forumVote(@Path("id") String id,
+                              @Header("Authorization") String basicAuthentication,
+                              @Field("forum") int forumId,
+                              @Field("vote") int vote);
+
+    @FormUrlEncoded
+    @PUT(Endpoints.COMMENT_VOTE)
+    Call<CommentVote> commentVote(@Path("id") String id,
+                                  @Header("Authorization") String basicAuthentication,
+                                  @Field("comment") int commentId,
+                                  @Field("vote") int vote);
 
     @GET(Endpoints.VIDEOS)
     Call<List<Video>> videos();
