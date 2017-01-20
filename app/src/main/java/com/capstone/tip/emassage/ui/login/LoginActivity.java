@@ -13,6 +13,7 @@ import com.capstone.tip.emassage.R;
 import com.capstone.tip.emassage.databinding.ActivityLoginBinding;
 import com.capstone.tip.emassage.model.data.User;
 import com.capstone.tip.emassage.ui.main.MainActivity;
+import com.capstone.tip.emassage.ui.main.MenuActivity;
 import com.capstone.tip.emassage.ui.register.RegisterActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.MvpViewStateActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.ViewState;
@@ -116,7 +117,7 @@ public class LoginActivity extends MvpViewStateActivity<LoginView, LoginPresente
 
     @Override
     public void onLoginSuccess() {
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, MenuActivity.class));
         finish();
     }
 

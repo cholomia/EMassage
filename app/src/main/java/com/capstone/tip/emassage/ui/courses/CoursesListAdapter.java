@@ -40,11 +40,11 @@ public class CoursesListAdapter extends RecyclerView.Adapter<CoursesListAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.itemCourseBinding.setCourse(courses.get(position));
         holder.itemCourseBinding.setView(coursesView);
-        Glide.with(holder.itemView.getContext())
+        /*Glide.with(holder.itemView.getContext())
                 .load(Endpoints.BASE_URL + courses.get(position).getCoverImage())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
-                .into(holder.itemCourseBinding.imageCourse);
+                .into(holder.itemCourseBinding.imageCourse);*/
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,7 +49,7 @@ public class CoursesActivity extends MvpViewStateActivity<CoursesView, CoursesPr
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerView.setAdapter(adapter);
-
+        binding.recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         courseRealmResults = realm.where(Course.class).findAllSortedAsync(Constants.COL_SEQ);
         courseRealmResults.addChangeListener(new RealmChangeListener<RealmResults<Course>>() {
             @Override

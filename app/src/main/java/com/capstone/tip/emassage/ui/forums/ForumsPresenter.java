@@ -9,8 +9,11 @@ import com.capstone.tip.emassage.model.response.ForumListResponse;
 import com.capstone.tip.emassage.ui.base.VotePresenter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
@@ -24,22 +27,23 @@ import retrofit2.Response;
  * Created by Cholo Mia on 12/4/2016.
  */
 
-public class ForumsPresenter extends VotePresenter<ForumsView> {
+class ForumsPresenter extends VotePresenter<ForumsView> {
 
     private static final String TAG = ForumsPresenter.class.getSimpleName();
     private Realm realm;
     private RealmResults<Forum> forumRealmResults;
     private User user;
+    private String query;
 
     public void onStart() {
+        query = "";
         realm = Realm.getDefaultInstance();
         user = realm.where(User.class).findFirst();
         forumRealmResults = realm.where(Forum.class).findAllSortedAsync("points", Sort.DESCENDING);
         forumRealmResults.addChangeListener(new RealmChangeListener<RealmResults<Forum>>() {
             @Override
             public void onChange(RealmResults<Forum> element) {
-                if (forumRealmResults.isLoaded() && forumRealmResults.isValid())
-                    getView().setForums(realm.copyFromRealm(forumRealmResults));
+                filterList();
             }
         });
     }
@@ -49,11 +53,11 @@ public class ForumsPresenter extends VotePresenter<ForumsView> {
         realm.close();
     }
 
-    public void loadForumList() {
+    void loadForumList() {
         forums(App.getInstance().getApiInterface().forums(Credentials.basic(user.getUsername(), user.getPassword())));
     }
 
-    public void loadForumList(Map<String, String> params) {
+    void loadForumList(Map<String, String> params) {
         forums(App.getInstance().getApiInterface().forums(Credentials.basic(user.getUsername(), user.getPassword()), params));
     }
 
@@ -111,6 +115,28 @@ public class ForumsPresenter extends VotePresenter<ForumsView> {
 
     public void vote(int forumId, int vote) {
         super.vote(realm.copyFromRealm(user), forumId, vote);
+    }
+
+    void setQuery(String query) {
+        this.query = query;
+        filterList();
+    }
+
+    private void filterList() {
+        if (forumRealmResults.isLoaded() && forumRealmResults.isValid()) {
+            List<Forum> forumList;
+            if (query != null && !query.isEmpty()) {
+                forumList = realm.copyFromRealm(forumRealmResults.where()
+                        .contains("title", query, Case.INSENSITIVE)
+                        .or()
+                        .contains("content", query, Case.INSENSITIVE)
+                        .findAll());
+            } else {
+                forumList = realm.copyFromRealm(forumRealmResults);
+            }
+            getView().setForums(forumList);
+        }
+
     }
 
 }
