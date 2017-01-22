@@ -152,25 +152,41 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
 
         Grade grade = realm.where(Grade.class).equalTo("lesson", lesson.getId()).findFirst();
         if (grade != null) {
-            // already taken the quiz
-            new AlertDialog.Builder(this)
-                    .setTitle("Retake Quiz?")
-                    .setMessage("If Submitted, it will overwrite previous grade!")
-                    .setCancelable(false)
-                    .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    })
-                    .setNegativeButton("Back", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            QuizActivity.this.finish();
-                        }
-                    })
-                    .show();
+            if (grade.getTryCount() >= 3) {
+                // quiz can be taken 3 times maximum
+                new AlertDialog.Builder(this)
+                        .setTitle("Unable to take Quiz")
+                        .setMessage("Quiz can only be taken 3 times!")
+                        .setCancelable(false)
+                        .setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                QuizActivity.this.finish();
+                            }
+                        })
+                        .show();
+            } else {
+                // already taken the quiz
+                new AlertDialog.Builder(this)
+                        .setTitle("Retake Quiz?")
+                        .setMessage("If Submitted, it will overwrite previous grade!")
+                        .setCancelable(false)
+                        .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                QuizActivity.this.finish();
+                            }
+                        })
+                        .show();
+            }
         }
+
 
         ((QuizViewState) getViewState()).setCounter(0);
 
@@ -331,13 +347,15 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
         Grade grade = realm.where(Grade.class).equalTo("lesson", lesson.getId()).findFirst();
         if (grade == null) {
             grade = new Grade();
-            grade.setId(lesson.getId());
+            grade.setId("l-" + lesson.getId() + "-" + user.getUsername());
             grade.setLesson(lesson.getId());
-            grade.setLocal(true);
+            grade.setTryCount(0);
         }
         grade.setRawScore(finalScore);
         grade.setItemCount(items);
         grade.setSaved(false);
+        int tryCount = grade.getTryCount();
+        grade.setTryCount(tryCount + 1);
         realm.copyToRealmOrUpdate(grade);
         realm.commitTransaction();
 
@@ -354,7 +372,6 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
                     }
                 })
                 .show();
-
     }
 
     @Override
@@ -370,7 +387,6 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
     @Override
     public void stopLoading() {
         if (progressDialog != null) progressDialog.dismiss();
-
     }
 
     @Override

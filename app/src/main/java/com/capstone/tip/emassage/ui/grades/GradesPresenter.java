@@ -127,7 +127,6 @@ public class GradesPresenter extends GradesSavePresenter<GradesView> {
                                 public void execute(Realm realm) {
                                     realm.delete(Grade.class);
                                     for (Grade grade : response.body()) {
-                                        grade.setLocal(false);
                                         grade.setSaved(true);
                                         realm.insertOrUpdate(grade);
                                     }

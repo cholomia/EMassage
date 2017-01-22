@@ -13,20 +13,21 @@ import io.realm.annotations.PrimaryKey;
 public class Grade extends RealmObject {
 
     @PrimaryKey
-    private int id;
+    private String id;
     private int lesson;
     @SerializedName("raw_score")
     private int rawScore;
     @SerializedName("item_count")
     private int itemCount;
     private boolean saved;
-    private boolean local;
+    @SerializedName("try_count")
+    private int tryCount;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -62,12 +63,12 @@ public class Grade extends RealmObject {
         this.saved = saved;
     }
 
-    public boolean isLocal() {
-        return local;
+    public int getTryCount() {
+        return tryCount;
     }
 
-    public void setLocal(boolean local) {
-        this.local = local;
+    public void setTryCount(int tryCount) {
+        this.tryCount = tryCount;
     }
 
     /**

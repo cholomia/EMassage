@@ -4,6 +4,7 @@ import com.capstone.tip.emassage.model.data.Comment;
 import com.capstone.tip.emassage.model.data.Course;
 import com.capstone.tip.emassage.model.data.Forum;
 import com.capstone.tip.emassage.model.data.Grade;
+import com.capstone.tip.emassage.model.data.Twist;
 import com.capstone.tip.emassage.model.data.User;
 import com.capstone.tip.emassage.model.data.Video;
 import com.capstone.tip.emassage.model.response.CommentVote;
@@ -103,20 +104,22 @@ public interface ApiInterface {
     Call<List<Grade>> getGrades(@Header("Authorization") String basicAuthentication,
                                 @QueryMap Map<String, String> params);
 
-    @FormUrlEncoded
+    /*@FormUrlEncoded
     @POST(Endpoints.GRADES)
     Call<Grade> saveGrade(@Header("Authorization") String basicAuthentication,
                           @Field("lesson") int lessonId,
                           @Field("raw_score") int rawScore,
-                          @Field("item_count") int itemCount);
+                          @Field("item_count") int itemCount);*/
 
     @FormUrlEncoded
     @PUT(Endpoints.GRADE)
-    Call<Grade> saveGrade(@Path("id") int id,
+    Call<Grade> saveGrade(@Path("id") String id,
                           @Header("Authorization") String basicAuthentication,
+                          @Field("id") String pk,
                           @Field("lesson") int lessonId,
                           @Field("raw_score") int rawScore,
-                          @Field("item_count") int itemCount);
+                          @Field("item_count") int itemCount,
+                          @Field("try_count") int tryCount);
 
     @FormUrlEncoded
     @PUT(Endpoints.FORUM_VOTE)
@@ -134,5 +137,8 @@ public interface ApiInterface {
 
     @GET(Endpoints.VIDEOS)
     Call<List<Video>> videos();
+
+    @GET(Endpoints.TWIST)
+    Call<List<Twist>> getTwistWords();
 
 }

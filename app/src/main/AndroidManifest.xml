@@ -43,7 +43,10 @@
         <activity android:name=".ui.forums.details.ForumDetailActivity" />
         <activity android:name=".ui.grades.GradesActivity" />
         <activity android:name=".ui.video_simulation.VideoSimulationActivity" />
-        <activity android:name=".ui.main.MenuActivity"></activity>
+        <activity android:name=".ui.main.MenuActivity" />
+        <activity
+            android:name=".ui.text_twist.TextTwistActivity"
+            android:label="Twist Words" />
     </application>
 
 </manifest>

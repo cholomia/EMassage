@@ -39,4 +39,5 @@ public class Endpoints {
 
     public static final String YOUTUBE_THUMBNAIL = "http://img.youtube.com/vi/{code}/hqdefault.jpg";
 
+    public static final String TWIST = "twist-words/";
 }
