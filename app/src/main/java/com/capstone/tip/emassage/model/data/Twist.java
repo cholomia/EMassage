@@ -13,6 +13,7 @@ public class Twist extends RealmObject {
     private int id;
     private String word;
     private String clue;
+    private boolean done;
 
     public int getId() {
         return id;
@@ -36,5 +37,13 @@ public class Twist extends RealmObject {
 
     public void setClue(String clue) {
         this.clue = clue;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
     }
 }

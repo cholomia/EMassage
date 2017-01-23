@@ -57,11 +57,13 @@ public class CommentsPresenter extends MvpNullObjectBasePresenter<CommentsView> 
     }
 
     public void loadCommentList() {
-        comments(App.getInstance().getApiInterface().comments());
+        comments(App.getInstance().getApiInterface()
+                .comments(Credentials.basic(user.getUsername(), user.getPassword())));
     }
 
     public void loadCommentList(Map<String, String> parameters) {
-        comments(App.getInstance().getApiInterface().comments(parameters));
+        comments(App.getInstance().getApiInterface()
+                .comments(Credentials.basic(user.getUsername(), user.getPassword()), parameters));
     }
 
     private void comments(Call<CommentListResponse> commentListResponseCall) {

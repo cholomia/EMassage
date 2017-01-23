@@ -19,6 +19,8 @@ public interface MenuView extends MvpView {
 
     void onViewVideos();
 
+    void onViewMiniGame();
+
     void onLogout();
 
     void onSetUser(User user);

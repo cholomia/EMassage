@@ -1,10 +1,10 @@
 package com.capstone.tip.emassage.app;
 
 import android.app.Application;
+import android.support.v7.app.AppCompatDelegate;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.internal.bind.util.ISO8601Utils;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -35,6 +35,7 @@ public class App extends Application {
                 .deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(realmConfig);
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
     public synchronized static App getInstance() {

@@ -75,10 +75,11 @@ public interface ApiInterface {
                                    @Header("Authorization") String basicAuthentication);
 
     @GET(Endpoints.COMMENTS)
-    Call<CommentListResponse> comments();
+    Call<CommentListResponse> comments(@Header("Authorization") String basicAuthentication);
 
     @GET(Endpoints.COMMENTS)
-    Call<CommentListResponse> comments(@QueryMap Map<String, String> params);
+    Call<CommentListResponse> comments(@Header("Authorization") String basicAuthentication,
+                                       @QueryMap Map<String, String> params);
 
     @FormUrlEncoded
     @POST(Endpoints.COMMENTS)

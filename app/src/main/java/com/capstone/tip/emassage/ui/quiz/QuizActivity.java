@@ -356,7 +356,7 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
         grade.setSaved(false);
         int tryCount = grade.getTryCount();
         grade.setTryCount(tryCount + 1);
-        realm.copyToRealmOrUpdate(grade);
+        grade = realm.copyToRealmOrUpdate(grade);
         realm.commitTransaction();
 
         presenter.saveGrade(realm.copyFromRealm(grade), Credentials.basic(user.getUsername(), user.getPassword()));

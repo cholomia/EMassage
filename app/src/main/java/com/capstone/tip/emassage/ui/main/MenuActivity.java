@@ -16,6 +16,7 @@ import com.capstone.tip.emassage.ui.courses.CoursesActivity;
 import com.capstone.tip.emassage.ui.forums.ForumsActivity;
 import com.capstone.tip.emassage.ui.grades.GradesActivity;
 import com.capstone.tip.emassage.ui.login.LoginActivity;
+import com.capstone.tip.emassage.ui.text_twist.TextTwistActivity;
 import com.capstone.tip.emassage.ui.video_simulation.VideoSimulationActivity;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
@@ -82,6 +83,11 @@ public class MenuActivity extends MvpActivity<MenuView, MenuPresenter> implement
     @Override
     public void onViewVideos() {
         startActivity(new Intent(this, VideoSimulationActivity.class));
+    }
+
+    @Override
+    public void onViewMiniGame() {
+        startActivity(new Intent(this, TextTwistActivity.class));
     }
 
     @Override
