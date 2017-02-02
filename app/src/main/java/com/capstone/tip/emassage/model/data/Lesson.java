@@ -13,6 +13,8 @@ public class Lesson extends RealmObject {
     @PrimaryKey
     private int id;
     private String title;
+    private String objective;
+    private String summary;
     private int sequence;
     private String coverImage;
     private String pdf;
@@ -33,6 +35,22 @@ public class Lesson extends RealmObject {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getObjective() {
+        return objective;
+    }
+
+    public void setObjective(String objective) {
+        this.objective = objective;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public int getSequence() {

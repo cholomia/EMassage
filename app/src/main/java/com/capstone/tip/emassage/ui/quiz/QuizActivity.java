@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 import okhttp3.Credentials;
 
 public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
@@ -46,6 +47,7 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
     private List<Question> questionList;
     private List<UserAnswer> userAnswerList;
     private ProgressDialog progressDialog;
+    private RealmResults<Grade> gradeRealmResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,10 +151,10 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
                     .setCancelable(false)
                     .show();
         }
-
-        Grade grade = realm.where(Grade.class).equalTo("lesson", lesson.getId()).findFirst();
-        if (grade != null) {
-            if (grade.getTryCount() >= 3) {
+        gradeRealmResults = realm.where(Grade.class).equalTo("lesson", lesson.getId()).findAll();
+        //Grade grade = realm.where(Grade.class).equalTo("lesson", lesson.getId()).findFirst();
+        if (gradeRealmResults.size() > 0) {
+            if (gradeRealmResults.size() >= 3) {
                 // quiz can be taken 3 times maximum
                 new AlertDialog.Builder(this)
                         .setTitle("Unable to take Quiz")
@@ -344,18 +346,16 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
 
         final int finalScore = score;
         realm.beginTransaction();
-        Grade grade = realm.where(Grade.class).equalTo("lesson", lesson.getId()).findFirst();
-        if (grade == null) {
-            grade = new Grade();
-            grade.setId("l-" + lesson.getId() + "-" + user.getUsername());
-            grade.setLesson(lesson.getId());
-            grade.setTryCount(0);
-        }
+        //Grade grade = realm.where(Grade.class).equalTo("lesson", lesson.getId()).findFirst();
+        //if (grade == null) {
+        Grade grade = new Grade();
+        grade.setId("l" + (gradeRealmResults.size() + 1) + "-" + lesson.getId() + "-" + user.getUsername());
+        grade.setLesson(lesson.getId());
+        grade.setTryCount(gradeRealmResults.size() + 1);
+        //}
         grade.setRawScore(finalScore);
         grade.setItemCount(items);
         grade.setSaved(false);
-        int tryCount = grade.getTryCount();
-        grade.setTryCount(tryCount + 1);
         grade = realm.copyToRealmOrUpdate(grade);
         realm.commitTransaction();
 

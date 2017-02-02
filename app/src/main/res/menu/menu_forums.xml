@@ -8,4 +8,19 @@
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/action_sort_trending"
+        android:title="Sort by trending"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_sort_title"
+        android:title="Sort by title"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_sort_date"
+        android:title="Sort by latest"
+        app:showAsAction="never" />
+
 </menu>

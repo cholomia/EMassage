@@ -30,16 +30,23 @@ import retrofit2.Response;
 class ForumsPresenter extends VotePresenter<ForumsView> {
 
     private static final String TAG = ForumsPresenter.class.getSimpleName();
+
+    public static final int SORT_TREND = 0;
+    public static final int SORT_TITLE = 1;
+    public static final int SORT_DATE = 2;
+
     private Realm realm;
     private RealmResults<Forum> forumRealmResults;
     private User user;
     private String query;
+    private int sortType;
 
     public void onStart() {
         query = "";
+        sortType = 0;
         realm = Realm.getDefaultInstance();
         user = realm.where(User.class).findFirst();
-        forumRealmResults = realm.where(Forum.class).findAllSortedAsync("points", Sort.DESCENDING);
+        forumRealmResults = realm.where(Forum.class).findAllAsync();
         forumRealmResults.addChangeListener(new RealmChangeListener<RealmResults<Forum>>() {
             @Override
             public void onChange(RealmResults<Forum> element) {
@@ -124,9 +131,24 @@ class ForumsPresenter extends VotePresenter<ForumsView> {
 
     private void filterList() {
         if (forumRealmResults.isLoaded() && forumRealmResults.isValid()) {
+            RealmResults<Forum> sortedForumRealmResults;
+            switch (sortType) {
+                case SORT_TREND:
+                    sortedForumRealmResults = forumRealmResults.where().findAllSorted("points", Sort.DESCENDING);
+                    break;
+                case SORT_TITLE:
+                    sortedForumRealmResults = forumRealmResults.where().findAllSorted("title", Sort.ASCENDING);
+                    break;
+                case SORT_DATE:
+                    sortedForumRealmResults = forumRealmResults.where().findAllSorted("created", Sort.DESCENDING);
+                    break;
+                default:
+                    sortedForumRealmResults = forumRealmResults;
+                    break;
+            }
             List<Forum> forumList;
             if (query != null && !query.isEmpty()) {
-                forumList = realm.copyFromRealm(forumRealmResults.where()
+                forumList = realm.copyFromRealm(sortedForumRealmResults.where()
                         .contains("title", query, Case.INSENSITIVE)
                         .or()
                         .contains("content", query, Case.INSENSITIVE)
@@ -139,4 +161,8 @@ class ForumsPresenter extends VotePresenter<ForumsView> {
 
     }
 
+    public void sortBy(int sortType) {
+        this.sortType = sortType;
+        filterList();
+    }
 }

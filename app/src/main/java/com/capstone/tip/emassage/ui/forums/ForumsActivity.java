@@ -113,6 +113,14 @@ public class ForumsActivity extends MvpViewStateActivity<ForumsView, ForumsPrese
             case android.R.id.home:
                 onBackPressed();
                 return true;
+            case R.id.action_sort_trending:
+                presenter.sortBy(ForumsPresenter.SORT_TREND);
+                return true;
+            case R.id.action_sort_title:
+                presenter.sortBy(ForumsPresenter.SORT_TITLE);
+                return true;
+            case R.id.action_sort_date:
+                presenter.sortBy(ForumsPresenter.SORT_DATE);
             default:
                 return super.onOptionsItemSelected(item);
         }

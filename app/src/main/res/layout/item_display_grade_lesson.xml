@@ -33,6 +33,97 @@
                 android:text="@{displayGrade.title}"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:visibility="@{displayGrade.grades.size() > 0 ? View.VISIBLE : View.GONE}">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Take 1"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text='@{displayGrade.grades.get(0) != null ? displayGrade.grades.get(0).rawScore + "/" + displayGrade.grades.get(0).itemCount}'
+                        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:visibility="@{displayGrade.grades.size() > 1 ? View.VISIBLE : View.GONE}">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Take 2"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text='@{displayGrade.grades.get(1) != null ? displayGrade.grades.get(1).rawScore + "/" + displayGrade.grades.get(1).itemCount}'
+                        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:visibility="@{displayGrade.grades.size() > 2 ? View.VISIBLE : View.GONE}">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Take 3"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text='@{displayGrade.grades.get(2) != null ? displayGrade.grades.get(2).rawScore + "/" + displayGrade.grades.get(2).itemCount}'
+                        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="@{displayGrade.grades.size() > 0 ? View.VISIBLE : View.GONE}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Average"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text='@{"Average: " + displayGrade.formattedAverage()}'
+                        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

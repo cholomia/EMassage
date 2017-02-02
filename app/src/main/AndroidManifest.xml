@@ -47,6 +47,7 @@
         <activity
             android:name=".ui.text_twist.TextTwistActivity"
             android:label="Twist Words" />
+        <activity android:name=".ui.lessons.detail.LessonDetailActivity"></activity>
     </application>
 
 </manifest>

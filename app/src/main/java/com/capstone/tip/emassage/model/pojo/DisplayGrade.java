@@ -2,6 +2,9 @@ package com.capstone.tip.emassage.model.pojo;
 
 import com.capstone.tip.emassage.model.data.Grade;
 
+import java.text.DecimalFormat;
+import java.util.List;
+
 /**
  * @author pocholomia
  * @since 10/01/2017
@@ -16,7 +19,7 @@ public class DisplayGrade {
     private int sequence;
     private int view;
     private String title;
-    private Grade grade;
+    private List<Grade> grades;
 
     public int getSequence() {
         return sequence;
@@ -42,11 +45,20 @@ public class DisplayGrade {
         this.title = title;
     }
 
-    public Grade getGrade() {
-        return grade;
+    public List<Grade> getGrades() {
+        return grades;
     }
 
-    public void setGrade(Grade grade) {
-        this.grade = grade;
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
+    }
+
+    public String formattedAverage() {
+        if (grades.size() > 0) {
+            double ave = grades.get(grades.size() - 1).average();
+            DecimalFormat decimalFormat = new DecimalFormat("0.00");
+            return decimalFormat.format(ave) + "%";
+        }
+        return "N/A";
     }
 }
