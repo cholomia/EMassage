@@ -77,7 +77,7 @@ public class PdfActivity extends MvpViewStateActivity<PdfView, PdfPresenter> imp
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            case R.id.action_quiz:
+            /*case R.id.action_quiz:
                 if (lesson.isLoaded() && lesson.isValid()) {
                     Intent intent = new Intent(this, QuizActivity.class);
                     intent.putExtra(Constants.ID, lesson.getId());
@@ -85,7 +85,7 @@ public class PdfActivity extends MvpViewStateActivity<PdfView, PdfPresenter> imp
                 } else {
                     showAlert("No Lesson Found");
                 }
-                return true;
+                return true;*/
             default:
                 return super.onOptionsItemSelected(item);
         }

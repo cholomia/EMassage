@@ -154,11 +154,10 @@ class ForumsPresenter extends VotePresenter<ForumsView> {
                         .contains("content", query, Case.INSENSITIVE)
                         .findAll());
             } else {
-                forumList = realm.copyFromRealm(forumRealmResults);
+                forumList = realm.copyFromRealm(sortedForumRealmResults);
             }
             getView().setForums(forumList);
         }
-
     }
 
     public void sortBy(int sortType) {

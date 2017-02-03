@@ -61,4 +61,11 @@ public class DisplayGrade {
         }
         return "N/A";
     }
+
+    public boolean isNeedToSave() {
+        for (Grade grade : grades) {
+            if (!grade.isSaved()) return true;
+        }
+        return false;
+    }
 }

@@ -1,5 +1,7 @@
 package com.capstone.tip.emassage.ui.lessons.detail;
 
+import android.view.View;
+
 import com.capstone.tip.emassage.model.data.Lesson;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 
@@ -14,4 +16,6 @@ public interface LessonDetailView extends MvpView {
     void onViewPdf(Lesson lesson);
 
     void onTakeQuiz(Lesson lesson);
+
+    void onPopTextToSpeech(View view, String stringToTextToSpeech);
 }

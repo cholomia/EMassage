@@ -122,12 +122,12 @@ public class GradesActivity extends MvpViewStateActivity<GradesView, GradesPrese
             progressDialog.setMessage("Loading...");
             progressDialog.setCancelable(false);
         }
-        progressDialog.show();
+        if (!progressDialog.isShowing()) progressDialog.show();
     }
 
     @Override
     public void stopLoading() {
-        if (progressDialog != null) progressDialog.dismiss();
+        if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
     }
 
     @Override
@@ -136,7 +136,7 @@ public class GradesActivity extends MvpViewStateActivity<GradesView, GradesPrese
     }
 
     @Override
-    public void onGradeSave(Grade grade) {
-        presenter.saveGrade(grade);
+    public void onGradeSave(List<Grade> grades) {
+        for (Grade grade : grades) if (!grade.isSaved()) presenter.saveGrade(grade);
     }
 }

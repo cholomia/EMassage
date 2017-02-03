@@ -43,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:visibility="@{displayGrade.grades.size() > 0 ? View.VISIBLE : View.GONE}">
+                    android:visibility="@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 0 ? View.VISIBLE : View.GONE}">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -54,7 +54,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text='@{displayGrade.grades.get(0) != null ? displayGrade.grades.get(0).rawScore + "/" + displayGrade.grades.get(0).itemCount}'
+                        android:text='@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 0 &amp;&amp; displayGrade.grades.get(0) != null ? displayGrade.grades.get(0).rawScore + "/" + displayGrade.grades.get(0).itemCount : ""}'
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
                 </LinearLayout>
@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:visibility="@{displayGrade.grades.size() > 1 ? View.VISIBLE : View.GONE}">
+                    android:visibility="@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 1 ? View.VISIBLE : View.GONE}">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -75,7 +75,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text='@{displayGrade.grades.get(1) != null ? displayGrade.grades.get(1).rawScore + "/" + displayGrade.grades.get(1).itemCount}'
+                        android:text='@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 1 &amp;&amp; displayGrade.grades.get(1) != null ? displayGrade.grades.get(1).rawScore + "/" + displayGrade.grades.get(1).itemCount : ""}'
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
                 </LinearLayout>
@@ -85,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:visibility="@{displayGrade.grades.size() > 2 ? View.VISIBLE : View.GONE}">
+                    android:visibility="@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 2 ? View.VISIBLE : View.GONE}">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -96,17 +96,17 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text='@{displayGrade.grades.get(2) != null ? displayGrade.grades.get(2).rawScore + "/" + displayGrade.grades.get(2).itemCount}'
+                        android:text='@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 2 &amp;&amp;  displayGrade.grades.get(2) != null ? displayGrade.grades.get(2).rawScore + "/" + displayGrade.grades.get(2).itemCount : ""}'
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:visibility="@{displayGrade.grades.size() > 0 ? View.VISIBLE : View.GONE}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 0 ? View.VISIBLE : View.GONE}">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -117,26 +117,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text='@{"Average: " + displayGrade.formattedAverage()}'
+                        android:text='@{displayGrade.formattedAverage()}'
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
                 </LinearLayout>
 
             </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text='@{"Score: " + displayGrade.grade.rawScore + "/" + displayGrade.grade.itemCount}'
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:visibility="@{displayGrade.grade != null ? View.VISIBLE : View.GONE}" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text='@{"Average: " + displayGrade.grade.average()}'
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:visibility="@{displayGrade.grade != null ? View.VISIBLE : View.GONE}" />
 
         </LinearLayout>
 
@@ -144,21 +130,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="@{displayGrade.grade != null ? View.VISIBLE : View.GONE}">
+            android:visibility="@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 0 ? View.VISIBLE : View.GONE}">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:gravity="end"
-                android:text='@{"Online Status:\n" + (displayGrade.grade.saved ? "Saved" : "Not yet Saved")}' />
+                android:text='@{"Online Status:\n" + (displayGrade.needToSave ? "Not yet Saved" : "Saved")}' />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{() -> view.onGradeSave(displayGrade.grade)}"
+                android:onClick="@{() -> view.onGradeSave(displayGrade.grades)}"
                 android:text="Save"
-                android:visibility="@{displayGrade.grade.saved ? View.GONE : View.VISIBLE   }" />
+                android:visibility="@{displayGrade.needToSave ? View.VISIBLE : View.GONE}" />
 
         </LinearLayout>
 

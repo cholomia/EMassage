@@ -14,6 +14,6 @@ import java.util.List;
 public interface GradesView extends GradesSaveView {
     void setDisplayGradeList(List<DisplayGrade> displayGrades);
 
-    void onGradeSave(Grade grade);
+    void onGradeSave(List<Grade> grades);
 
 }

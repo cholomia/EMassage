@@ -21,6 +21,7 @@ import java.util.Map;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import okhttp3.Credentials;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -95,13 +96,14 @@ public class GradesPresenter extends GradesSavePresenter<GradesView> {
                         displayGradeLesson.setSequence(x);
                         displayGradeLesson.setView(DisplayGrade.VIEW_LESSON);
                         displayGradeLesson.setTitle(lesson.getTitle());
+                        List<Grade> grades = new ArrayList<>();
                         if (gradeRealmResults.isLoaded() && gradeRealmResults.isValid()) {
-                            Grade grade = gradeRealmResults.where()
-                                    .equalTo("lesson", lesson.getId()).findFirst();
-                            if (grade != null) {
-                                displayGradeLesson.setGrade(realm.copyFromRealm(grade));
-                            }
+                            RealmResults<Grade> lessonGradeRealmResults = gradeRealmResults.where()
+                                    .equalTo("lesson", lesson.getId())
+                                    .findAllSorted("tryCount", Sort.ASCENDING);
+                            grades = realm.copyFromRealm(lessonGradeRealmResults);
                         }
+                        displayGradeLesson.setGrades(grades);
                         displayGrades.add(displayGradeLesson);
                     }
                 }
@@ -167,5 +169,6 @@ public class GradesPresenter extends GradesSavePresenter<GradesView> {
     public void saveGrade(Grade grade) {
         super.saveGrade(grade, Credentials.basic(user.getUsername(), user.getPassword()));
     }
+
 
 }

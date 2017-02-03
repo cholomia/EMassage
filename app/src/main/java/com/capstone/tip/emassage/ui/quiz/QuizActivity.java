@@ -381,12 +381,13 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
             progressDialog.setMessage("Loading...");
             progressDialog.setCancelable(false);
         }
-        progressDialog.show();
+        if (!progressDialog.isShowing())
+            progressDialog.show();
     }
 
     @Override
     public void stopLoading() {
-        if (progressDialog != null) progressDialog.dismiss();
+        if (progressDialog != null && progressDialog.isShowing()) progressDialog.dismiss();
     }
 
     @Override

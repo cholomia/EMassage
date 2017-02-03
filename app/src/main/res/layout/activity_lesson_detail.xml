@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -24,14 +25,30 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context="com.capstone.tip.emassage.ui.lessons.detail.LessonDetailActivity">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-condensed"
-            android:text="Objective"
-            android:textAllCaps="true"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
-            android:textColor="@color/colorPrimary" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Objective"
+                android:textAllCaps="true"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+                android:textColor="@color/colorPrimary" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:onClick="@{(theView) -> view.onPopTextToSpeech(theView, lesson.objective)}"
+                android:tint="@color/blue"
+                app:srcCompat="@drawable/ic_volume_up_black_24dp" />
+
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -45,15 +62,31 @@
             android:text="@{lesson.objective}"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:fontFamily="sans-serif-condensed"
-            android:text="Summary"
-            android:textAllCaps="true"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
-            android:textColor="@color/colorPrimary" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Summary"
+                android:textAllCaps="true"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+                android:textColor="@color/colorPrimary" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:onClick="@{(theView) -> view.onPopTextToSpeech(theView, lesson.summary)}"
+                android:tint="@color/blue"
+                app:srcCompat="@drawable/ic_volume_up_black_24dp" />
+
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
