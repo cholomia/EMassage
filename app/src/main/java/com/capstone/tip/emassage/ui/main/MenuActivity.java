@@ -2,9 +2,8 @@ package com.capstone.tip.emassage.ui.main;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,8 +11,11 @@ import android.view.MenuItem;
 import com.capstone.tip.emassage.R;
 import com.capstone.tip.emassage.databinding.ActivityMenuBinding;
 import com.capstone.tip.emassage.model.data.User;
-import com.capstone.tip.emassage.ui.courses.CoursesActivity;
+import com.capstone.tip.emassage.ui.announcement.list.AnnouncementListActivity;
+import com.capstone.tip.emassage.ui.category.CategoryActivity;
+import com.capstone.tip.emassage.ui.fake_grades.FakeGradesActivity;
 import com.capstone.tip.emassage.ui.forums.ForumsActivity;
+import com.capstone.tip.emassage.ui.gallery.list.GalleryListActivity;
 import com.capstone.tip.emassage.ui.grades.GradesActivity;
 import com.capstone.tip.emassage.ui.login.LoginActivity;
 import com.capstone.tip.emassage.ui.text_twist.TextTwistActivity;
@@ -67,7 +69,7 @@ public class MenuActivity extends MvpActivity<MenuView, MenuPresenter> implement
 
     @Override
     public void onViewCourses() {
-        startActivity(new Intent(this, CoursesActivity.class));
+        startActivity(new Intent(this, CategoryActivity.class));
     }
 
     @Override
@@ -77,7 +79,7 @@ public class MenuActivity extends MvpActivity<MenuView, MenuPresenter> implement
 
     @Override
     public void onViewGrades() {
-        startActivity(new Intent(this, GradesActivity.class));
+        startActivity(new Intent(this, FakeGradesActivity.class));
     }
 
     @Override
@@ -118,5 +120,25 @@ public class MenuActivity extends MvpActivity<MenuView, MenuPresenter> implement
     @Override
     public void onSetUser(User user) {
         binding.setUser(user);
+    }
+
+    @Override
+    public void onViewAnnouncement() {
+        startActivity(new Intent(this, AnnouncementListActivity.class));
+    }
+
+    @Override
+    public void onViewSummaryAssessment() {
+        startActivity(new Intent(this, GradesActivity.class));
+    }
+
+    @Override
+    public void onViewGallery() {
+        startActivity(new Intent(this, GalleryListActivity.class));
+    }
+
+    @Override
+    public void onViewConsole() {
+
     }
 }

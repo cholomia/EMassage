@@ -21,11 +21,13 @@ import java.util.List;
 public class SummaryListAdapter extends RecyclerView.Adapter<SummaryListAdapter.ViewHolder> {
 
     private final List<UserAnswer> userAnswerList;
+    private QuizView view;
 
     /**
      * Constructor and init the list
      */
-    public SummaryListAdapter() {
+    public SummaryListAdapter(QuizView view) {
+        this.view = view;
         userAnswerList = new ArrayList<>();
     }
 
@@ -45,6 +47,7 @@ public class SummaryListAdapter extends RecyclerView.Adapter<SummaryListAdapter.
         holder.itemUserAnswerBinding.setAnswer(userAnswer);
         String strItemNum = (position + 1) + ".)"; // add 1 as index starts w/ 0
         holder.itemUserAnswerBinding.txtItemNum.setText(strItemNum);
+        holder.itemUserAnswerBinding.setView(view);
     }
 
     @Override

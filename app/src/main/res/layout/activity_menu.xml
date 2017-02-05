@@ -18,7 +18,7 @@
         android:id="@+id/activity_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/blue"
+        android:background="@color/colorPrimaryDark"
         android:orientation="vertical"
         android:padding="@dimen/activity_vertical_margin"
         tools:context="com.capstone.tip.emassage.ui.main.MenuActivity">
@@ -55,33 +55,6 @@
             android:textColor="@android:color/white"
             android:textStyle="bold" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/white" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/activity_vertical_margin">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:tint="@android:color/white"
-                app:srcCompat="@drawable/ic_menu_black_24dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Menu"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-                android:textColor="@android:color/white" />
-
-        </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -99,20 +72,23 @@
                     android:layout_margin="@dimen/activity_vertical_margin"
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackground"
-                    android:onClick="@{() -> view.onViewCourses()}"
+                    android:onClick="@{() -> view.onViewAnnouncement()}"
                     android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginBottom="2dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/school" />
+                        app:srcCompat="@drawable/announcementicon" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:ellipsize="marquee"
                         android:gravity="center"
-                        android:text="Courses"
+                        android:maxLines="1"
+                        android:text="Announcements"
                         android:textAllCaps="true"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                         android:textColor="@android:color/white"
@@ -137,14 +113,53 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginBottom="2dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/forum" />
+                        app:srcCompat="@drawable/forumicon" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:ellipsize="marquee"
                         android:gravity="center"
+                        android:maxLines="1"
                         android:text="Forums"
+                        android:textAllCaps="true"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/activity_vertical_margin"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:onClick="@{() -> view.onViewCourses()}"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/courseicon" />
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="marquee"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="Lessons"
                         android:textAllCaps="true"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                         android:textColor="@android:color/white"
@@ -178,19 +193,59 @@
                     android:layout_margin="@dimen/activity_vertical_margin"
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackground"
-                    android:onClick="@{() -> view.onViewGrades()}"
+                    android:onClick="@{() -> view.onViewSummaryAssessment()}"
                     android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginBottom="2dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/ic_format_annotation_plus" />
+                        app:srcCompat="@drawable/summaryicon" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="marquee"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="Summary of Assessments"
+                        android:textAllCaps="true"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/activity_vertical_margin"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:onClick="@{() -> view.onViewGrades()}"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/gradeicon" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:ellipsize="marquee"
                         android:gravity="center"
+                        android:maxLines="1"
                         android:text="Grades"
                         android:textAllCaps="true"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
@@ -214,16 +269,20 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/imageView2"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginBottom="2dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/video" />
+                        app:srcCompat="@drawable/videoicon" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:ellipsize="marquee"
                         android:gravity="center"
-                        android:text="Videos"
+                        android:maxLines="1"
+                        android:text="Video Simulations"
                         android:textAllCaps="true"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                         android:textColor="@android:color/white"
@@ -257,20 +316,24 @@
                     android:layout_margin="@dimen/activity_vertical_margin"
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackground"
-                    android:onClick="@{() -> view.onViewMiniGame()}"
+                    android:onClick="@{() -> view.onViewGallery()}"
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/imageView4"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginBottom="2dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/gamepad_variant" />
+                        app:srcCompat="@drawable/galleryicon" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:ellipsize="marquee"
                         android:gravity="center"
-                        android:text="Mini Game"
+                        android:maxLines="1"
+                        android:text="Gallery"
                         android:textAllCaps="true"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                         android:textColor="@android:color/white"
@@ -289,23 +352,62 @@
                     android:layout_margin="@dimen/activity_vertical_margin"
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackground"
+                    android:onClick="@{() -> view.onViewConsole()}"
                     android:orientation="vertical">
 
-                    <!-- <ImageView
-                         android:layout_width="match_parent"
-                         android:layout_height="0dp"
-                         android:layout_weight="1"
-                         app:srcCompat="@drawable/video" />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/consoleicon" />
 
-                     <TextView
-                         android:layout_width="match_parent"
-                         android:layout_height="wrap_content"
-                         android:gravity="center"
-                         android:text="Videos"
-                         android:textAllCaps="true"
-                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                         android:textColor="@android:color/white"
-                         android:textStyle="bold" />-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="marquee"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="Console"
+                        android:textAllCaps="true"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/activity_vertical_margin"
+                    android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
+                    android:onClick="@{() -> view.onViewMiniGame()}"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/gameicon" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="marquee"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="Mini Game"
+                        android:textAllCaps="true"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 

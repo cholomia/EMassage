@@ -24,4 +24,12 @@ public interface MenuView extends MvpView {
     void onLogout();
 
     void onSetUser(User user);
+
+    void onViewAnnouncement();
+
+    void onViewSummaryAssessment();
+
+    void onViewGallery();
+
+    void onViewConsole();
 }

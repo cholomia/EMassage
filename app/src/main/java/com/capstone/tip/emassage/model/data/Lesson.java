@@ -1,5 +1,7 @@
 package com.capstone.tip.emassage.model.data;
 
+import com.google.gson.annotations.SerializedName;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -19,6 +21,8 @@ public class Lesson extends RealmObject {
     private String coverImage;
     private String pdf;
     private int category;
+    @SerializedName("youtube_code")
+    private String youtubeCode;
     private RealmList<Question> questions;
 
     public int getId() {
@@ -83,6 +87,14 @@ public class Lesson extends RealmObject {
 
     public void setCategory(int category) {
         this.category = category;
+    }
+
+    public String getYoutubeCode() {
+        return youtubeCode;
+    }
+
+    public void setYoutubeCode(String youtubeCode) {
+        this.youtubeCode = youtubeCode;
     }
 
     public RealmList<Question> getQuestions() {

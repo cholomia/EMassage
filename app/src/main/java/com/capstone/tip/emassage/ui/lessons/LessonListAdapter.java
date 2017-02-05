@@ -35,8 +35,8 @@ public class LessonListAdapter extends RecyclerView.Adapter<LessonListAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.itemLessonBinding.setLesson(lessons.get(position));
-        holder.itemLessonBinding.setView(lessonsView);
+        //holder.itemLessonBinding.setLesson(lessons.get(position));
+        //holder.itemLessonBinding.setView(lessonsView);
     }
 
     @Override

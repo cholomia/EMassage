@@ -5,7 +5,6 @@ import android.util.Log;
 import com.capstone.tip.emassage.app.App;
 import com.capstone.tip.emassage.app.Constants;
 import com.capstone.tip.emassage.model.data.Category;
-import com.capstone.tip.emassage.model.data.Course;
 import com.capstone.tip.emassage.model.data.Grade;
 import com.capstone.tip.emassage.model.data.Lesson;
 import com.capstone.tip.emassage.model.data.User;
@@ -37,7 +36,7 @@ public class GradesPresenter extends GradesSavePresenter<GradesView> {
     private static final String TAG = GradesPresenter.class.getSimpleName();
 
     private Realm realm;
-    private RealmResults<Course> courseRealmResults;
+    private RealmResults<Category> categoryRealmResults;
     private RealmResults<Grade> gradeRealmResults;
     private User user;
 
@@ -46,10 +45,10 @@ public class GradesPresenter extends GradesSavePresenter<GradesView> {
 
         user = realm.where(User.class).findFirst();
 
-        courseRealmResults = realm.where(Course.class).findAllSortedAsync(Constants.COL_SEQ);
-        courseRealmResults.addChangeListener(new RealmChangeListener<RealmResults<Course>>() {
+        categoryRealmResults = realm.where(Category.class).findAllSortedAsync(Constants.COL_SEQ);
+        categoryRealmResults.addChangeListener(new RealmChangeListener<RealmResults<Category>>() {
             @Override
-            public void onChange(RealmResults<Course> element) {
+            public void onChange(RealmResults<Category> element) {
                 updateDisplayList();
             }
         });
@@ -64,7 +63,7 @@ public class GradesPresenter extends GradesSavePresenter<GradesView> {
     }
 
     public void onStop() {
-        courseRealmResults.removeChangeListeners();
+        categoryRealmResults.removeChangeListeners();
         gradeRealmResults.removeChangeListeners();
         realm.close();
     }
@@ -72,16 +71,16 @@ public class GradesPresenter extends GradesSavePresenter<GradesView> {
     private void updateDisplayList() {
         List<DisplayGrade> displayGrades = new ArrayList<>();
         int x = 0;
-        if (courseRealmResults.isLoaded() && courseRealmResults.isValid()) {
-            for (Course course : courseRealmResults) {
+        if (categoryRealmResults.isLoaded() && categoryRealmResults.isValid()) {
+           /* for (Category course : categoryRealmResults) {
                 // set course header
                 x++;
                 DisplayGrade displayGradeCourse = new DisplayGrade();
                 displayGradeCourse.setSequence(x);
                 displayGradeCourse.setView(DisplayGrade.VIEW_COURSE);
                 displayGradeCourse.setTitle(course.getTitle());
-                displayGrades.add(displayGradeCourse);
-                for (Category category : course.getCategories()) {
+                displayGrades.add(displayGradeCourse);*/
+                for (Category category : categoryRealmResults) {
                     // set category headers
                     x++;
                     DisplayGrade displayGradeCategory = new DisplayGrade();
@@ -107,7 +106,7 @@ public class GradesPresenter extends GradesSavePresenter<GradesView> {
                         displayGrades.add(displayGradeLesson);
                     }
                 }
-            }
+            //}
         }
         getView().setDisplayGradeList(displayGrades);
     }

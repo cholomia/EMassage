@@ -1,17 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    <data>
+
+        <variable
+            name="lesson"
+            type="com.capstone.tip.emassage.model.data.Lesson" />
+
+        <variable
+            name="view"
+            type="com.capstone.tip.emassage.ui.pdf.PdfView" />
+    </data>
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/activity_pdf"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         tools:context="com.capstone.tip.emassage.ui.pdf.PdfActivity">
 
         <com.github.barteksc.pdfviewer.PDFView
             android:id="@+id/pdf_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-    </RelativeLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:onClick="@{() -> view.onBack()}"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="start"
+                android:background="@android:drawable/edit_text"
+                android:tint="@color/blue"
+                app:srcCompat="@drawable/ic_chevron_left_black_24dp" />
+
+            <ImageView
+                android:onClick="@{() -> view.onMenu()}"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:background="@android:drawable/edit_text"
+                android:tint="@color/blue"
+                app:srcCompat="@drawable/ic_menu_black_24dp" />
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="end"
+                android:background="@android:drawable/edit_text"
+                android:onClick="@{() -> view.onNext()}"
+                android:tint="@color/blue"
+                app:srcCompat="@drawable/ic_chevron_right_black_24dp" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_take_quiz"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{() -> view.onTakeQuiz(lesson)}"
+                android:text="Take Quiz" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{() -> view.onViewVideo(lesson)}"
+                android:text="View Video" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </layout>

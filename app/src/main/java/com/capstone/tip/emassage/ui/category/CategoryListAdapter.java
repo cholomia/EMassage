@@ -38,8 +38,8 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.itemCategoryBinding.setCategory(categories.get(position));
-        holder.itemCategoryBinding.setView(categoryView);
+        //holder.itemCategoryBinding.setCategory(categories.get(position));
+        //holder.itemCategoryBinding.setView(categoryView);
         /*Glide.with(holder.itemView.getContext())
                 .load(Endpoints.BASE_URL + categories.get(position).getCoverImage())
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

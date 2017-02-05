@@ -1,5 +1,6 @@
 package com.capstone.tip.emassage.ui.pdf;
 
+import com.capstone.tip.emassage.model.data.Lesson;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 
 /**
@@ -15,4 +16,14 @@ public interface PdfView extends MvpView {
     void showAlert(String message);
 
     void loadPdfLocal();
+
+    void onTakeQuiz(Lesson lesson);
+
+    void onViewVideo(Lesson lesson);
+
+    void onBack();
+
+    void onMenu();
+
+    void onNext();
 }

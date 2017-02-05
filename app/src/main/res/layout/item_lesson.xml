@@ -5,18 +5,18 @@
 
         <variable
             name="lesson"
-            type="com.capstone.tip.emassage.model.data.Lesson" />
+            type="com.capstone.tip.emassage.model.pojo.LessonParcelable" />
 
         <variable
             name="view"
-            type="com.capstone.tip.emassage.ui.lessons.LessonsView" />
+            type="com.capstone.tip.emassage.ui.category.CategoryView" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
-        android:onClick="@{() -> view.onLessonsItemClicked(lesson)}"
+        android:onClick="@{() -> view.onLessonsItemClicked(lesson.id)}"
         android:orientation="vertical"
         android:padding="@dimen/activity_vertical_margin">
 

@@ -3,7 +3,6 @@ package com.capstone.tip.emassage.ui.quiz;
 import com.capstone.tip.emassage.model.data.Question;
 import com.capstone.tip.emassage.model.pojo.UserAnswer;
 import com.capstone.tip.emassage.ui.base.GradesSaveView;
-import com.hannesdorfmann.mosby.mvp.MvpView;
 
 import java.util.List;
 
@@ -19,4 +18,6 @@ public interface QuizView extends GradesSaveView {
     void onNext();
 
     void restoreData(int counter, List<Question> questionList, List<UserAnswer> userAnswerList);
+
+    void onViewReference(int page);
 }

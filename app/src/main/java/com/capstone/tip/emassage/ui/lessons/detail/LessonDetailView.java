@@ -18,4 +18,7 @@ public interface LessonDetailView extends MvpView {
     void onTakeQuiz(Lesson lesson);
 
     void onPopTextToSpeech(View view, String stringToTextToSpeech);
+
+    void onMenu();
+
 }

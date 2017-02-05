@@ -7,7 +7,7 @@
     <application
         android:name=".app.App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -41,13 +41,31 @@
         <activity android:name=".ui.quiz.QuizActivity" />
         <activity android:name=".ui.forums.form.ForumFormActivity" />
         <activity android:name=".ui.forums.details.ForumDetailActivity" />
-        <activity android:name=".ui.grades.GradesActivity" />
-        <activity android:name=".ui.video_simulation.VideoSimulationActivity" />
+        <activity
+            android:name=".ui.grades.GradesActivity"
+            android:label="Summary of Assessment" />
+        <activity
+            android:name=".ui.video_simulation.VideoSimulationActivity"
+            android:label="Video Simulations" />
         <activity android:name=".ui.main.MenuActivity" />
         <activity
             android:name=".ui.text_twist.TextTwistActivity"
             android:label="Twist Words" />
-        <activity android:name=".ui.lessons.detail.LessonDetailActivity"></activity>
+        <activity android:name=".ui.lessons.detail.LessonDetailActivity" />
+        <activity
+            android:name=".ui.announcement.list.AnnouncementListActivity"
+            android:label="Announcement" />
+        <activity
+            android:name=".ui.announcement.detail.AnnouncementDetailActivity"
+            android:label="Announcement" />
+        <activity
+            android:name=".ui.gallery.list.GalleryListActivity"
+            android:label="Gallery" />
+        <activity android:name=".ui.gallery.detail.GalleryDetailActivity" />
+        <activity android:name=".ui.gallery.display.GalleryDisplayActivity" />
+        <activity
+            android:name=".ui.fake_grades.FakeGradesActivity"
+            android:label="Grades" />
     </application>
 
 </manifest>

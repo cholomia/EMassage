@@ -15,6 +15,7 @@ public class Question extends RealmObject {
     private String body;
     private String answer;
     private int lesson;
+    private int page;
     private RealmList<Choice> choices;
 
     public int getId() {
@@ -47,6 +48,14 @@ public class Question extends RealmObject {
 
     public void setLesson(int lesson) {
         this.lesson = lesson;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
     }
 
     public RealmList<Choice> getChoices() {

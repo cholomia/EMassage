@@ -8,6 +8,10 @@
         <variable
             name="answer"
             type="com.capstone.tip.emassage.model.pojo.UserAnswer" />
+
+        <variable
+            name="view"
+            type="com.capstone.tip.emassage.ui.quiz.QuizView" />
     </data>
 
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
@@ -67,6 +71,13 @@
                 android:layout_height="wrap_content"
                 android:visibility="@{answer.choiceType == 2 ? View.VISIBLE : View.GONE}"
                 tools:ignore="ContentDescription" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:onClick="@{() -> view.onViewReference(answer.page)}"
+                android:text="View Reference" />
 
         </LinearLayout>
 

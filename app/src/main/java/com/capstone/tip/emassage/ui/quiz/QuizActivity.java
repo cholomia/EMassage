@@ -2,10 +2,10 @@ package com.capstone.tip.emassage.ui.quiz;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -23,11 +23,11 @@ import com.capstone.tip.emassage.model.data.Lesson;
 import com.capstone.tip.emassage.model.data.Question;
 import com.capstone.tip.emassage.model.data.User;
 import com.capstone.tip.emassage.model.pojo.UserAnswer;
+import com.capstone.tip.emassage.ui.pdf.PdfActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.MvpViewStateActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.ViewState;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
@@ -276,6 +276,14 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
             onSetQuestion(questionList.get(counter));
     }
 
+    @Override
+    public void onViewReference(int page) {
+        Intent intent = new Intent(this, PdfActivity.class);
+        intent.putExtra(Constants.ID, lesson.getId());
+        intent.putExtra("page", page);
+        startActivity(intent);
+    }
+
     /***
      * End of QuizView
      ***/
@@ -301,6 +309,7 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
         UserAnswer userAnswer = new UserAnswer();
         userAnswer.setQuestionId(question.getId());
         userAnswer.setCorrectAnswer(question.getAnswer());
+        userAnswer.setPage(question.getPage());
 
         Choice choice = adapter.getSelectedChoice();
         if (choice == null && hasReturn) {
@@ -340,7 +349,7 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
         dialogBinding.recyclerView.setItemAnimator(new DefaultItemAnimator());
         dialogBinding.recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        SummaryListAdapter summaryListAdapter = new SummaryListAdapter();
+        SummaryListAdapter summaryListAdapter = new SummaryListAdapter(getMvpView());
         summaryListAdapter.setUserAnswerList(userAnswerList);
         dialogBinding.recyclerView.setAdapter(summaryListAdapter);
 

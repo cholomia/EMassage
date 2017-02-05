@@ -1,8 +1,11 @@
 package com.capstone.tip.emassage.app;
 
+import com.capstone.tip.emassage.model.data.Announcement;
+import com.capstone.tip.emassage.model.data.Category;
 import com.capstone.tip.emassage.model.data.Comment;
 import com.capstone.tip.emassage.model.data.Course;
 import com.capstone.tip.emassage.model.data.Forum;
+import com.capstone.tip.emassage.model.data.Gallery;
 import com.capstone.tip.emassage.model.data.Grade;
 import com.capstone.tip.emassage.model.data.Twist;
 import com.capstone.tip.emassage.model.data.User;
@@ -26,6 +29,7 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 /**
@@ -49,6 +53,15 @@ public interface ApiInterface {
 
     @GET(Endpoints.COURSES)
     Call<List<Course>> courses();
+
+    @GET(Endpoints.CATEGORY)
+    Call<List<Category>> category();
+
+    @GET(Endpoints.ANNOUNCEMENTS)
+    Call<List<Announcement>> announcements();
+
+    @GET(Endpoints.GALLERIES)
+    Call<List<Gallery>> galleries(@Query("gategory_id") int ccategoryId);
 
     @GET(Endpoints.FORUMS)
     Call<ForumListResponse> forums(@Header("Authorization") String basicAuthentication);

@@ -101,6 +101,11 @@ public class LessonDetailActivity extends MvpActivity<LessonDetailView, LessonDe
     }
 
     @Override
+    public void onMenu() {
+        onBackPressed();
+    }
+
+    @Override
     public void onInit(int i) {
         if (i == TextToSpeech.SUCCESS) {
 

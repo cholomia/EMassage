@@ -3,10 +3,9 @@ package com.capstone.tip.emassage.ui.grades;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,9 +20,7 @@ import com.capstone.tip.emassage.model.pojo.DisplayGrade;
 import com.hannesdorfmann.mosby.mvp.viewstate.MvpViewStateActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.ViewState;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class GradesActivity extends MvpViewStateActivity<GradesView, GradesPresenter>
         implements GradesView {
@@ -41,7 +38,6 @@ public class GradesActivity extends MvpViewStateActivity<GradesView, GradesPrese
         // assumes that theme has toolbar
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("Grades");
         }
 
         adapter = new GradesListAdapter(getMvpView());
