@@ -1,6 +1,7 @@
 package com.capstone.tip.emassage.ui.category;
 
 import com.capstone.tip.emassage.app.App;
+import com.capstone.tip.emassage.app.Constants;
 import com.capstone.tip.emassage.model.data.Category;
 import com.capstone.tip.emassage.model.data.Lesson;
 import com.capstone.tip.emassage.model.pojo.LessonGroup;
@@ -76,11 +77,11 @@ public class CategoryPresenter extends MvpNullObjectBasePresenter<CategoryView> 
 
     public void onStart() {
         realm = Realm.getDefaultInstance();
-        categoryRealmResults = realm.where(Category.class).findAllAsync();
+        categoryRealmResults = realm.where(Category.class).findAllSorted(Constants.COL_SEQ);
         categoryRealmResults.addChangeListener(new RealmChangeListener<RealmResults<Category>>() {
             @Override
             public void onChange(RealmResults<Category> element) {
-                setLessonGroup(realm.copyFromRealm(categoryRealmResults));
+                setLessonGroup(categoryRealmResults);
             }
         });
     }
@@ -89,7 +90,7 @@ public class CategoryPresenter extends MvpNullObjectBasePresenter<CategoryView> 
         List<LessonGroup> lessonGroups = new ArrayList<>();
         for (Category category : categories) {
             List<LessonParcelable> lessonParcelables = new ArrayList<>();
-            for (Lesson lesson : category.getLessons()) {
+            for (Lesson lesson : category.getLessons().sort(Constants.COL_SEQ)) {
                 LessonParcelable lessonParcelable = new LessonParcelable(
                         lesson.getId(), lesson.getTitle());
                 lessonParcelables.add(lessonParcelable);
