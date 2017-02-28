@@ -1,5 +1,7 @@
 package com.capstone.tip.emassage.model.data;
 
+import com.google.gson.annotations.SerializedName;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -15,7 +17,8 @@ public class Question extends RealmObject {
     private String body;
     private String answer;
     private int lesson;
-    private int page;
+    @SerializedName("lesson_detail")
+    private int lessonDetail;
     private RealmList<Choice> choices;
 
     public int getId() {
@@ -50,12 +53,12 @@ public class Question extends RealmObject {
         this.lesson = lesson;
     }
 
-    public int getPage() {
-        return page;
+    public int getLessonDetail() {
+        return lessonDetail;
     }
 
-    public void setPage(int page) {
-        this.page = page;
+    public void setLessonDetail(int lessonDetail) {
+        this.lessonDetail = lessonDetail;
     }
 
     public RealmList<Choice> getChoices() {

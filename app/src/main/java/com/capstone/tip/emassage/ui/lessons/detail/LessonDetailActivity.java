@@ -1,5 +1,6 @@
 package com.capstone.tip.emassage.ui.lessons.detail;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Build;
@@ -7,6 +8,9 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,19 +19,26 @@ import android.widget.Toast;
 import com.capstone.tip.emassage.R;
 import com.capstone.tip.emassage.app.Constants;
 import com.capstone.tip.emassage.databinding.ActivityLessonDetailBinding;
+import com.capstone.tip.emassage.model.data.Category;
 import com.capstone.tip.emassage.model.data.Lesson;
-import com.capstone.tip.emassage.ui.pdf.PdfActivity;
+import com.capstone.tip.emassage.model.data.LessonDetail;
+import com.capstone.tip.emassage.ui.category.CategoryActivity;
 import com.capstone.tip.emassage.ui.quiz.QuizActivity;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
 import java.util.Locale;
 
-public class LessonDetailActivity extends MvpActivity<LessonDetailView, LessonDetailPresenter> implements LessonDetailView, TextToSpeech.OnInitListener {
+public class LessonDetailActivity extends MvpActivity<LessonDetailView, LessonDetailPresenter>
+        implements LessonDetailView, TextToSpeech.OnInitListener {
 
     private ActivityLessonDetailBinding binding;
     private TextToSpeech textToSpeech;
+    private int currentIndex;
+    private Lesson lesson;
+    private int lessonDetailId;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_lesson_detail);
@@ -38,6 +49,7 @@ public class LessonDetailActivity extends MvpActivity<LessonDetailView, LessonDe
             Toast.makeText(getApplicationContext(), "No Intent Extra Found!", Toast.LENGTH_SHORT).show();
             finish();
         }
+        lessonDetailId = getIntent().getIntExtra("lesson_detail", -1);
         textToSpeech = new TextToSpeech(this, this);
 
         presenter.onStart(id);
@@ -72,22 +84,70 @@ public class LessonDetailActivity extends MvpActivity<LessonDetailView, LessonDe
 
     @Override
     public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
         if (getSupportActionBar() != null) getSupportActionBar().setTitle(lesson.getTitle());
-        binding.setLesson(lesson);
+        if (lessonDetailId == -1) {
+            currentIndex = 0;
+            changeFragment(LessonSummaryFragment.newInstance(lesson.getObjective(), lesson.getSummary()),
+                    LessonSummaryFragment.class.getSimpleName(),
+                    false);
+        } else {
+            for (int i = 0; i < lesson.getLessonDetails().size(); i++) {
+                LessonDetail lessonDetail = lesson.getLessonDetails().get(i);
+                if (lessonDetail.getId() == lessonDetailId) {
+                    currentIndex = i + 1;
+                    setLessonDetailFragment();
+                }
+            }
+        }
+
     }
 
     @Override
-    public void onViewPdf(Lesson lesson) {
-        Intent intent = new Intent(this, PdfActivity.class);
-        intent.putExtra(Constants.ID, lesson.getId());
-        startActivity(intent);
+    public void onPrevious() {
+        if (currentIndex == 0) {
+            onBackPressed();
+        } else {
+            currentIndex--;
+            setLessonDetailFragment();
+
+        }
     }
 
     @Override
-    public void onTakeQuiz(Lesson lesson) {
-        Intent intent = new Intent(this, QuizActivity.class);
-        intent.putExtra(Constants.ID, lesson.getId());
-        startActivity(intent);
+    public void onNext() {
+        binding.btnViewVideo.setVisibility(View.VISIBLE);
+        if (currentIndex == lesson.getLessonDetails().size()) {
+            // index 0 is objcetive/summary
+            new AlertDialog.Builder(this)
+                    .setTitle("View Next Lesson?")
+                    .setCancelable(false)
+                    .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            presenter.getNextLesson(lesson.getId());
+                        }
+                    })
+                    .setNegativeButton("CLOSE", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            LessonDetailActivity.this.finish();
+                        }
+                    })
+                    .show();
+        } else {
+            currentIndex++;
+            setLessonDetailFragment();
+        }
+    }
+
+    private void setLessonDetailFragment() {
+        binding.btnViewVideo.setVisibility(currentIndex == 0 ? View.GONE : View.VISIBLE);
+        binding.btnTakeQuiz.setVisibility(currentIndex == lesson.getLessonDetails().size() ? View.VISIBLE : View.GONE);
+        changeFragment(LessonBodyFragment.newInstance(
+                lesson.getLessonDetails().sort("sequence").get(currentIndex - 1).getTitle(),
+                lesson.getLessonDetails().sort("sequence").get(currentIndex - 1).getBody()),
+                LessonBodyFragment.class.getSimpleName() + (currentIndex - 1), false);
     }
 
     @Override
@@ -102,7 +162,42 @@ public class LessonDetailActivity extends MvpActivity<LessonDetailView, LessonDe
 
     @Override
     public void onMenu() {
-        onBackPressed();
+        Intent intent = new Intent(this, CategoryActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onTakeQuiz() {
+        Intent intent = new Intent(this, QuizActivity.class);
+        intent.putExtra(Constants.ID, lesson.getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onViewVideo() {
+
+    }
+
+    @Override
+    public void setNextLesson(Lesson nextLesson) {
+        Intent intent = new Intent(this, LessonDetailActivity.class);
+        intent.putExtra(Constants.ID, nextLesson.getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void setNoNextLesson() {
+        new AlertDialog.Builder(this)
+                .setTitle("No Next Lesson")
+                .setCancelable(false)
+                .setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        LessonDetailActivity.this.finish();
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -124,4 +219,15 @@ public class LessonDetailActivity extends MvpActivity<LessonDetailView, LessonDe
             Log.e("TTS", "Initialization Failed!");
         }
     }
+
+    public void changeFragment(Fragment fragment, String tag, boolean addToBackStack) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.container_comments, fragment, tag);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+        if (addToBackStack)
+            fragmentTransaction.addToBackStack(tag);
+        fragmentTransaction.commit();
+    }
+
+
 }

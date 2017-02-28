@@ -11,7 +11,7 @@ public class UserAnswer {
     private String userAnswer;
     private String correctAnswer;
     private int choiceType;
-    private int page;
+    private int lessonDetail;
 
     public int getQuestionId() {
         return questionId;
@@ -49,11 +49,11 @@ public class UserAnswer {
         this.choiceType = choiceType;
     }
 
-    public int getPage() {
-        return page;
+    public int getLessonDetail() {
+        return lessonDetail;
     }
 
-    public void setPage(int page) {
-        this.page = page;
+    public void setLessonDetail(int lessonDetail) {
+        this.lessonDetail = lessonDetail;
     }
 }

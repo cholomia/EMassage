@@ -23,6 +23,7 @@ import com.capstone.tip.emassage.model.data.Lesson;
 import com.capstone.tip.emassage.model.data.Question;
 import com.capstone.tip.emassage.model.data.User;
 import com.capstone.tip.emassage.model.pojo.UserAnswer;
+import com.capstone.tip.emassage.ui.lessons.detail.LessonDetailActivity;
 import com.capstone.tip.emassage.ui.pdf.PdfActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.MvpViewStateActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.ViewState;
@@ -278,9 +279,9 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
 
     @Override
     public void onViewReference(int page) {
-        Intent intent = new Intent(this, PdfActivity.class);
+        Intent intent = new Intent(this, LessonDetailActivity.class);
         intent.putExtra(Constants.ID, lesson.getId());
-        intent.putExtra("page", page);
+        intent.putExtra("lesson_detail", page);
         startActivity(intent);
     }
 
@@ -309,7 +310,7 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
         UserAnswer userAnswer = new UserAnswer();
         userAnswer.setQuestionId(question.getId());
         userAnswer.setCorrectAnswer(question.getAnswer());
-        userAnswer.setPage(question.getPage());
+        userAnswer.setLessonDetail(question.getLessonDetail());
 
         Choice choice = adapter.getSelectedChoice();
         if (choice == null && hasReturn) {

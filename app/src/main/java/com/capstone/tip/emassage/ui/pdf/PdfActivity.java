@@ -166,13 +166,13 @@ public class PdfActivity extends MvpViewStateActivity<PdfView, PdfPresenter>
 
     @Override
     public void onViewVideo(Lesson lesson) {
-        try {
+       /* try {
             Intent intent = YouTubeStandalonePlayer.createVideoIntent(this, Constants.DEVELOPER_KEY, lesson.getYoutubeCode());
             startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "No YouTube Player Found", Toast.LENGTH_SHORT).show();
-        }
+        }*/
     }
 
     @Override

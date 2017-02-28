@@ -13,12 +13,19 @@ import com.hannesdorfmann.mosby.mvp.MvpView;
 public interface LessonDetailView extends MvpView {
     void setLesson(Lesson lesson);
 
-    void onViewPdf(Lesson lesson);
+    void onPrevious();
 
-    void onTakeQuiz(Lesson lesson);
+    void onNext();
 
     void onPopTextToSpeech(View view, String stringToTextToSpeech);
 
     void onMenu();
 
+    void onTakeQuiz();
+
+    void onViewVideo();
+
+    void setNextLesson(Lesson nextLesson);
+
+    void setNoNextLesson();
 }

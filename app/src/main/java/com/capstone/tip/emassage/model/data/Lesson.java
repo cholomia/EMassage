@@ -21,9 +21,10 @@ public class Lesson extends RealmObject {
     private String coverImage;
     private String pdf;
     private int category;
-    @SerializedName("youtube_code")
-    private String youtubeCode;
+    private String video;
     private RealmList<Question> questions;
+    @SerializedName("detail_lessons")
+    private RealmList<LessonDetail> lessonDetails;
 
     public int getId() {
         return id;
@@ -89,12 +90,12 @@ public class Lesson extends RealmObject {
         this.category = category;
     }
 
-    public String getYoutubeCode() {
-        return youtubeCode;
+    public String getVideo() {
+        return video;
     }
 
-    public void setYoutubeCode(String youtubeCode) {
-        this.youtubeCode = youtubeCode;
+    public void setVideo(String video) {
+        this.video = video;
     }
 
     public RealmList<Question> getQuestions() {
@@ -103,5 +104,13 @@ public class Lesson extends RealmObject {
 
     public void setQuestions(RealmList<Question> questions) {
         this.questions = questions;
+    }
+
+    public RealmList<LessonDetail> getLessonDetails() {
+        return lessonDetails;
+    }
+
+    public void setLessonDetails(RealmList<LessonDetail> lessonDetails) {
+        this.lessonDetails = lessonDetails;
     }
 }
