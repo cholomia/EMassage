@@ -10,7 +10,6 @@ import com.google.gson.GsonBuilder;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import io.realm.internal.Util;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;

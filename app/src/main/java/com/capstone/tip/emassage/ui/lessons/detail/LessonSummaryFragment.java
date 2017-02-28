@@ -27,7 +27,6 @@ public class LessonSummaryFragment extends Fragment {
     private String objective;
     private String summary;
 
-    private FragmentLessonSummaryBinding binding;
     private LessonDetailView lessonDetailView;
 
     public LessonSummaryFragment() {
@@ -64,7 +63,7 @@ public class LessonSummaryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_lesson_summary, container, false);
+        FragmentLessonSummaryBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_lesson_summary, container, false);
         binding.setObjective(objective);
         binding.setSummary(summary);
         binding.setView(lessonDetailView);

@@ -16,13 +16,12 @@ import java.util.List;
 public class FakeGradesActivity extends MvpActivity<FakeGradesView, FakeGradesPresenter>
         implements FakeGradesView {
 
-    private ActivityFakeGradesBinding binding;
     private FakeGradesAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_fake_grades);
+        ActivityFakeGradesBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_fake_grades);
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         adapter = new FakeGradesAdapter();
         binding.recyclerView.setAdapter(adapter);

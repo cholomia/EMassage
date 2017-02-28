@@ -20,6 +20,7 @@ import java.util.List;
  * Created by Cholo Mia on 12/29/2016.
  */
 
+@SuppressWarnings("WeakerAccess")
 public class CommentsListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int VIEW_TYPE_MORE = 1;

@@ -24,7 +24,6 @@ import com.capstone.tip.emassage.model.data.Question;
 import com.capstone.tip.emassage.model.data.User;
 import com.capstone.tip.emassage.model.pojo.UserAnswer;
 import com.capstone.tip.emassage.ui.lessons.detail.LessonDetailActivity;
-import com.capstone.tip.emassage.ui.pdf.PdfActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.MvpViewStateActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.ViewState;
 

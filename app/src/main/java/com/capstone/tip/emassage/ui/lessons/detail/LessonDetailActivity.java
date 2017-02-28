@@ -19,11 +19,11 @@ import android.widget.Toast;
 import com.capstone.tip.emassage.R;
 import com.capstone.tip.emassage.app.Constants;
 import com.capstone.tip.emassage.databinding.ActivityLessonDetailBinding;
-import com.capstone.tip.emassage.model.data.Category;
 import com.capstone.tip.emassage.model.data.Lesson;
 import com.capstone.tip.emassage.model.data.LessonDetail;
 import com.capstone.tip.emassage.ui.category.CategoryActivity;
 import com.capstone.tip.emassage.ui.quiz.QuizActivity;
+import com.capstone.tip.emassage.ui.video_simulation.OnlineVideoActivity;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
 
 import java.util.Locale;
@@ -93,14 +93,13 @@ public class LessonDetailActivity extends MvpActivity<LessonDetailView, LessonDe
                     false);
         } else {
             for (int i = 0; i < lesson.getLessonDetails().size(); i++) {
-                LessonDetail lessonDetail = lesson.getLessonDetails().get(i);
+                LessonDetail lessonDetail = lesson.getLessonDetails().sort("sequence").get(i);
                 if (lessonDetail.getId() == lessonDetailId) {
                     currentIndex = i + 1;
                     setLessonDetailFragment();
                 }
             }
         }
-
     }
 
     @Override
@@ -109,14 +108,18 @@ public class LessonDetailActivity extends MvpActivity<LessonDetailView, LessonDe
             onBackPressed();
         } else {
             currentIndex--;
-            setLessonDetailFragment();
-
+            if (currentIndex == 0) {
+                changeFragment(LessonSummaryFragment.newInstance(lesson.getObjective(), lesson.getSummary()),
+                        LessonSummaryFragment.class.getSimpleName(),
+                        false);
+            } else {
+                setLessonDetailFragment();
+            }
         }
     }
 
     @Override
     public void onNext() {
-        binding.btnViewVideo.setVisibility(View.VISIBLE);
         if (currentIndex == lesson.getLessonDetails().size()) {
             // index 0 is objcetive/summary
             new AlertDialog.Builder(this)
@@ -142,8 +145,6 @@ public class LessonDetailActivity extends MvpActivity<LessonDetailView, LessonDe
     }
 
     private void setLessonDetailFragment() {
-        binding.btnViewVideo.setVisibility(currentIndex == 0 ? View.GONE : View.VISIBLE);
-        binding.btnTakeQuiz.setVisibility(currentIndex == lesson.getLessonDetails().size() ? View.VISIBLE : View.GONE);
         changeFragment(LessonBodyFragment.newInstance(
                 lesson.getLessonDetails().sort("sequence").get(currentIndex - 1).getTitle(),
                 lesson.getLessonDetails().sort("sequence").get(currentIndex - 1).getBody()),
@@ -176,7 +177,9 @@ public class LessonDetailActivity extends MvpActivity<LessonDetailView, LessonDe
 
     @Override
     public void onViewVideo() {
-
+        Intent intent = new Intent(this, OnlineVideoActivity.class);
+        intent.putExtra("video_url", lesson.getVideo());
+        startActivity(intent);
     }
 
     @Override
@@ -221,8 +224,10 @@ public class LessonDetailActivity extends MvpActivity<LessonDetailView, LessonDe
     }
 
     public void changeFragment(Fragment fragment, String tag, boolean addToBackStack) {
+        //binding.btnViewVideo.setVisibility(currentIndex == 0 ? View.GONE : View.VISIBLE);
+        binding.btnTakeQuiz.setVisibility(currentIndex == lesson.getLessonDetails().size() ? View.VISIBLE : View.GONE);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container_comments, fragment, tag);
+        fragmentTransaction.replace(R.id.container, fragment, tag);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
         if (addToBackStack)
             fragmentTransaction.addToBackStack(tag);

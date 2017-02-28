@@ -77,7 +77,7 @@ public class CategoryPresenter extends MvpNullObjectBasePresenter<CategoryView> 
 
     public void onStart() {
         realm = Realm.getDefaultInstance();
-        categoryRealmResults = realm.where(Category.class).findAllSorted(Constants.COL_SEQ);
+        categoryRealmResults = realm.where(Category.class).findAllSortedAsync(Constants.COL_SEQ);
         categoryRealmResults.addChangeListener(new RealmChangeListener<RealmResults<Category>>() {
             @Override
             public void onChange(RealmResults<Category> element) {

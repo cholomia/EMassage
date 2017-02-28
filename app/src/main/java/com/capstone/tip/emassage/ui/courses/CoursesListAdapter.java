@@ -5,10 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.capstone.tip.emassage.R;
-import com.capstone.tip.emassage.app.Endpoints;
 import com.capstone.tip.emassage.databinding.ItemCourseBinding;
 import com.capstone.tip.emassage.model.data.Course;
 

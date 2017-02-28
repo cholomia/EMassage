@@ -9,6 +9,7 @@ import com.hannesdorfmann.mosby.mvp.viewstate.RestorableViewState;
  * Created by Cholo Mia on 12/4/2016.
  */
 
+@SuppressWarnings("WeakerAccess")
 public class CategoryViewState implements RestorableViewState<CategoryView> {
     @Override
     public void saveInstanceState(@NonNull Bundle out) {

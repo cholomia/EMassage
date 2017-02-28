@@ -9,7 +9,6 @@ import com.capstone.tip.emassage.model.response.ForumListResponse;
 import com.capstone.tip.emassage.ui.base.VotePresenter;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

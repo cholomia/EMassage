@@ -37,7 +37,6 @@
         <activity
             android:name=".ui.lessons.LessonsActivity"
             android:label="@string/lessons" />
-        <activity android:name=".ui.pdf.PdfActivity" />
         <activity android:name=".ui.quiz.QuizActivity" />
         <activity android:name=".ui.forums.form.ForumFormActivity" />
         <activity android:name=".ui.forums.details.ForumDetailActivity" />
@@ -66,7 +65,7 @@
         <activity
             android:name=".ui.fake_grades.FakeGradesActivity"
             android:label="Grades" />
-        <activity android:name=".ui.video_simulation.OnlineVideoActivity"></activity>
+        <activity android:name=".ui.video_simulation.OnlineVideoActivity" />
     </application>
 
 </manifest>

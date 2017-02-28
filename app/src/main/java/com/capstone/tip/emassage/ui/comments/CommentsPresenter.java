@@ -5,11 +5,9 @@ import android.util.Log;
 import com.capstone.tip.emassage.app.App;
 import com.capstone.tip.emassage.app.Constants;
 import com.capstone.tip.emassage.model.data.Comment;
-import com.capstone.tip.emassage.model.data.Forum;
 import com.capstone.tip.emassage.model.data.User;
 import com.capstone.tip.emassage.model.response.CommentListResponse;
 import com.capstone.tip.emassage.model.response.CommentVote;
-import com.capstone.tip.emassage.model.response.ForumVote;
 import com.hannesdorfmann.mosby.mvp.MvpNullObjectBasePresenter;
 
 import java.io.IOException;

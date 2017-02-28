@@ -48,7 +48,7 @@ public class CategoryActivity extends MvpViewStateActivity<CategoryView, Categor
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
-        binding.recyclerView.setAdapter(adapter);
+        //binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         presenter.onStart();
     }

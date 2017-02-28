@@ -10,6 +10,7 @@ import java.util.List;
  * Created by Cholo Mia on 12/4/2016.
  */
 
+@SuppressWarnings("WeakerAccess")
 public interface CategoryView extends MvpView {
 
     void onCategoryItemClicked(Category category);

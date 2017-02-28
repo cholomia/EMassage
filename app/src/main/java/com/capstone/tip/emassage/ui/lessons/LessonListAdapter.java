@@ -19,10 +19,9 @@ import java.util.List;
 public class LessonListAdapter extends RecyclerView.Adapter<LessonListAdapter.ViewHolder> {
 
     private List<Lesson> lessons;
-    private LessonsView lessonsView;
 
     public LessonListAdapter(LessonsView lessonsView) {
-        this.lessonsView = lessonsView;
+        LessonsView lessonsView1 = lessonsView;
         lessons = new ArrayList<>();
     }
 

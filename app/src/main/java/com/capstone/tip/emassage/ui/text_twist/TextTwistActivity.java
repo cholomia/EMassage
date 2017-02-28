@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -18,8 +17,6 @@ import com.capstone.tip.emassage.databinding.ActivityTextTwistBinding;
 import com.capstone.tip.emassage.model.data.Twist;
 import com.capstone.tip.emassage.model.pojo.Letter;
 import com.hannesdorfmann.mosby.mvp.MvpActivity;
-
-import java.util.List;
 
 public class TextTwistActivity extends MvpActivity<TextTwistView, TextTwistPresenter> implements TextTwistView {
 

@@ -5,10 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.capstone.tip.emassage.R;
-import com.capstone.tip.emassage.app.Endpoints;
 import com.capstone.tip.emassage.databinding.ItemCategoryBinding;
 import com.capstone.tip.emassage.model.data.Category;
 
@@ -22,10 +19,9 @@ import java.util.List;
 public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.ViewHolder> {
 
     private List<Category> categories;
-    private CategoryView categoryView;
 
     public CategoryListAdapter(CategoryView categoryView) {
-        this.categoryView = categoryView;
+        CategoryView categoryView1 = categoryView;
         categories = new ArrayList<>();
     }
 

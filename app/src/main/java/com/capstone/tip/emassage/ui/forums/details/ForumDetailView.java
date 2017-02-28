@@ -3,7 +3,6 @@ package com.capstone.tip.emassage.ui.forums.details;
 import com.capstone.tip.emassage.model.data.Comment;
 import com.capstone.tip.emassage.model.data.Forum;
 import com.capstone.tip.emassage.ui.base.VoteView;
-import com.hannesdorfmann.mosby.mvp.MvpView;
 
 /**
  * Created by Cholo Mia on 12/27/2016.

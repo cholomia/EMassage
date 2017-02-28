@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.capstone.tip.emassage.R;
 import com.capstone.tip.emassage.databinding.ActivityLoginBinding;
 import com.capstone.tip.emassage.model.data.User;
-import com.capstone.tip.emassage.ui.main.MainActivity;
 import com.capstone.tip.emassage.ui.main.MenuActivity;
 import com.capstone.tip.emassage.ui.register.RegisterActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.MvpViewStateActivity;

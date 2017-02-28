@@ -1,7 +1,6 @@
 package com.capstone.tip.emassage.model.response;
 
 import com.capstone.tip.emassage.model.data.Comment;
-import com.capstone.tip.emassage.model.data.Forum;
 import com.google.gson.annotations.SerializedName;
 
 /**

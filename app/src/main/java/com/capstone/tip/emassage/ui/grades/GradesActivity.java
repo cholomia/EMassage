@@ -25,7 +25,6 @@ import java.util.List;
 public class GradesActivity extends MvpViewStateActivity<GradesView, GradesPresenter>
         implements GradesView {
 
-    private ActivityGradesBinding binding;
     private GradesListAdapter adapter;
     private ProgressDialog progressDialog;
 
@@ -33,7 +32,7 @@ public class GradesActivity extends MvpViewStateActivity<GradesView, GradesPrese
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_grades);
+        ActivityGradesBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_grades);
 
         // assumes that theme has toolbar
         if (getSupportActionBar() != null) {

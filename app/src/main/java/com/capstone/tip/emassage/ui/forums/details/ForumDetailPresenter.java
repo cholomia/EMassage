@@ -8,7 +8,6 @@ import com.capstone.tip.emassage.model.data.Comment;
 import com.capstone.tip.emassage.model.data.Forum;
 import com.capstone.tip.emassage.model.data.User;
 import com.capstone.tip.emassage.ui.base.VotePresenter;
-import com.hannesdorfmann.mosby.mvp.MvpNullObjectBasePresenter;
 
 import java.io.IOException;
 

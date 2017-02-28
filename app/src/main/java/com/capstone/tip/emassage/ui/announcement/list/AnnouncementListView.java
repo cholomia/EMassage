@@ -9,6 +9,7 @@ import java.util.List;
  * Created by Cholo Mia on 2/5/2017.
  */
 
+@SuppressWarnings("WeakerAccess")
 public interface AnnouncementListView extends MvpView {
     void setAnnouncements(List<Announcement> announcements);
 

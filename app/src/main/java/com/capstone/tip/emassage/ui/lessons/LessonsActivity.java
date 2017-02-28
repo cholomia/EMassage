@@ -17,7 +17,6 @@ import com.capstone.tip.emassage.databinding.ActivityLessonsBinding;
 import com.capstone.tip.emassage.model.data.Category;
 import com.capstone.tip.emassage.model.data.Lesson;
 import com.capstone.tip.emassage.ui.lessons.detail.LessonDetailActivity;
-import com.capstone.tip.emassage.ui.pdf.PdfActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.MvpViewStateActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.ViewState;
 

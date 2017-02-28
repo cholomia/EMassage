@@ -2,9 +2,7 @@ package com.capstone.tip.emassage.ui.quiz;
 
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 

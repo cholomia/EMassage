@@ -9,6 +9,7 @@ import com.hannesdorfmann.mosby.mvp.viewstate.RestorableViewState;
  * Created by Cholo Mia on 2/5/2017.
  */
 
+@SuppressWarnings("WeakerAccess")
 public class AnnouncementListViewState implements RestorableViewState<AnnouncementListView> {
     @Override
     public void saveInstanceState(@NonNull Bundle out) {

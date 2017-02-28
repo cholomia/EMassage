@@ -3,10 +3,9 @@ package com.capstone.tip.emassage.ui.gallery.list;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.MenuItem;
@@ -22,13 +21,12 @@ import java.util.List;
 
 public class GalleryListActivity extends MvpActivity<GalleryListView, GalleryListPresenter> implements GalleryListView {
 
-    private ActivityGalleryListBinding binding;
     private GalleryListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_gallery_list);
+        ActivityGalleryListBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_gallery_list);
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         adapter = new GalleryListAdapter(getMvpView());
         binding.recyclerView.setAdapter(adapter);

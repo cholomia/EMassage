@@ -69,20 +69,20 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btn_take_quiz"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="@{() -> view.onTakeQuiz()}"
-                android:text="Take Quiz" />
-
-            <Button
                 android:id="@+id/btn_view_video"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="@{() -> view.onViewVideo()}"
                 android:text="View Video" />
+
+            <Button
+                android:id="@+id/btn_take_quiz"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{() -> view.onTakeQuiz()}"
+                android:text="Take Quiz" />
 
         </LinearLayout>
 
