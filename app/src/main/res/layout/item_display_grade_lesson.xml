@@ -38,73 +38,220 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+
+
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:orientation="vertical"
-                    android:visibility="@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 0 ? View.VISIBLE : View.GONE}">
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Take 1"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+                        android:orientation="vertical"
+                        android:visibility="@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 0 ? View.VISIBLE : View.GONE}">
 
-                    <TextView
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Take 1"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text='@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 0 &amp;&amp; displayGrade.grades.get(0) != null ? displayGrade.grades.get(0).rawScore + "/" + displayGrade.grades.get(0).itemCount : ""}'
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text='@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 0 &amp;&amp; displayGrade.grades.get(0) != null ? displayGrade.grades.get(0).rawScore + "/" + displayGrade.grades.get(0).itemCount : ""}'
-                        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+                        android:orientation="vertical"
+                        android:visibility="@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 1 ? View.VISIBLE : View.GONE}">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Take 2"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text='@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 1 &amp;&amp; displayGrade.grades.get(1) != null ? displayGrade.grades.get(1).rawScore + "/" + displayGrade.grades.get(1).itemCount : ""}'
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 2 ? View.VISIBLE : View.GONE}">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Take 3"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text='@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 2 &amp;&amp;  displayGrade.grades.get(2) != null ? displayGrade.grades.get(2).rawScore + "/" + displayGrade.grades.get(2).itemCount : ""}'
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 3 ? View.VISIBLE : View.GONE}">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Take 4"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text='@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 3 &amp;&amp;  displayGrade.grades.get(3) != null ? displayGrade.grades.get(3).rawScore + "/" + displayGrade.grades.get(3).itemCount : ""}'
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 4 ? View.VISIBLE : View.GONE}">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Take 5"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text='@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 4 &amp;&amp;  displayGrade.grades.get(4) != null ? displayGrade.grades.get(4).rawScore + "/" + displayGrade.grades.get(4).itemCount : ""}'
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 5 ? View.VISIBLE : View.GONE}">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Take 6"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text='@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 5 &amp;&amp;  displayGrade.grades.get(5) != null ? displayGrade.grades.get(5).rawScore + "/" + displayGrade.grades.get(5).itemCount : ""}'
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 6 ? View.VISIBLE : View.GONE}">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Take 7"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text='@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 6 &amp;&amp;  displayGrade.grades.get(6) != null ? displayGrade.grades.get(6).rawScore + "/" + displayGrade.grades.get(6).itemCount : ""}'
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 7 ? View.VISIBLE : View.GONE}">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Take 8"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text='@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 7 &amp;&amp;  displayGrade.grades.get(7) != null ? displayGrade.grades.get(7).rawScore + "/" + displayGrade.grades.get(7).itemCount : ""}'
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 8 ? View.VISIBLE : View.GONE}">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Take 9"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text='@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 8 &amp;&amp;  displayGrade.grades.get(8) != null ? displayGrade.grades.get(8).rawScore + "/" + displayGrade.grades.get(8).itemCount : ""}'
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 9 ? View.VISIBLE : View.GONE}">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Take 10"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text='@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 9 &amp;&amp;  displayGrade.grades.get(9) != null ? displayGrade.grades.get(9).rawScore + "/" + displayGrade.grades.get(9).itemCount : ""}'
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:visibility="@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 1 ? View.VISIBLE : View.GONE}">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Take 2"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text='@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 1 &amp;&amp; displayGrade.grades.get(1) != null ? displayGrade.grades.get(1).rawScore + "/" + displayGrade.grades.get(1).itemCount : ""}'
-                        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:visibility="@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 2 ? View.VISIBLE : View.GONE}">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Take 3"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text='@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 2 &amp;&amp;  displayGrade.grades.get(2) != null ? displayGrade.grades.get(2).rawScore + "/" + displayGrade.grades.get(2).itemCount : ""}'
-                        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:orientation="vertical"
                     android:visibility="@{displayGrade.grades != null &amp;&amp; displayGrade.grades.size() > 0 ? View.VISIBLE : View.GONE}">
 

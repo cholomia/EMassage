@@ -80,8 +80,10 @@ public class GalleryDisplayActivity extends MvpActivity<GalleryDisplayView, Gall
         binding.setGallery(gallery);
         Glide.with(this)
                 .load(gallery.getImage())
+                .placeholder(R.drawable.icon)
+                .error(R.drawable.icon)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .into(binding.image);
+                .fitCenter()
+                .into(binding.touchImageView);
     }
 }

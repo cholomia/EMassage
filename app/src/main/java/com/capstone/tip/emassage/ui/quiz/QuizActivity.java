@@ -154,7 +154,7 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
         gradeRealmResults = realm.where(Grade.class).equalTo("lesson", lesson.getId()).findAll();
         //Grade grade = realm.where(Grade.class).equalTo("lesson", lesson.getId()).findFirst();
         if (gradeRealmResults.size() > 0) {
-            if (gradeRealmResults.size() >= 3) {
+            if (gradeRealmResults.size() >= 10) {
                 // quiz can be taken 3 times maximum
                 new AlertDialog.Builder(this)
                         .setTitle("Unable to take Quiz")
@@ -167,7 +167,7 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
                             }
                         })
                         .show();
-            } else {
+            } /*else {
                 // already taken the quiz
                 new AlertDialog.Builder(this)
                         .setTitle("Retake Quiz?")
@@ -186,7 +186,7 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
                             }
                         })
                         .show();
-            }
+            }*/
         }
 
 

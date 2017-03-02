@@ -128,7 +128,7 @@ public class CategoryPresenter extends MvpNullObjectBasePresenter<CategoryView> 
                         if (i == 0) {
                             return -1;
                         } else {
-                            int lastLessonIndex = categories.sort("sequence").get(i - 1).getLessons().size();
+                            int lastLessonIndex = categories.sort("sequence").get(i - 1).getLessons().size() -1;
                             return categories.sort("sequence").get(i - 1).getLessons().sort("sequence").get(lastLessonIndex).getId();
                         }
                     } else {

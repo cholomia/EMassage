@@ -80,32 +80,32 @@ public class GradesPresenter extends GradesSavePresenter<GradesView> {
                 displayGradeCourse.setView(DisplayGrade.VIEW_COURSE);
                 displayGradeCourse.setTitle(course.getTitle());
                 displayGrades.add(displayGradeCourse);*/
-                for (Category category : categoryRealmResults) {
-                    // set category headers
+            for (Category category : categoryRealmResults) {
+                // set category headers
+                x++;
+                DisplayGrade displayGradeCategory = new DisplayGrade();
+                displayGradeCategory.setSequence(x);
+                displayGradeCategory.setView(DisplayGrade.VIEW_CATEGORY);
+                displayGradeCategory.setTitle(category.getTitle());
+                displayGrades.add(displayGradeCategory);
+                for (Lesson lesson : category.getLessons().sort(Constants.COL_SEQ)) {
+                    // set lesson grades
                     x++;
-                    DisplayGrade displayGradeCategory = new DisplayGrade();
-                    displayGradeCategory.setSequence(x);
-                    displayGradeCategory.setView(DisplayGrade.VIEW_CATEGORY);
-                    displayGradeCategory.setTitle(category.getTitle());
-                    displayGrades.add(displayGradeCategory);
-                    for (Lesson lesson : category.getLessons()) {
-                        // set lesson grades
-                        x++;
-                        DisplayGrade displayGradeLesson = new DisplayGrade();
-                        displayGradeLesson.setSequence(x);
-                        displayGradeLesson.setView(DisplayGrade.VIEW_LESSON);
-                        displayGradeLesson.setTitle(lesson.getTitle());
-                        List<Grade> grades = new ArrayList<>();
-                        if (gradeRealmResults.isLoaded() && gradeRealmResults.isValid()) {
-                            RealmResults<Grade> lessonGradeRealmResults = gradeRealmResults.where()
-                                    .equalTo("lesson", lesson.getId())
-                                    .findAllSorted("tryCount", Sort.ASCENDING);
-                            grades = realm.copyFromRealm(lessonGradeRealmResults);
-                        }
-                        displayGradeLesson.setGrades(grades);
-                        displayGrades.add(displayGradeLesson);
+                    DisplayGrade displayGradeLesson = new DisplayGrade();
+                    displayGradeLesson.setSequence(x);
+                    displayGradeLesson.setView(DisplayGrade.VIEW_LESSON);
+                    displayGradeLesson.setTitle(lesson.getTitle());
+                    List<Grade> grades = new ArrayList<>();
+                    if (gradeRealmResults.isLoaded() && gradeRealmResults.isValid()) {
+                        RealmResults<Grade> lessonGradeRealmResults = gradeRealmResults.where()
+                                .equalTo("lesson", lesson.getId())
+                                .findAllSorted("tryCount", Sort.ASCENDING);
+                        grades = realm.copyFromRealm(lessonGradeRealmResults);
                     }
+                    displayGradeLesson.setGrades(grades);
+                    displayGrades.add(displayGradeLesson);
                 }
+            }
             //}
         }
         getView().setDisplayGradeList(displayGrades);
