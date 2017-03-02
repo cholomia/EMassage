@@ -122,22 +122,30 @@ public class LessonDetailActivity extends MvpActivity<LessonDetailView, LessonDe
     public void onNext() {
         if (currentIndex == lesson.getLessonDetails().size()) {
             // index 0 is objcetive/summary
-            new AlertDialog.Builder(this)
-                    .setTitle("View Next Lesson?")
-                    .setCancelable(false)
-                    .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            presenter.getNextLesson(lesson.getId());
-                        }
-                    })
-                    .setNegativeButton("CLOSE", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            LessonDetailActivity.this.finish();
-                        }
-                    })
-                    .show();
+            if (presenter.hasTakenQuiz()) {
+                new AlertDialog.Builder(this)
+                        .setTitle("View Next Lesson?")
+                        .setCancelable(false)
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                presenter.getNextLesson(lesson.getId());
+                            }
+                        })
+                        .setNegativeButton("CLOSE", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                LessonDetailActivity.this.finish();
+                            }
+                        })
+                        .show();
+            } else {
+                new AlertDialog.Builder(this)
+                        .setTitle("Quiz Not Yet Taken")
+                        .setCancelable(false)
+                        .setPositiveButton("Close", null)
+                        .show();
+            }
         } else {
             currentIndex++;
             setLessonDetailFragment();

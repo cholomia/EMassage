@@ -3,6 +3,7 @@ package com.capstone.tip.emassage.ui.category;
 import com.capstone.tip.emassage.app.App;
 import com.capstone.tip.emassage.app.Constants;
 import com.capstone.tip.emassage.model.data.Category;
+import com.capstone.tip.emassage.model.data.Grade;
 import com.capstone.tip.emassage.model.data.Lesson;
 import com.capstone.tip.emassage.model.pojo.LessonGroup;
 import com.capstone.tip.emassage.model.pojo.LessonParcelable;
@@ -15,6 +16,7 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -104,5 +106,37 @@ public class CategoryPresenter extends MvpNullObjectBasePresenter<CategoryView> 
     public void onStop() {
         categoryRealmResults.removeChangeListeners();
         realm.close();
+    }
+
+    public boolean hasTakenPreviousLessonQuiz(int id) {
+        int previousLessonId = getPreviousLessonId(id);
+        if (previousLessonId == -1) {
+            return true;
+        } else {
+            Grade grade = realm.where(Grade.class).equalTo("lesson", previousLessonId).findFirst();
+            return grade != null;
+        }
+    }
+
+    private int getPreviousLessonId(int id) {
+        RealmResults<Category> categories = realm.where(Category.class).findAllSorted("sequence", Sort.ASCENDING);
+        for (int i = 0; i < categories.size(); i++) {
+            for (int j = 0; j < categories.get(i).getLessons().size(); j++) {
+                Lesson lesson = categories.sort("sequence").get(i).getLessons().sort("sequence").get(j);
+                if (lesson.getId() == id) {
+                    if (j == 0) {
+                        if (i == 0) {
+                            return -1;
+                        } else {
+                            int lastLessonIndex = categories.sort("sequence").get(i - 1).getLessons().size();
+                            return categories.sort("sequence").get(i - 1).getLessons().sort("sequence").get(lastLessonIndex).getId();
+                        }
+                    } else {
+                        return categories.sort("sequence").get(i).getLessons().sort("sequence").get(j - 1).getId();
+                    }
+                }
+            }
+        }
+        return -1;
     }
 }

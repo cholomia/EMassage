@@ -143,9 +143,13 @@ public class CategoryActivity extends MvpViewStateActivity<CategoryView, Categor
 
     @Override
     public void onLessonsItemClicked(int id) {
-        Intent intent = new Intent(this, LessonDetailActivity.class);
-        intent.putExtra(Constants.ID, id);
-        startActivity(intent);
+        if (presenter.hasTakenPreviousLessonQuiz(id)) {
+            Intent intent = new Intent(this, LessonDetailActivity.class);
+            intent.putExtra(Constants.ID, id);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "Previous Lesson Quiz has not yet been taken", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

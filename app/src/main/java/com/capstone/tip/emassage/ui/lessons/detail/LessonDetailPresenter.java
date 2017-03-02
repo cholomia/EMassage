@@ -2,6 +2,7 @@ package com.capstone.tip.emassage.ui.lessons.detail;
 
 import com.capstone.tip.emassage.app.Constants;
 import com.capstone.tip.emassage.model.data.Category;
+import com.capstone.tip.emassage.model.data.Grade;
 import com.capstone.tip.emassage.model.data.Lesson;
 import com.hannesdorfmann.mosby.mvp.MvpNullObjectBasePresenter;
 
@@ -58,5 +59,10 @@ public class LessonDetailPresenter extends MvpNullObjectBasePresenter<LessonDeta
                 }
             }
         }
+    }
+
+    public boolean hasTakenQuiz() {
+        Grade grade = realm.where(Grade.class).equalTo("lesson", lesson.getId()).findFirst();
+        return grade != null;
     }
 }
