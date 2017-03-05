@@ -77,4 +77,8 @@ public class Grade extends RealmObject {
     public double average() {
         return (((double) rawScore / (double) itemCount) * 50.0) + 50.0;
     }
+
+    public float averageFloat() {
+        return (((float) rawScore / (float) itemCount) * 50.0f) + 50.0f;
+    }
 }

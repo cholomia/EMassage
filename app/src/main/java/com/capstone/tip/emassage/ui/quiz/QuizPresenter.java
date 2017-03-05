@@ -25,7 +25,11 @@ public class QuizPresenter extends GradesSavePresenter<QuizView> {
             questionList.add(question);
         }
         Collections.shuffle(questionList);
-        return questionList;
+        if (questionList.size() >= 15) {
+            return questionList.subList(0, 15);
+        } else {
+            return questionList;
+        }
     }
 
     /**

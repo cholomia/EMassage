@@ -1,4 +1,4 @@
-package com.capstone.tip.emassage.utils;
+package com.capstone.tip.emassage.ui.custom;
 
 import android.annotation.TargetApi;
 import android.content.Context;

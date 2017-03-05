@@ -2,6 +2,7 @@ package com.capstone.tip.emassage.ui.grades;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +18,9 @@ import com.capstone.tip.emassage.R;
 import com.capstone.tip.emassage.databinding.ActivityGradesBinding;
 import com.capstone.tip.emassage.model.data.Grade;
 import com.capstone.tip.emassage.model.pojo.DisplayGrade;
+import com.capstone.tip.emassage.model.pojo.LessonGroup;
+import com.capstone.tip.emassage.ui.category.CategoryAdapter;
+import com.capstone.tip.emassage.ui.grades.detail.GradesDetailActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.MvpViewStateActivity;
 import com.hannesdorfmann.mosby.mvp.viewstate.ViewState;
 
@@ -27,12 +31,13 @@ public class GradesActivity extends MvpViewStateActivity<GradesView, GradesPrese
 
     private GradesListAdapter adapter;
     private ProgressDialog progressDialog;
+    private ActivityGradesBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityGradesBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_grades);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_grades);
 
         // assumes that theme has toolbar
         if (getSupportActionBar() != null) {
@@ -40,7 +45,8 @@ public class GradesActivity extends MvpViewStateActivity<GradesView, GradesPrese
         }
 
         adapter = new GradesListAdapter(getMvpView());
-        binding.recyclerView.setAdapter(adapter);
+
+
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerView.setItemAnimator(new DefaultItemAnimator());
         binding.recyclerView.addItemDecoration(new DividerItemDecoration(this,
@@ -133,5 +139,18 @@ public class GradesActivity extends MvpViewStateActivity<GradesView, GradesPrese
     @Override
     public void onGradeSave(List<Grade> grades) {
         for (Grade grade : grades) if (!grade.isSaved()) presenter.saveGrade(grade);
+    }
+
+    @Override
+    public void setLessonGroupList(List<LessonGroup> lessonGroups) {
+        CategoryAdapter categoryAdapter = new CategoryAdapter(lessonGroups, getMvpView());
+        binding.recyclerView.setAdapter(categoryAdapter);
+    }
+
+    @Override
+    public void onLessonsItemClicked(int id) {
+        Intent intent = new Intent(this, GradesDetailActivity.class);
+        intent.putExtra("lesson", id);
+        startActivity(intent);
     }
 }

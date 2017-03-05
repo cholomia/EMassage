@@ -66,6 +66,9 @@
             android:name=".ui.fake_grades.FakeGradesActivity"
             android:label="Grades" />
         <activity android:name=".ui.video_simulation.OnlineVideoActivity" />
+        <activity
+            android:name=".ui.grades.detail.GradesDetailActivity"
+            android:label="Summary of Assessment" />
     </application>
 
 </manifest>

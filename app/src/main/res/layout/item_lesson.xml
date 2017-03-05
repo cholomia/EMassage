@@ -9,7 +9,7 @@
 
         <variable
             name="view"
-            type="com.capstone.tip.emassage.ui.category.CategoryView" />
+            type="com.capstone.tip.emassage.ui.base.LessonListView" />
     </data>
 
     <LinearLayout

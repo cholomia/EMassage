@@ -109,16 +109,18 @@ public class CategoryPresenter extends MvpNullObjectBasePresenter<CategoryView> 
     }
 
     public boolean hasTakenPreviousLessonQuiz(int id) {
-        int previousLessonId = getPreviousLessonId(id);
-        if (previousLessonId == -1) {
+        Lesson previousLesson = getPreviousLesson(id);
+        if (previousLesson == null) {
             return true;
-        } else {
-            Grade grade = realm.where(Grade.class).equalTo("lesson", previousLessonId).findFirst();
+        } else if (previousLesson.getQuestions() != null && previousLesson.getQuestions().size() > 0) {
+            Grade grade = realm.where(Grade.class).equalTo("lesson", previousLesson.getId()).findFirst();
             return grade != null;
+        } else {
+            return true;
         }
     }
 
-    private int getPreviousLessonId(int id) {
+    private Lesson getPreviousLesson(int id) {
         RealmResults<Category> categories = realm.where(Category.class).findAllSorted("sequence", Sort.ASCENDING);
         for (int i = 0; i < categories.size(); i++) {
             for (int j = 0; j < categories.get(i).getLessons().size(); j++) {
@@ -126,17 +128,17 @@ public class CategoryPresenter extends MvpNullObjectBasePresenter<CategoryView> 
                 if (lesson.getId() == id) {
                     if (j == 0) {
                         if (i == 0) {
-                            return -1;
+                            return null;
                         } else {
-                            int lastLessonIndex = categories.sort("sequence").get(i - 1).getLessons().size() -1;
-                            return categories.sort("sequence").get(i - 1).getLessons().sort("sequence").get(lastLessonIndex).getId();
+                            int lastLessonIndex = categories.sort("sequence").get(i - 1).getLessons().size() - 1;
+                            return categories.sort("sequence").get(i - 1).getLessons().sort("sequence").get(lastLessonIndex);
                         }
                     } else {
-                        return categories.sort("sequence").get(i).getLessons().sort("sequence").get(j - 1).getId();
+                        return categories.sort("sequence").get(i).getLessons().sort("sequence").get(j - 1);
                     }
                 }
             }
         }
-        return -1;
+        return null;
     }
 }

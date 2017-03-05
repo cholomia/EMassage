@@ -10,6 +10,7 @@ import com.capstone.tip.emassage.databinding.ItemCategoryBinding;
 import com.capstone.tip.emassage.databinding.ItemLessonBinding;
 import com.capstone.tip.emassage.model.pojo.LessonGroup;
 import com.capstone.tip.emassage.model.pojo.LessonParcelable;
+import com.capstone.tip.emassage.ui.base.LessonListView;
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter;
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup;
 import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder;
@@ -23,11 +24,11 @@ import static android.view.animation.Animation.RELATIVE_TO_SELF;
  * Created by Cholo Mia on 2/5/2017.
  */
 
-class CategoryAdapter extends ExpandableRecyclerViewAdapter<CategoryAdapter.CategoryViewHolder, CategoryAdapter.LessonViewHolder> {
+public class CategoryAdapter extends ExpandableRecyclerViewAdapter<CategoryAdapter.CategoryViewHolder, CategoryAdapter.LessonViewHolder> {
 
-    private CategoryView mvpView;
+    private LessonListView mvpView;
 
-    CategoryAdapter(List<LessonGroup> groups, CategoryView mvpView) {
+    public CategoryAdapter(List<LessonGroup> groups, LessonListView mvpView) {
         super(groups);
         this.mvpView = mvpView;
     }

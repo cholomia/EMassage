@@ -47,7 +47,7 @@ public class ChoiceListAdapter extends RecyclerView.Adapter<ChoiceListAdapter.Vi
         x += position;
         holder.itemChoiceBinding.setLetter(x + "");
         onBind = true;
-        holder.itemChoiceBinding.checkbox.setChecked(selected[position]);
+        holder.itemChoiceBinding.radioButton.setChecked(selected[position]);
         onBind = false;
     }
 
@@ -101,7 +101,7 @@ public class ChoiceListAdapter extends RecyclerView.Adapter<ChoiceListAdapter.Vi
         public ViewHolder(ItemChoiceBinding itemChoiceBinding) {
             super(itemChoiceBinding.getRoot());
             this.itemChoiceBinding = itemChoiceBinding;
-            itemChoiceBinding.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            itemChoiceBinding.radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     resetSelected(b ? getAdapterPosition() : -1);

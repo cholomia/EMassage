@@ -62,7 +62,11 @@ public class LessonDetailPresenter extends MvpNullObjectBasePresenter<LessonDeta
     }
 
     public boolean hasTakenQuiz() {
-        Grade grade = realm.where(Grade.class).equalTo("lesson", lesson.getId()).findFirst();
-        return grade != null;
+        if (lesson.getQuestions() != null && lesson.getQuestions().size() > 0) {
+            Grade grade = realm.where(Grade.class).equalTo("lesson", lesson.getId()).findFirst();
+            return grade != null;
+        } else {
+            return true;
+        }
     }
 }

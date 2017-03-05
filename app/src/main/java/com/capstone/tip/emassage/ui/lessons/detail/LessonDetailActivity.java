@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -56,10 +57,19 @@ public class LessonDetailActivity extends MvpActivity<LessonDetailView, LessonDe
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_lesson_detail, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                return true;
+            case R.id.action_topic_menu:
+                onMenu();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -100,6 +110,7 @@ public class LessonDetailActivity extends MvpActivity<LessonDetailView, LessonDe
                 }
             }
         }
+        binding.btnViewVideo.setVisibility(lesson.getVideo() != null && !lesson.getVideo().isEmpty() ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override
@@ -233,7 +244,7 @@ public class LessonDetailActivity extends MvpActivity<LessonDetailView, LessonDe
 
     public void changeFragment(Fragment fragment, String tag, boolean addToBackStack) {
         //binding.btnViewVideo.setVisibility(currentIndex == 0 ? View.GONE : View.VISIBLE);
-        binding.btnTakeQuiz.setVisibility(currentIndex == lesson.getLessonDetails().size() ? View.VISIBLE : View.GONE);
+        binding.btnTakeQuiz.setVisibility(currentIndex == lesson.getLessonDetails().size() && lesson.getQuestions().size() > 0 ? View.VISIBLE : View.GONE);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment, tag);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);

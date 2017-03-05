@@ -2,6 +2,7 @@ package com.capstone.tip.emassage.ui.category;
 
 import com.capstone.tip.emassage.model.data.Category;
 import com.capstone.tip.emassage.model.pojo.LessonGroup;
+import com.capstone.tip.emassage.ui.base.LessonListView;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  */
 
 @SuppressWarnings("WeakerAccess")
-public interface CategoryView extends MvpView {
+public interface CategoryView extends MvpView, LessonListView {
 
     void onCategoryItemClicked(Category category);
 
@@ -22,8 +23,6 @@ public interface CategoryView extends MvpView {
     void stopLoading();
 
     void showAlert(String message);
-
-    void onLessonsItemClicked(int id);
 
     void setLessonGroups(List<LessonGroup> lessonGroups);
 }

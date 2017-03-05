@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ import okhttp3.Credentials;
 public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
         implements QuizView {
 
+    private static final String TAG = QuizActivity.class.getSimpleName();
     private ActivityQuizBinding binding;
     private ChoiceListAdapter adapter;
 
@@ -79,8 +81,8 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
         if (getSupportActionBar() != null) {
             String title = "Quiz: " + lesson.getTitle();
             getSupportActionBar().setTitle(title);
-            String strNumItems = "Number of Items: " + lesson.getQuestions().size();
-            getSupportActionBar().setSubtitle(strNumItems);
+            /*String strNumItems = "Number of Items: " + lesson.getQuestions().size();
+            getSupportActionBar().setSubtitle(strNumItems);*/
         }
 
     }
@@ -194,7 +196,7 @@ public class QuizActivity extends MvpViewStateActivity<QuizView, QuizPresenter>
 
         userAnswerList = new ArrayList<>();
         questionList = presenter.getShuffledQuestionList(realm.copyFromRealm(lesson.getQuestions()));
-
+        Log.d(TAG, "onNewViewStateInstance: questionList size: " + questionList.size());
         ((QuizViewState) getViewState()).setUserAnswerList(userAnswerList);
         ((QuizViewState) getViewState()).setQuestionList(questionList);
 

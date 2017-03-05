@@ -21,8 +21,8 @@
         android:background="?attr/selectableItemBackground"
         android:padding="8dp">
 
-        <CheckBox
-            android:id="@+id/checkbox"
+        <RadioButton
+            android:id="@+id/radio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|top" />

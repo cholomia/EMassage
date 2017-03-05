@@ -9,6 +9,8 @@ import com.capstone.tip.emassage.model.data.Grade;
 import com.capstone.tip.emassage.model.data.Lesson;
 import com.capstone.tip.emassage.model.data.User;
 import com.capstone.tip.emassage.model.pojo.DisplayGrade;
+import com.capstone.tip.emassage.model.pojo.LessonGroup;
+import com.capstone.tip.emassage.model.pojo.LessonParcelable;
 import com.capstone.tip.emassage.ui.base.GradesSavePresenter;
 
 import java.io.IOException;
@@ -49,7 +51,8 @@ public class GradesPresenter extends GradesSavePresenter<GradesView> {
         categoryRealmResults.addChangeListener(new RealmChangeListener<RealmResults<Category>>() {
             @Override
             public void onChange(RealmResults<Category> element) {
-                updateDisplayList();
+                if (categoryRealmResults.isValid() && categoryRealmResults.isLoaded())
+                    setLessonGroupList();
             }
         });
 
@@ -57,7 +60,7 @@ public class GradesPresenter extends GradesSavePresenter<GradesView> {
         gradeRealmResults.addChangeListener(new RealmChangeListener<RealmResults<Grade>>() {
             @Override
             public void onChange(RealmResults<Grade> element) {
-                updateDisplayList();
+                //updateDisplayList();
             }
         });
     }
@@ -68,20 +71,28 @@ public class GradesPresenter extends GradesSavePresenter<GradesView> {
         realm.close();
     }
 
+    private void setLessonGroupList() {
+        List<LessonGroup> lessonGroups = new ArrayList<>();
+        for (Category category : categoryRealmResults) {
+            List<LessonParcelable> lessonParcelables = new ArrayList<>();
+            for (Lesson lesson : category.getLessons().sort(Constants.COL_SEQ)) {
+                if (lesson.getQuestions() != null && lesson.getQuestions().size() > 0) {
+                    LessonParcelable lessonParcelable = new LessonParcelable(
+                            lesson.getId(), lesson.getTitle());
+                    lessonParcelables.add(lessonParcelable);
+                }
+            }
+            LessonGroup lessonGroup = new LessonGroup(category.getTitle(), lessonParcelables);
+            lessonGroups.add(lessonGroup);
+        }
+        getView().setLessonGroupList(lessonGroups);
+    }
+
     private void updateDisplayList() {
         List<DisplayGrade> displayGrades = new ArrayList<>();
         int x = 0;
         if (categoryRealmResults.isLoaded() && categoryRealmResults.isValid()) {
-           /* for (Category course : categoryRealmResults) {
-                // set course header
-                x++;
-                DisplayGrade displayGradeCourse = new DisplayGrade();
-                displayGradeCourse.setSequence(x);
-                displayGradeCourse.setView(DisplayGrade.VIEW_COURSE);
-                displayGradeCourse.setTitle(course.getTitle());
-                displayGrades.add(displayGradeCourse);*/
             for (Category category : categoryRealmResults) {
-                // set category headers
                 x++;
                 DisplayGrade displayGradeCategory = new DisplayGrade();
                 displayGradeCategory.setSequence(x);
@@ -106,7 +117,6 @@ public class GradesPresenter extends GradesSavePresenter<GradesView> {
                     displayGrades.add(displayGradeLesson);
                 }
             }
-            //}
         }
         getView().setDisplayGradeList(displayGrades);
     }

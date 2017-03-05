@@ -25,7 +25,7 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context="com.capstone.tip.emassage.ui.gallery.display.GalleryDisplayActivity">
 
-        <com.capstone.tip.emassage.utils.TouchImageView
+        <com.capstone.tip.emassage.ui.custom.TouchImageView
             android:id="@+id/touch_image_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
